@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <linker>
   <assembly fullname="GameFramework" preserve="all" />
-  <assembly fullname="UnityGameFramework" preserve="all" />
+  <assembly fullname="UnityGameFramework.Runtime" preserve="all" />
+  <assembly fullname="GameLogic.Mono" preserve="all" />
+  <assembly fullname="GameLogic.Hotfix" preserve="all" />
 </linker>
