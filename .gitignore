@@ -1,0 +1,8 @@
+﻿.idea/
+Client/Temp
+Client/*.csproj
+Client/*.sln
+Client/UserSettings
+Client/Library
+Client/Logs
+Client/obj
