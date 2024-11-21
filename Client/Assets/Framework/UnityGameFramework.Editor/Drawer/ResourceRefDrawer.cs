@@ -1,16 +1,14 @@
-﻿using System;
-using Framework.UnityGameFramework;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 using UnityGameFramework.Runtime;
 using Object = UnityEngine.Object;
 
 namespace UnityGameFramework.Editor
 {
-    [CustomPropertyDrawer(typeof(ResourceRef))]
+    [CustomPropertyDrawer(typeof(AssetRef))]
     public class ResourceRefDrawer : PropertyDrawer
     {
-        private SerializedProperty m_ResourcePathProperty;
+        private SerializedProperty m_AssetPathProperty;
         private SerializedProperty m_GuidProperty;
         private System.Type m_ResourceType;
         private string m_CacheAssetPath;
@@ -33,7 +31,7 @@ namespace UnityGameFramework.Editor
 
             // 绘制原始资源路径
             rect = new Rect(position.x, rect.y + rect.height + PADDING, position.width, LINE_HEIGHT);
-            EditorGUI.LabelField(rect, new GUIContent($"资源路径: {m_ResourcePathProperty.stringValue}"));
+            EditorGUI.LabelField(rect, new GUIContent($"资源路径: {m_AssetPathProperty.stringValue}"));
 
             #region [绘制引用资源]
 
@@ -46,12 +44,12 @@ namespace UnityGameFramework.Editor
                 {
                     // 清空引用
                     m_GuidProperty.stringValue = string.Empty;
-                    m_ResourcePathProperty.stringValue = string.Empty;
+                    m_AssetPathProperty.stringValue = string.Empty;
                 }
                 else
                 {
-                    m_ResourcePathProperty.stringValue = AssetDatabase.GetAssetPath(asset);
-                    m_GuidProperty.stringValue = AssetDatabase.AssetPathToGUID(m_ResourcePathProperty.stringValue);
+                    m_AssetPathProperty.stringValue = AssetDatabase.GetAssetPath(asset);
+                    m_GuidProperty.stringValue = AssetDatabase.AssetPathToGUID(m_AssetPathProperty.stringValue);
                 }
             }
 
@@ -72,9 +70,9 @@ namespace UnityGameFramework.Editor
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            m_ResourcePathProperty = property.FindPropertyRelative("m_ResourcePath");
+            m_AssetPathProperty = property.FindPropertyRelative("m_AssetPath");
             m_GuidProperty = property.FindPropertyRelative("m_Guid");
-            m_ResourceType = property.boxedValue is ResourceRef referenceRef ? referenceRef.ResourceType : typeof(Object);
+            m_ResourceType = property.boxedValue is AssetRef referenceRef ? referenceRef.ResourceType : typeof(Object);
 
             var guid = m_GuidProperty.stringValue;
             (m_CacheAssetPath, m_CacheObject) = AssetDatabaseUtility.LoadAssetWithGUID(guid, m_ResourceType);
@@ -89,7 +87,7 @@ namespace UnityGameFramework.Editor
                 m_HelpText = string.Empty;
                 m_HelpMessageType = MessageType.None;
 
-                m_ResourcePathProperty.stringValue = m_CacheAssetPath;
+                m_AssetPathProperty.stringValue = m_CacheAssetPath;
             }
             else
             {
@@ -101,7 +99,7 @@ namespace UnityGameFramework.Editor
         }
     }
 
-    [CustomPropertyDrawer(typeof(HotfixConfigurationResourceRef))]
+    [CustomPropertyDrawer(typeof(HotfixConfigurationAssetRef))]
     public class HotfixConfigurationResourceRefDrawer : ResourceRefDrawer
     {
     }
