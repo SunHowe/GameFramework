@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameLogic.Mono
+namespace GameMono
 {
     /// <summary>
     /// 游戏入口

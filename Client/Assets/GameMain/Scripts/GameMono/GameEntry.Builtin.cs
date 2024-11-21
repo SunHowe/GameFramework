@@ -1,6 +1,6 @@
 ﻿using UnityGameFramework.Runtime;
 
-namespace GameLogic.Mono
+namespace GameMono
 {
     public partial class GameEntry
     {

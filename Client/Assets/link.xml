@@ -2,6 +2,6 @@
 <linker>
   <assembly fullname="GameFramework" preserve="all" />
   <assembly fullname="UnityGameFramework.Runtime" preserve="all" />
-  <assembly fullname="GameLogic.Mono" preserve="all" />
-  <assembly fullname="GameLogic.Hotfix" preserve="all" />
+  <assembly fullname="GameMono" preserve="all" />
+  <assembly fullname="GameLogic" preserve="all" />
 </linker>
