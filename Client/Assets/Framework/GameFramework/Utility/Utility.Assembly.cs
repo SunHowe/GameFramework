@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GameFramework
 {
@@ -17,19 +18,28 @@ namespace GameFramework
         /// </summary>
         public static class Assembly
         {
-            private static readonly System.Reflection.Assembly[] s_Assemblies = null;
+            private static readonly HashSet<System.Reflection.Assembly> s_Assemblies = null;
             private static readonly Dictionary<string, Type> s_CachedTypes = new Dictionary<string, Type>(StringComparer.Ordinal);
 
             static Assembly()
             {
-                s_Assemblies = AppDomain.CurrentDomain.GetAssemblies();
+                s_Assemblies = AppDomain.CurrentDomain.GetAssemblies().ToHashSet();
+            }
+
+            /// <summary>
+            /// 添加程序集实例 用于动态加载的程序集
+            /// </summary>
+            /// <param name="assembly">程序集实例</param>
+            public static void Add(System.Reflection.Assembly assembly)
+            {
+                s_Assemblies.Add(assembly);
             }
 
             /// <summary>
             /// 获取已加载的程序集。
             /// </summary>
             /// <returns>已加载的程序集。</returns>
-            public static System.Reflection.Assembly[] GetAssemblies()
+            public static HashSet<System.Reflection.Assembly> GetAssemblies()
             {
                 return s_Assemblies;
             }
