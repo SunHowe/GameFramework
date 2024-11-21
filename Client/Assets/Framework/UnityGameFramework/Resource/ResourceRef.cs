@@ -15,20 +15,6 @@ namespace UnityGameFramework.Runtime
         [SerializeField]
         private string m_Guid;
 
-#if UNITY_EDITOR
-        public void FixResourcePath()
-        {
-            var assetPath = UnityEditor.AssetDatabase.GUIDToAssetPath(m_Guid);
-            if (string.IsNullOrEmpty(assetPath))
-            {
-                UnityEngine.Debug.LogError($"Resource path is invalid. Previous resource path is {m_ResourcePath}, guid is {m_Guid}.");
-                return;
-            }
-            
-            m_ResourcePath = assetPath;
-        }
-#endif
-
         /// <summary>
         /// 资源路径
         /// </summary>
