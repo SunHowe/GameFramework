@@ -6,7 +6,7 @@ using Object = UnityEngine.Object;
 namespace UnityGameFramework.Editor
 {
     [CustomPropertyDrawer(typeof(AssetRef))]
-    public class ResourceRefDrawer : PropertyDrawer
+    public class AssetRefDrawer : PropertyDrawer
     {
         private SerializedProperty m_AssetPathProperty;
         private SerializedProperty m_GuidProperty;
@@ -100,7 +100,7 @@ namespace UnityGameFramework.Editor
     }
 
     [CustomPropertyDrawer(typeof(HotfixConfigurationAssetRef))]
-    public class HotfixConfigurationResourceRefDrawer : ResourceRefDrawer
+    public class HotfixConfigurationAssetRefDrawer : AssetRefDrawer
     {
     }
 }
