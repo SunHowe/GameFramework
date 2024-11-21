@@ -19,11 +19,26 @@ namespace UnityGameFramework.Editor
         private MessageType m_HelpMessageType;
 
         private const float ERROR_BOX_HEIGHT = 32f;
+        private const float LINE_HEIGHT = 16f;
+        private const float PADDING = 4f;
+        private const float BASIC_HEIGHT = LINE_HEIGHT * 3 + PADDING * 2;
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var rect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
-            var asset = EditorGUI.ObjectField(rect, label, m_CacheObject, m_ResourceType, false);
+            // 绘制字段标题
+            var rect = new Rect(position.x, position.y, position.width, LINE_HEIGHT);
+            EditorGUI.LabelField(rect, label);
+
+            using var _ = GameFrameworkEditorGUIUtility.MakeIndentLevelChangedScope(1);
+
+            // 绘制原始资源路径
+            rect = new Rect(position.x, rect.y + rect.height + PADDING, position.width, LINE_HEIGHT);
+            EditorGUI.LabelField(rect, new GUIContent($"资源路径: {m_ResourcePathProperty.stringValue}"));
+
+            #region [绘制引用资源]
+
+            rect = new Rect(position.x, rect.y + rect.height + PADDING, position.width, LINE_HEIGHT);
+            var asset = EditorGUI.ObjectField(rect, m_CacheObject, m_ResourceType, false);
 
             if (asset != m_CacheObject)
             {
@@ -40,13 +55,19 @@ namespace UnityGameFramework.Editor
                 }
             }
 
+            #endregion
+
+            #region [绘制提示框]
+
             if (m_HelpMessageType == MessageType.None)
             {
                 return;
             }
-            
-            rect = new Rect(position.x, position.y + EditorGUIUtility.singleLineHeight, position.width, ERROR_BOX_HEIGHT);
+
+            rect = new Rect(position.x, rect.y + rect.height + PADDING, position.width, ERROR_BOX_HEIGHT);
             EditorGUI.HelpBox(rect, m_HelpText, m_HelpMessageType);
+
+            #endregion
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
@@ -72,11 +93,11 @@ namespace UnityGameFramework.Editor
             }
             else
             {
-                m_HelpText = $"资源引用丢失, 原资源路径: {m_ResourcePathProperty.stringValue}";
+                m_HelpText = $"资源引用丢失";
                 m_HelpMessageType = MessageType.Error;
             }
 
-            return m_HelpMessageType != MessageType.None ? ERROR_BOX_HEIGHT + EditorGUIUtility.singleLineHeight : EditorGUIUtility.singleLineHeight;
+            return m_HelpMessageType != MessageType.None ? ERROR_BOX_HEIGHT + PADDING + BASIC_HEIGHT : BASIC_HEIGHT;
         }
     }
 
