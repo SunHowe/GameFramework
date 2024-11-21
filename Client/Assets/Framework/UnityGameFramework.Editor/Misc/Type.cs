@@ -5,6 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
+using System;
 using GameFramework;
 using System.Collections.Generic;
 using System.Reflection;
@@ -20,12 +21,14 @@ namespace UnityGameFramework.Editor
         {
             "UnityGameFramework.Runtime",
             "GameMono",
+            "GameLogic",
         };
 
         private static readonly string[] RuntimeOrEditorAssemblyNames =
         {
             "UnityGameFramework.Runtime",
             "GameMono",
+            "GameLogic",
             "UnityGameFramework.Editor",
         };
 
@@ -81,6 +84,50 @@ namespace UnityGameFramework.Editor
         internal static string[] GetRuntimeOrEditorTypeNames(System.Type typeBase)
         {
             return GetTypeNames(typeBase, RuntimeOrEditorAssemblyNames);
+        }
+
+        /// <summary>
+        /// 在运行时程序集中获取指定基类的所有子类。
+        /// </summary>
+        /// <param name="typeBase">基类类型。</param>
+        /// <returns>指定基类的所有子类。</returns>
+        internal static System.Type[] GetRuntimeTypes(System.Type typeBase)
+        {
+            return GetTypeDict(typeBase, RuntimeAssemblyNames);
+        }
+
+        private static System.Type[] GetTypeDict(System.Type typeBase, string[] assemblyNames)
+        {
+            List<System.Type> matchTypes = new List<System.Type>();
+            foreach (string assemblyName in assemblyNames)
+            {
+                Assembly assembly = null;
+                try
+                {
+                    assembly = Assembly.Load(assemblyName);
+                }
+                catch
+                {
+                    continue;
+                }
+
+                if (assembly == null)
+                {
+                    continue;
+                }
+
+                System.Type[] types = assembly.GetTypes();
+                foreach (System.Type type in types)
+                {
+                    if (type.IsClass && !type.IsAbstract && typeBase.IsAssignableFrom(type))
+                    {
+                        matchTypes.Add(type);
+                    }
+                }
+            }
+
+            matchTypes.Sort((t1, t2) => string.Compare(t1.FullName, t2.FullName, StringComparison.Ordinal));
+            return matchTypes.ToArray();
         }
 
         private static string[] GetTypeNames(System.Type typeBase, string[] assemblyNames)

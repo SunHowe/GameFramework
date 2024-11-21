@@ -49,7 +49,7 @@ namespace UnityGameFramework.Runtime
 
         private List<AssemblyInfo> m_HotfixAssemblies;
         private byte[][] m_HotfixAssemblyBytes;
-        private string m_HotfixAppTypeName;
+        private HotfixAppTypeRef m_HotfixAppType;
 
         /// <summary>
         /// 已加载的热更新程序集信息
@@ -136,7 +136,7 @@ namespace UnityGameFramework.Runtime
         {
             var configuration = (HotfixConfiguration)asset;
 
-            m_HotfixAppTypeName = configuration.HotfixAppTypeName;
+            m_HotfixAppType = configuration.HotfixAppType;
             m_HotfixAssemblies = configuration.HotfixAssemblies.ToList();
 
             // 归还资源
@@ -217,7 +217,7 @@ namespace UnityGameFramework.Runtime
             // 清空数据
             m_HotfixAssemblies = null;
             m_HotfixAssemblyBytes = null;
-            m_HotfixAppTypeName = null;
+            m_HotfixAppType = null;
 
             SetCurrentStep(HotfixLoadStep.None);
 
@@ -306,8 +306,11 @@ namespace UnityGameFramework.Runtime
             
             try
             {
-                var appType = Utility.Assembly.GetType(m_HotfixAppTypeName);
+                Log.Info(m_HotfixAppType);
+                var appType = m_HotfixAppType.GetRuntimeType();
+                Log.Info(appType);
                 HotfixApp = (HotfixAppBase)Activator.CreateInstance(appType);
+                Log.Info(HotfixApp);
                 HotfixApp.Awake();
             }
             catch (Exception e)
@@ -318,7 +321,7 @@ namespace UnityGameFramework.Runtime
             // 清空数据
             m_HotfixAssemblies = null;
             m_HotfixAssemblyBytes = null;
-            m_HotfixAppTypeName = null;
+            m_HotfixAppType = null;
 
             if (!string.IsNullOrEmpty(errorMessage))
             {

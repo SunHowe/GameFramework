@@ -12,5 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb84cc0816f04d1885324edcaa05d31c, type: 3}
   m_Name: HotfixConfiguration
   m_EditorClassIdentifier: 
-  m_HotfixAssemblies: []
-  m_HotfixAppTypeName: 
+  m_HotfixAssemblies:
+  - Name: GameLogic
+    Version: 
+    Guid: 303582c4528d03b4ab55bc58bac61d58
+  m_HotfixAppType:
+    m_FullName: GameLogic.HotfixApp
+    m_AssemblyName: GameLogic, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null

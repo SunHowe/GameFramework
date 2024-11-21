@@ -1,4 +1,5 @@
-﻿using GameFramework.Procedure;
+﻿using GameFramework.Fsm;
+using GameFramework.Procedure;
 
 namespace GameMono
 {
@@ -7,5 +8,10 @@ namespace GameMono
     /// </summary>
     public class LaunchGameLogicProcedure : ProcedureBase
     {
+        protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
+        {
+            base.OnEnter(procedureOwner);
+            GameEntry.Hotfix.LoadHotfix();
+        }
     }
 }

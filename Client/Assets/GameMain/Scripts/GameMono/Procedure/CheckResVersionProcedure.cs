@@ -1,4 +1,5 @@
-﻿using GameFramework.Procedure;
+﻿using GameFramework.Fsm;
+using GameFramework.Procedure;
 
 namespace GameMono
 {
@@ -7,5 +8,10 @@ namespace GameMono
     /// </summary>
     public class CheckResVersionProcedure : ProcedureBase
     {
+        protected override void OnUpdate(IFsm<IProcedureManager> procedureOwner, float elapseSeconds, float realElapseSeconds)
+        {
+            base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
+            ChangeState<LaunchGameLogicProcedure>(procedureOwner);
+        }
     }
 }

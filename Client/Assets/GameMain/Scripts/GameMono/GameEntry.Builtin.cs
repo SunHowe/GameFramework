@@ -103,6 +103,11 @@ namespace GameMono
         /// 获取网络组件。
         /// </summary>
         public static WebRequestComponent WebRequest { get; private set; }
+        
+        /// <summary>
+        /// 热更新组件。
+        /// </summary>
+        public static HotfixComponent Hotfix { get; private set; }
 
         private static void InitBuiltinComponents()
         {
@@ -126,6 +131,7 @@ namespace GameMono
             Sound = UnityGameFramework.Runtime.GameEntry.GetComponent<SoundComponent>();
             UI = UnityGameFramework.Runtime.GameEntry.GetComponent<UIComponent>();
             WebRequest = UnityGameFramework.Runtime.GameEntry.GetComponent<WebRequestComponent>();
+            Hotfix = UnityGameFramework.Runtime.GameEntry.GetComponent<HotfixComponent>();
         }
     }
 }
