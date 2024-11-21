@@ -255,6 +255,30 @@ PrefabInstance:
       propertyPath: m_CompressionHelperTypeName
       value: UnityGameFramework.Runtime.DefaultCompressionHelper
       objectReference: {fileID: 0}
+    - target: {fileID: 1972724105296522838, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_HotfixHelperTypeName
+      value: UnityGameFramework.Runtime.DefaultHotfixHelper
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972724105296522838, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_HotfixAssetHelperTypeName
+      value: UnityGameFramework.Runtime.DefaultHotfixAssetHelper
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972724105296522838, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_HotfixConfigAssetRef.m_Guid
+      value: 13102bc81fb2548479d68032f07959a1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972724105296522838, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_HotfixConfigResourceRef.m_Guid
+      value: 13102bc81fb2548479d68032f07959a1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972724105296522838, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_HotfixConfigAssetRef.m_AssetPath
+      value: Assets/Framework/HotfixConfiguration.asset
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972724105296522838, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_HotfixConfigResourceRef.m_ResourcePath
+      value: Assets/Framework/HotfixConfiguration.asset
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

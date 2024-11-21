@@ -4,46 +4,40 @@ using GameFramework.Event;
 namespace UnityGameFramework.Runtime
 {
     /// <summary>
-    /// 热更新加载失败事件。
+    /// 热更新加载阶段变更事件。
     /// </summary>
-    public sealed class HotfixLoadFailureEventArgs : GameEventArgs
+    public sealed class HotfixLoadStepChangedEventArgs : GameEventArgs
     {
         /// <summary>
         /// 事件编号。
         /// </summary>
-        public static readonly int EventId = typeof(HotfixLoadFailureEventArgs).GetHashCode();
+        public static readonly int EventId = typeof(HotfixLoadStepChangedEventArgs).GetHashCode();
 
         /// <summary>
         /// 获取事件编号。
         /// </summary>
         public override int Id => EventId;
-
-        /// <summary>
-        /// 发生失败的阶段
-        /// </summary>
-        public HotfixLoadStep LoadStep { get; set; }
         
         /// <summary>
-        /// 错误信息描述
+        /// 当前加载阶段
         /// </summary>
-        public string ErrorMessage { get; set; }
+        public HotfixLoadStep LoadStep { get; set; }
 
         /// <summary>
         /// 初始化事件新实例。
         /// </summary>
-        public HotfixLoadFailureEventArgs()
+        public HotfixLoadStepChangedEventArgs()
         {
-            Clear();
+            LoadStep = HotfixLoadStep.None;
         }
 
         /// <summary>
         /// 创建事件。
         /// </summary>
-        public static HotfixLoadFailureEventArgs Create(HotfixLoadStep step, string errorMessage)
+        public static HotfixLoadStepChangedEventArgs Create(HotfixLoadStep step)
         {
-            var eventArgs = ReferencePool.Acquire<HotfixLoadFailureEventArgs>();
+            var eventArgs = ReferencePool.Acquire<HotfixLoadStepChangedEventArgs>();
             eventArgs.LoadStep = step;
-            eventArgs.ErrorMessage = errorMessage;
             return eventArgs;
         }
 
@@ -53,7 +47,6 @@ namespace UnityGameFramework.Runtime
         public override void Clear()
         {
             LoadStep = HotfixLoadStep.None;
-            ErrorMessage = null;
         }
     }
 }

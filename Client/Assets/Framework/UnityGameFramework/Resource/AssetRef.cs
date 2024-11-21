@@ -53,11 +53,29 @@ namespace UnityGameFramework.Runtime
         {
             if (string.IsNullOrEmpty(m_AssetPath))
             {
-                loadAssetCallbacks.LoadAssetFailureCallback?.Invoke(string.Empty, LoadResourceStatus.NotExist, "AssetPath is invalid.", this);
+                loadAssetCallbacks.LoadAssetFailureCallback?.Invoke(string.Empty, LoadResourceStatus.NotExist, "AssetPath is invalid.", null);
                 return;
             }
 
             component.LoadAsset(AssetPath, ResourceType, priority, loadAssetCallbacks);
+        }
+
+        /// <summary>
+        /// 加载资源
+        /// </summary>
+        /// <param name="component">资源组件引用。</param>
+        /// <param name="priority">加载资源的优先级。</param>
+        /// <param name="loadAssetCallbacks">加载资源回调函数集。</param>
+        /// <param name="userdata">用户自定义数据。</param>
+        public void LoadAsset(ResourceComponent component, int priority, LoadAssetCallbacks loadAssetCallbacks, object userdata)
+        {
+            if (string.IsNullOrEmpty(m_AssetPath))
+            {
+                loadAssetCallbacks.LoadAssetFailureCallback?.Invoke(string.Empty, LoadResourceStatus.NotExist, "AssetPath is invalid.", userdata);
+                return;
+            }
+
+            component.LoadAsset(AssetPath, ResourceType, priority, loadAssetCallbacks, userdata);
         }
     }
 
