@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace UnityGameFramework.Runtime
 {
-    public sealed partial class DebuggerComponent : GameFrameworkComponent
+    public sealed partial class DebuggerComponent
     {
         [Serializable]
         private sealed class ConsoleWindow : IDebuggerWindow

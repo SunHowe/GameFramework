@@ -18,7 +18,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Base")]
-    public sealed class BaseComponent : GameFrameworkComponent
+    public sealed class BaseComponent : GameFrameworkComponent<BaseComponent>
     {
         private const int DefaultDpi = 96;  // default windows dpi
 

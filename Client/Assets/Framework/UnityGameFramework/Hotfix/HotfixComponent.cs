@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using GameFramework;
 using GameFramework.Resource;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -10,7 +9,7 @@ namespace UnityGameFramework.Runtime
 {
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Hotfix")]
-    public sealed class HotfixComponent : GameFrameworkComponent
+    public sealed class HotfixComponent : GameFrameworkComponent<HotfixComponent>
     {
         [SerializeField]
         private HotfixConfigurationAssetRef m_HotfixConfigAssetRef = null;

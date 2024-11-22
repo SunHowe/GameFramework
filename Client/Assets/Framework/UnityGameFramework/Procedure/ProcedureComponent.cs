@@ -19,7 +19,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Procedure")]
-    public sealed class ProcedureComponent : GameFrameworkComponent
+    public sealed class ProcedureComponent : GameFrameworkComponent<ProcedureComponent>
     {
         private IProcedureManager m_ProcedureManager = null;
         private ProcedureBase m_EntranceProcedure = null;

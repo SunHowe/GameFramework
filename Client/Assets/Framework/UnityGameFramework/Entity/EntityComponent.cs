@@ -20,7 +20,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Entity")]
-    public sealed partial class EntityComponent : GameFrameworkComponent
+    public sealed partial class EntityComponent : GameFrameworkComponent<EntityComponent>
     {
         private const int DefaultPriority = 0;
 

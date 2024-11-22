@@ -17,7 +17,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Event")]
-    public sealed class EventComponent : GameFrameworkComponent
+    public sealed class EventComponent : GameFrameworkComponent<EventComponent>
     {
         private IEventManager m_EventManager = null;
 

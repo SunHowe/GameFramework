@@ -23,7 +23,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Sound")]
-    public sealed partial class SoundComponent : GameFrameworkComponent
+    public sealed partial class SoundComponent : GameFrameworkComponent<SoundComponent>
     {
         private const int DefaultPriority = 0;
 

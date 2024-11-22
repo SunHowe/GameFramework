@@ -17,7 +17,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Web Request")]
-    public sealed class WebRequestComponent : GameFrameworkComponent
+    public sealed class WebRequestComponent : GameFrameworkComponent<WebRequestComponent>
     {
         private const int DefaultPriority = 0;
 

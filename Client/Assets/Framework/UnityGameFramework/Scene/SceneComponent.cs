@@ -20,7 +20,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Scene")]
-    public sealed class SceneComponent : GameFrameworkComponent
+    public sealed class SceneComponent : GameFrameworkComponent<SceneComponent>
     {
         private const int DefaultPriority = 0;
 

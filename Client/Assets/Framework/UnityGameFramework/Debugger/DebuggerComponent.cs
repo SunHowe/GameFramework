@@ -17,7 +17,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Debugger")]
-    public sealed partial class DebuggerComponent : GameFrameworkComponent
+    public sealed partial class DebuggerComponent : GameFrameworkComponent<DebuggerComponent>
     {
         /// <summary>
         /// 默认调试器漂浮框大小。
@@ -170,14 +170,14 @@ namespace UnityGameFramework.Runtime
         protected override void Awake()
         {
             base.Awake();
-
+        
             m_DebuggerManager = GameFrameworkEntry.GetModule<IDebuggerManager>();
             if (m_DebuggerManager == null)
             {
                 Log.Fatal("Debugger manager is invalid.");
                 return;
             }
-
+        
             m_FpsCounter = new FpsCounter(0.5f);
         }
 

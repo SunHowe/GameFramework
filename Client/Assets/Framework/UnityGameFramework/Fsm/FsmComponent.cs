@@ -18,7 +18,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/FSM")]
-    public sealed class FsmComponent : GameFrameworkComponent
+    public sealed class FsmComponent : GameFrameworkComponent<FsmComponent>
     {
         private IFsmManager m_FsmManager = null;
 

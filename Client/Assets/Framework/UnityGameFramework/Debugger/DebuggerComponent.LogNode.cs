@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace UnityGameFramework.Runtime
 {
-    public sealed partial class DebuggerComponent : GameFrameworkComponent
+    public sealed partial class DebuggerComponent
     {
         /// <summary>
         /// 日志记录结点。

@@ -18,7 +18,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Setting")]
-    public sealed class SettingComponent : GameFrameworkComponent
+    public sealed class SettingComponent : GameFrameworkComponent<SettingComponent>
     {
         private ISettingManager m_SettingManager = null;
 

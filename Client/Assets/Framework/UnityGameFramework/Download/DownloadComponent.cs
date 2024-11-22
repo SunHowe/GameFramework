@@ -17,7 +17,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Download")]
-    public sealed class DownloadComponent : GameFrameworkComponent
+    public sealed class DownloadComponent : GameFrameworkComponent<DownloadComponent>
     {
         private const int DefaultPriority = 0;
         private const int OneMegaBytes = 1024 * 1024;

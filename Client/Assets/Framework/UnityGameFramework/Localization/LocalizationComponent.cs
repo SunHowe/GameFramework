@@ -17,7 +17,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Localization")]
-    public sealed class LocalizationComponent : GameFrameworkComponent
+    public sealed class LocalizationComponent : GameFrameworkComponent<LocalizationComponent>
     {
         private const int DefaultPriority = 0;
 

@@ -21,7 +21,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Resource")]
-    public sealed partial class ResourceComponent : GameFrameworkComponent
+    public sealed partial class ResourceComponent : GameFrameworkComponent<ResourceComponent>
     {
         private const int DefaultPriority = 0;
         private const int OneMegaBytes = 1024 * 1024;

@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace UnityGameFramework.Runtime
 {
-    public sealed partial class UIComponent : GameFrameworkComponent
+    public sealed partial class UIComponent
     {
         [Serializable]
         private sealed class UIGroup

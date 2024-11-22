@@ -17,7 +17,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Config")]
-    public sealed class ConfigComponent : GameFrameworkComponent
+    public sealed class ConfigComponent : GameFrameworkComponent<ConfigComponent>
     {
         private const int DefaultPriority = 0;
 

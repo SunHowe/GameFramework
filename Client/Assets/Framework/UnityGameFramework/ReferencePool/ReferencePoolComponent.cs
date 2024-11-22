@@ -15,7 +15,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/ReferencePool")]
-    public sealed class ReferencePoolComponent : GameFrameworkComponent
+    public sealed class ReferencePoolComponent : GameFrameworkComponent<ReferencePoolComponent>
     {
         [SerializeField]
         private ReferenceStrictCheckType m_EnableStrictCheck = ReferenceStrictCheckType.AlwaysEnable;

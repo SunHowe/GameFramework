@@ -18,7 +18,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Object Pool")]
-    public sealed class ObjectPoolComponent : GameFrameworkComponent
+    public sealed class ObjectPoolComponent : GameFrameworkComponent<ObjectPoolComponent>
     {
         private IObjectPoolManager m_ObjectPoolManager = null;
 

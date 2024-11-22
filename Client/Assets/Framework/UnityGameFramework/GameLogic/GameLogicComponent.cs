@@ -1,11 +1,14 @@
 ﻿using GameFramework;
+using UnityEngine;
 
 namespace UnityGameFramework.Runtime
 {
     /// <summary>
     /// 游戏逻辑托管组件，用于统一管理游戏逻辑实例的生命周期。
     /// </summary>
-    public class GameLogicComponent : GameFrameworkComponent
+    [DisallowMultipleComponent]
+    [AddComponentMenu("Game Framework/GameLogic")]
+    public class GameLogicComponent : GameFrameworkComponent<GameLogicComponent>
     {
         /// <summary>
         /// 是否已经销毁。

@@ -16,7 +16,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Data Node")]
-    public sealed class DataNodeComponent : GameFrameworkComponent
+    public sealed class DataNodeComponent : GameFrameworkComponent<DataNodeComponent>
     {
         private IDataNodeManager m_DataNodeManager = null;
 
