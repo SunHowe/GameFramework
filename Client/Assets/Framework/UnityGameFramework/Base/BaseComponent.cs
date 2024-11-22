@@ -239,8 +239,9 @@ namespace UnityGameFramework.Runtime
             StopAllCoroutines();
         }
 
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
+            base.OnDestroy();
             GameFrameworkEntry.Shutdown();
         }
 

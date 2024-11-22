@@ -42,7 +42,7 @@ namespace UnityGameFramework.Runtime
             base.Awake();
         }
 
-        protected void OnDestroy()
+        protected virtual void OnDestroy()
         {
             Instance = null;
         }

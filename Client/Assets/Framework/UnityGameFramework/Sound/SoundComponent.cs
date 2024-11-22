@@ -189,8 +189,9 @@ namespace UnityGameFramework.Runtime
             }
         }
 
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
+            base.OnDestroy();
 #if UNITY_5_4_OR_NEWER
             SceneManager.sceneLoaded -= OnSceneLoaded;
             SceneManager.sceneUnloaded -= OnSceneUnloaded;
