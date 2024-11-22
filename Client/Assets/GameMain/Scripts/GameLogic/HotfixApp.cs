@@ -1,4 +1,5 @@
-﻿using UnityGameFramework.Runtime;
+﻿using Cysharp.Threading.Tasks;
+using UnityGameFramework.Runtime;
 
 namespace GameLogic
 {
@@ -9,6 +10,15 @@ namespace GameLogic
     {
         protected override void OnAwake()
         {
+            GameLogicComponent.Instance.AddGameLogic<DataTableModule>();
+
+            DataTableModule.Instance.LoadAsync().ContinueWith(() =>
+            {
+                foreach (var item in DataTableModule.Instance.TbItem.DataList)
+                {
+                    Log.Info(item.ToString());
+                }
+            }).Forget();
         }
 
         protected override void OnShutdown()
