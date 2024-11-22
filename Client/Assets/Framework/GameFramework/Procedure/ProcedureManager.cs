@@ -108,6 +108,9 @@ namespace GameFramework.Procedure
             {
                 throw new GameFrameworkException("FSM manager is invalid.");
             }
+            
+            // 启动前触发一次Shutdown 以支持多次初始化流程状态机的功能
+            Shutdown();
 
             m_FsmManager = fsmManager;
             m_ProcedureFsm = m_FsmManager.CreateFsm(this, procedures);

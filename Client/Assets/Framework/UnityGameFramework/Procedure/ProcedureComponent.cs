@@ -67,7 +67,7 @@ namespace UnityGameFramework.Runtime
             }
         }
 
-        private IEnumerator Start()
+        private void Start()
         {
             ProcedureBase[] procedures = new ProcedureBase[m_AvailableProcedureTypeNames.Length];
             for (int i = 0; i < m_AvailableProcedureTypeNames.Length; i++)
@@ -76,14 +76,14 @@ namespace UnityGameFramework.Runtime
                 if (procedureType == null)
                 {
                     Log.Error("Can not find procedure type '{0}'.", m_AvailableProcedureTypeNames[i]);
-                    yield break;
+                    return;
                 }
 
                 procedures[i] = (ProcedureBase)Activator.CreateInstance(procedureType);
                 if (procedures[i] == null)
                 {
                     Log.Error("Can not create procedure instance '{0}'.", m_AvailableProcedureTypeNames[i]);
-                    yield break;
+                    return;
                 }
 
                 if (m_EntranceProcedureTypeName == m_AvailableProcedureTypeNames[i])
@@ -92,17 +92,30 @@ namespace UnityGameFramework.Runtime
                 }
             }
 
-            if (m_EntranceProcedure == null)
+            StartProcedure(procedures, m_EntranceProcedure);
+        }
+
+        /// <summary>
+        /// 启动流程模块
+        /// </summary>
+        public void StartProcedure(ProcedureBase[] procedures, ProcedureBase entranceProcedure)
+        {
+            StartCoroutine(StartProcedureInner(procedures, entranceProcedure));
+        }
+
+        private IEnumerator StartProcedureInner(ProcedureBase[] procedures, ProcedureBase entranceProcedure)
+        {
+            if (entranceProcedure == null)
             {
-                Log.Error("Entrance procedure is invalid.");
+                Log.Fatal("Entrance procedure is invalid.");
                 yield break;
             }
-
+            
             m_ProcedureManager.Initialize(GameFrameworkEntry.GetModule<IFsmManager>(), procedures);
-
+            
             yield return new WaitForEndOfFrame();
-
-            m_ProcedureManager.StartProcedure(m_EntranceProcedure.GetType());
+            
+            m_ProcedureManager.StartProcedure(entranceProcedure.GetType());
         }
 
         /// <summary>

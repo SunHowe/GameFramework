@@ -6,7 +6,7 @@ namespace GameMono
     /// <summary>
     /// 检查应用版本流程
     /// </summary>
-    public class CheckAppVersionProcedure : ProcedureBase
+    internal class CheckAppVersionProcedure : ProcedureBase
     {
         protected override void OnUpdate(IFsm<IProcedureManager> procedureOwner, float elapseSeconds, float realElapseSeconds)
         {

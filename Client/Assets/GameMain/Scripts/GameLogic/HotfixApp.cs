@@ -1,4 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using GameFramework.Procedure;
 using UnityGameFramework.Runtime;
 
 namespace GameLogic
@@ -10,15 +10,17 @@ namespace GameLogic
     {
         protected override void OnAwake()
         {
-            GameLogicComponent.Instance.AddGameLogic<DataTableModule>();
-
-            DataTableModule.Instance.LoadAsync().ContinueWith(() =>
+            // 重新载入流程状态机
+            var entranceProcedure = new LaunchProcedure();
+            var procedures = new ProcedureBase[]
             {
-                foreach (var item in DataTableModule.Instance.TbItem.DataList)
-                {
-                    Log.Info(item.ToString());
-                }
-            }).Forget();
+                entranceProcedure,
+                new LoadDataTableProcedure(),
+                new LoginProcedure(),
+                new LobbyProcedure(),
+            };
+            
+            ProcedureComponent.Instance.StartProcedure(procedures, entranceProcedure);
         }
 
         protected override void OnShutdown()

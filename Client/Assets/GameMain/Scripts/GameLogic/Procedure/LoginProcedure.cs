@@ -2,17 +2,17 @@
 using GameFramework.Procedure;
 using UnityGameFramework.Runtime;
 
-namespace GameMono
+namespace GameLogic
 {
     /// <summary>
-    /// 启动游戏逻辑流程
+    /// 登录流程
     /// </summary>
-    internal class LaunchGameLogicProcedure : ProcedureBase
+    internal sealed class LoginProcedure : ProcedureBase
     {
         protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
         {
             base.OnEnter(procedureOwner);
-            HotfixComponent.Instance.LoadHotfix();
+            Log.Info("LoginProcedure OnEnter, Close Launch UI");
         }
     }
 }
