@@ -33,14 +33,10 @@ namespace UnityGameFramework.Runtime
 
         [SerializeField]
         private bool m_EnableLoadAssemblyFailureEvent;
-        
-        /// <summary>
-        /// 热更新逻辑入口
-        /// </summary>
-        public HotfixAppBase HotfixApp { get; private set; }
 
         private EventComponent m_EventComponent = null;
         private ResourceComponent m_ResourceComponent = null;
+        private GameLogicComponent m_GameLogicComponent = null;
 
         private LoadAssetCallbacks m_LoadHotfixConfigCallbacks;
         private LoadBinaryCallbacks m_LoadAssemblyFileCallbacks;
@@ -75,6 +71,13 @@ namespace UnityGameFramework.Runtime
             if (m_ResourceComponent == null)
             {
                 Log.Fatal("Resource component is invalid.");
+                return;
+            }
+            
+            m_GameLogicComponent = GameEntry.GetComponent<GameLogicComponent>();
+            if (m_GameLogicComponent == null)
+            {
+                Log.Fatal("GameLogic component is invalid.");
                 return;
             }
 
@@ -306,12 +309,13 @@ namespace UnityGameFramework.Runtime
             
             try
             {
-                Log.Info(m_HotfixAppType);
                 var appType = m_HotfixAppType.GetRuntimeType();
-                Log.Info(appType);
-                HotfixApp = (HotfixAppBase)Activator.CreateInstance(appType);
-                Log.Info(HotfixApp);
-                HotfixApp.Awake();
+                
+                // 创建热更新应用实例
+                var hotfixApp = (HotfixAppBase)Activator.CreateInstance(appType);
+                
+                // 将热更新引用实例添加到逻辑模块进行驱动
+                m_GameLogicComponent.AddGameLogic(hotfixApp);
             }
             catch (Exception e)
             {

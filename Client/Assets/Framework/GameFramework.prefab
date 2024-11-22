@@ -293,7 +293,6 @@ Transform:
   m_Children:
   - {fileID: 436184}
   - {fileID: 455962}
-  - {fileID: 465000}
   - {fileID: 404872}
   - {fileID: 472238}
   - {fileID: 449550}
@@ -312,6 +311,7 @@ Transform:
   - {fileID: 430602}
   - {fileID: 450964}
   - {fileID: 2994344119614184352}
+  - {fileID: 5937378777060504965}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11499388
@@ -945,55 +945,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67038fd9feefc894aa31ae3869a45b72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &179612
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 465000}
-  - component: {fileID: 11451924}
-  m_Layer: 0
-  m_Name: Data Table
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &465000
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 179612}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 433714}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &11451924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 179612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54066418ab853614483ea44b531049f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EnableLoadDataTableUpdateEvent: 0
-  m_EnableLoadDataTableDependencyAssetEvent: 0
-  m_DataTableHelperTypeName: UnityGameFramework.Runtime.DefaultDataTableHelper
-  m_CustomDataTableHelper: {fileID: 0}
-  m_CachedBytesSize: 0
 --- !u!1 &180508
 GameObject:
   m_ObjectHideFlags: 0
@@ -1129,6 +1080,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d51a9a1325b84f6cb37d75ee0d8ed043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HotfixConfigResourceRef:
-    m_ResourcePath: 
+  m_HotfixConfigAssetRef:
+    m_AssetPath: 
     m_Guid: 
+  m_HotfixAssetHelperTypeName: UnityGameFramework.Runtime.DefaultHotfixAssetHelper
+  m_CustomHotfixAssetHelper: {fileID: 0}
+  m_EnableLoadCompleteEvent: 0
+  m_EnableLoadFailureEvent: 0
+  m_EnableLoadStepChangedEvent: 0
+  m_EnableLoadAssemblyFailureEvent: 0
+--- !u!1 &4111797595593485217
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5937378777060504965}
+  - component: {fileID: 9104649361192415378}
+  m_Layer: 0
+  m_Name: GameLogic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5937378777060504965
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4111797595593485217}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 433714}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9104649361192415378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4111797595593485217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be7f67761f6f461b904f0544ea16302e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

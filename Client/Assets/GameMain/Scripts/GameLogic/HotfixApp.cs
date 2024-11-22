@@ -7,14 +7,12 @@ namespace GameLogic
     /// </summary>
     public class HotfixApp : HotfixAppBase
     {
-        public override void Awake()
+        protected override void OnAwake()
         {
-            Log.Info("HotfixApp Awake");
         }
 
-        public override void Shutdown()
+        protected override void OnShutdown()
         {
-            Log.Info("HotfixApp Shutdown");
         }
     }
 }

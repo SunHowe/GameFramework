@@ -20,11 +20,6 @@ namespace GameMono
         public static DataNodeComponent DataNode { get; private set; }
 
         /// <summary>
-        /// 获取数据表组件。
-        /// </summary>
-        public static DataTableComponent DataTable { get; private set; }
-
-        /// <summary>
         /// 获取调试组件。
         /// </summary>
         public static DebuggerComponent Debugger { get; private set; }
@@ -105,6 +100,11 @@ namespace GameMono
         public static WebRequestComponent WebRequest { get; private set; }
         
         /// <summary>
+        /// 游戏逻辑管理组件。
+        /// </summary>
+        public static GameLogicComponent GameLogic { get; private set; }
+        
+        /// <summary>
         /// 热更新组件。
         /// </summary>
         public static HotfixComponent Hotfix { get; private set; }
@@ -114,7 +114,6 @@ namespace GameMono
             Base = UnityGameFramework.Runtime.GameEntry.GetComponent<BaseComponent>();
             Config = UnityGameFramework.Runtime.GameEntry.GetComponent<ConfigComponent>();
             DataNode = UnityGameFramework.Runtime.GameEntry.GetComponent<DataNodeComponent>();
-            DataTable = UnityGameFramework.Runtime.GameEntry.GetComponent<DataTableComponent>();
             Debugger = UnityGameFramework.Runtime.GameEntry.GetComponent<DebuggerComponent>();
             Download = UnityGameFramework.Runtime.GameEntry.GetComponent<DownloadComponent>();
             Entity = UnityGameFramework.Runtime.GameEntry.GetComponent<EntityComponent>();
@@ -131,6 +130,7 @@ namespace GameMono
             Sound = UnityGameFramework.Runtime.GameEntry.GetComponent<SoundComponent>();
             UI = UnityGameFramework.Runtime.GameEntry.GetComponent<UIComponent>();
             WebRequest = UnityGameFramework.Runtime.GameEntry.GetComponent<WebRequestComponent>();
+            GameLogic = UnityGameFramework.Runtime.GameEntry.GetComponent<GameLogicComponent>();
             Hotfix = UnityGameFramework.Runtime.GameEntry.GetComponent<HotfixComponent>();
         }
     }
