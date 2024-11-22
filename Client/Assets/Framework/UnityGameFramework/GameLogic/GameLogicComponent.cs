@@ -41,6 +41,16 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
+        /// 添加受托管的游戏逻辑实例。
+        /// </summary>
+        public T AddGameLogic<T>() where T : IGameLogic, new()
+        {
+            var gameLogic = new T();
+            m_GameLogicManager.AddGameLogic(gameLogic);
+            return gameLogic;
+        }
+
+        /// <summary>
         /// 移除受托管的游戏逻辑实例
         /// </summary>
         /// <param name="gameLogic">游戏逻辑实例。</param>
