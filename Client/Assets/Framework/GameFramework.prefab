@@ -312,6 +312,7 @@ Transform:
   - {fileID: 450964}
   - {fileID: 2994344119614184352}
   - {fileID: 5937378777060504965}
+  - {fileID: 1843844919333341263}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11499388
@@ -327,12 +328,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EditorResourceMode: 1
-  m_EditorLanguage: 0
-  m_TextHelperTypeName: 
-  m_VersionHelperTypeName: 
-  m_LogHelperTypeName: 
-  m_CompressionHelperTypeName: 
-  m_JsonHelperTypeName: 
+  m_EditorLanguage: 8
+  m_TextHelperTypeName: UnityGameFramework.Runtime.DefaultTextHelper
+  m_VersionHelperTypeName: UnityGameFramework.Runtime.DefaultVersionHelper
+  m_LogHelperTypeName: UnityGameFramework.Runtime.DefaultLogHelper
+  m_CompressionHelperTypeName: UnityGameFramework.Runtime.DefaultCompressionHelper
+  m_JsonHelperTypeName: UnityGameFramework.Runtime.DefaultJsonHelper
   m_FrameRate: 30
   m_GameSpeed: 1
   m_RunInBackground: 1
@@ -653,8 +654,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 959bca2b68d03954897f38b1dbb00303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AvailableProcedureTypeNames: []
-  m_EntranceProcedureTypeName: 
+  m_AvailableProcedureTypeNames:
+  - GameMono.CheckAppVersionProcedure
+  - GameMono.CheckResVersionProcedure
+  - GameMono.DownloadResPackageProcedure
+  - GameMono.LaunchGameLogicProcedure
+  - GameMono.LaunchProcedure
+  m_EntranceProcedureTypeName: GameMono.LaunchProcedure
 --- !u!1 &140694
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,8 +1087,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HotfixConfigAssetRef:
-    m_AssetPath: 
-    m_Guid: 
+    m_AssetPath: Assets/Framework/HotfixConfiguration.asset
+    m_Guid: 13102bc81fb2548479d68032f07959a1
   m_HotfixAssetHelperTypeName: UnityGameFramework.Runtime.DefaultHotfixAssetHelper
   m_CustomHotfixAssetHelper: {fileID: 0}
   m_EnableLoadCompleteEvent: 0
@@ -1131,5 +1137,49 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be7f67761f6f461b904f0544ea16302e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &7273391147319344289
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1843844919333341263}
+  - component: {fileID: 4316401963237820126}
+  m_Layer: 0
+  m_Name: Remote Request
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1843844919333341263
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7273391147319344289}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 433714}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4316401963237820126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7273391147319344289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc1c6ab1a9084fe7b45dacf474f8c940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
