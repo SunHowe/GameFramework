@@ -5,23 +5,23 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
-using GameFramework.UI;
 using System;
+using GameFramework.UI;
 using UnityEngine;
 
-namespace UnityGameFramework.Runtime
+namespace UnityGameFramework.Runtime.UGUI
 {
     /// <summary>
-    /// 界面。
+    /// UGUI界面。
     /// </summary>
-    public sealed class UIForm : MonoBehaviour, IUIForm
+    public sealed class UGUIForm : MonoBehaviour, IUIForm
     {
         private int m_SerialId;
         private string m_UIFormAssetName;
         private IUIGroup m_UIGroup;
         private int m_DepthInUIGroup;
         private bool m_PauseCoveredUIForm;
-        private UIFormLogic m_UIFormLogic;
+        private UGUIFormLogic m_UIFormLogic;
 
         /// <summary>
         /// 获取界面序列编号。
@@ -92,7 +92,7 @@ namespace UnityGameFramework.Runtime
         /// <summary>
         /// 获取界面逻辑。
         /// </summary>
-        public UIFormLogic Logic
+        public UGUIFormLogic Logic
         {
             get
             {
@@ -122,7 +122,7 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
-            m_UIFormLogic = GetComponent<UIFormLogic>();
+            m_UIFormLogic = GetComponent<UGUIFormLogic>();
             if (m_UIFormLogic == null)
             {
                 Log.Error("UI form '{0}' can not get UI form logic.", uiFormAssetName);

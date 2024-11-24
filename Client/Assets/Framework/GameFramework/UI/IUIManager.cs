@@ -93,16 +93,16 @@ namespace GameFramework.UI
         void SetObjectPoolManager(IObjectPoolManager objectPoolManager);
 
         /// <summary>
-        /// 设置资源管理器。
-        /// </summary>
-        /// <param name="resourceManager">资源管理器。</param>
-        void SetResourceManager(IResourceManager resourceManager);
-
-        /// <summary>
         /// 设置界面辅助器。
         /// </summary>
         /// <param name="uiFormHelper">界面辅助器。</param>
         void SetUIFormHelper(IUIFormHelper uiFormHelper);
+
+        /// <summary>
+        /// 设置界面资源辅助器。
+        /// </summary>
+        /// <param name="uiFormAssetHelper">界面资源辅助器。</param>
+        void SetUIFormAssetHelper(IUIFormAssetHelper uiFormAssetHelper);
 
         /// <summary>
         /// 是否存在界面组。

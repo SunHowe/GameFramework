@@ -8,12 +8,12 @@
 using GameFramework.UI;
 using UnityEngine;
 
-namespace UnityGameFramework.Runtime
+namespace UnityGameFramework.Runtime.UGUI
 {
     /// <summary>
-    /// 默认界面辅助器。
+    /// 默认的UGUI界面辅助器。
     /// </summary>
-    public class DefaultUIFormHelper : UIFormHelperBase
+    public class DefaultUGUIFormHelper : UIFormHelperBase
     {
         private ResourceComponent m_ResourceComponent = null;
 
@@ -47,7 +47,7 @@ namespace UnityGameFramework.Runtime
             transform.SetParent(((MonoBehaviour)uiGroup.Helper).transform);
             transform.localScale = Vector3.one;
 
-            return gameObject.GetOrAddComponent<UIForm>();
+            return gameObject.GetOrAddComponent<UGUIForm>();
         }
 
         /// <summary>

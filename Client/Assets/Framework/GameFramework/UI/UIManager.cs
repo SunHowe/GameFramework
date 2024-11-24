@@ -23,9 +23,9 @@ namespace GameFramework.UI
         private readonly Queue<IUIForm> m_RecycleQueue;
         private readonly LoadAssetCallbacks m_LoadAssetCallbacks;
         private IObjectPoolManager m_ObjectPoolManager;
-        private IResourceManager m_ResourceManager;
         private IObjectPool<UIFormInstanceObject> m_InstancePool;
         private IUIFormHelper m_UIFormHelper;
+        private IUIFormAssetHelper m_UIFormAssetHelper;
         private int m_Serial;
         private bool m_IsShutdown;
         private EventHandler<OpenUIFormSuccessEventArgs> m_OpenUIFormSuccessEventHandler;
@@ -45,7 +45,7 @@ namespace GameFramework.UI
             m_RecycleQueue = new Queue<IUIForm>();
             m_LoadAssetCallbacks = new LoadAssetCallbacks(LoadAssetSuccessCallback, LoadAssetFailureCallback, LoadAssetUpdateCallback, LoadAssetDependencyAssetCallback);
             m_ObjectPoolManager = null;
-            m_ResourceManager = null;
+            m_UIFormAssetHelper = null;
             m_InstancePool = null;
             m_UIFormHelper = null;
             m_Serial = 0;
@@ -252,20 +252,6 @@ namespace GameFramework.UI
         }
 
         /// <summary>
-        /// 设置资源管理器。
-        /// </summary>
-        /// <param name="resourceManager">资源管理器。</param>
-        public void SetResourceManager(IResourceManager resourceManager)
-        {
-            if (resourceManager == null)
-            {
-                throw new GameFrameworkException("Resource manager is invalid.");
-            }
-
-            m_ResourceManager = resourceManager;
-        }
-
-        /// <summary>
         /// 设置界面辅助器。
         /// </summary>
         /// <param name="uiFormHelper">界面辅助器。</param>
@@ -277,6 +263,20 @@ namespace GameFramework.UI
             }
 
             m_UIFormHelper = uiFormHelper;
+        }
+
+        /// <summary>
+        /// 设置界面资源辅助器。
+        /// </summary>
+        /// <param name="uiFormAssetHelper">界面资源辅助器。</param>
+        public void SetUIFormAssetHelper(IUIFormAssetHelper uiFormAssetHelper)
+        {
+            if (uiFormAssetHelper == null)
+            {
+                throw new GameFrameworkException("UI form asset helper is invalid.");    
+            }
+            
+            m_UIFormAssetHelper = uiFormAssetHelper;
         }
 
         /// <summary>
@@ -722,14 +722,14 @@ namespace GameFramework.UI
         /// <returns>界面的序列编号。</returns>
         public int OpenUIForm(string uiFormAssetName, string uiGroupName, int priority, bool pauseCoveredUIForm, object userData)
         {
-            if (m_ResourceManager == null)
-            {
-                throw new GameFrameworkException("You must set resource manager first.");
-            }
-
             if (m_UIFormHelper == null)
             {
                 throw new GameFrameworkException("You must set UI form helper first.");
+            }
+
+            if (m_UIFormAssetHelper == null)
+            {
+                throw new GameFrameworkException("You must set UI form asset helper first.");
             }
 
             if (string.IsNullOrEmpty(uiFormAssetName))
@@ -753,7 +753,7 @@ namespace GameFramework.UI
             if (uiFormInstanceObject == null)
             {
                 m_UIFormsBeingLoaded.Add(serialId, uiFormAssetName);
-                m_ResourceManager.LoadAsset(uiFormAssetName, priority, m_LoadAssetCallbacks, OpenUIFormInfo.Create(serialId, uiGroup, pauseCoveredUIForm, userData));
+                m_UIFormAssetHelper.LoadUIFormAsset(uiFormAssetName, priority, m_LoadAssetCallbacks, OpenUIFormInfo.Create(serialId, uiGroup, pauseCoveredUIForm, userData));
             }
             else
             {

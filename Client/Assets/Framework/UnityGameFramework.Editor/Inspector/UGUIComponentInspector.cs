@@ -7,11 +7,12 @@
 
 using UnityEditor;
 using UnityGameFramework.Runtime;
+using UnityGameFramework.Runtime.UGUI;
 
 namespace UnityGameFramework.Editor
 {
-    [CustomEditor(typeof(UIComponent))]
-    internal sealed class UIComponentInspector : GameFrameworkInspector
+    [CustomEditor(typeof(UGUIComponent))]
+    internal sealed class UGUIComponentInspector : GameFrameworkInspector
     {
         private SerializedProperty m_EnableOpenUIFormSuccessEvent = null;
         private SerializedProperty m_EnableOpenUIFormFailureEvent = null;
@@ -26,6 +27,7 @@ namespace UnityGameFramework.Editor
         private SerializedProperty m_UIGroups = null;
 
         private HelperInfo<UIFormHelperBase> m_UIFormHelperInfo = new HelperInfo<UIFormHelperBase>("UIForm");
+        private HelperInfo<UIFormAssetHelperBase> m_UIFormAssetHelperInfo = new HelperInfo<UIFormAssetHelperBase>("UIFormAsset");
         private HelperInfo<UIGroupHelperBase> m_UIGroupHelperInfo = new HelperInfo<UIGroupHelperBase>("UIGroup");
 
         public override void OnInspectorGUI()
@@ -34,7 +36,7 @@ namespace UnityGameFramework.Editor
 
             serializedObject.Update();
 
-            UIComponent t = (UIComponent)target;
+            UGUIComponent t = (UGUIComponent)target;
 
             EditorGUI.BeginDisabledGroup(EditorApplication.isPlayingOrWillChangePlaymode);
             {
@@ -102,6 +104,7 @@ namespace UnityGameFramework.Editor
             {
                 EditorGUILayout.PropertyField(m_InstanceRoot);
                 m_UIFormHelperInfo.Draw();
+                m_UIFormAssetHelperInfo.Draw();
                 m_UIGroupHelperInfo.Draw();
                 EditorGUILayout.PropertyField(m_UIGroups, true);
             }
@@ -139,6 +142,7 @@ namespace UnityGameFramework.Editor
             m_UIGroups = serializedObject.FindProperty("m_UIGroups");
 
             m_UIFormHelperInfo.Init(serializedObject);
+            m_UIFormAssetHelperInfo.Init(serializedObject);
             m_UIGroupHelperInfo.Init(serializedObject);
 
             RefreshTypeNames();
@@ -147,6 +151,7 @@ namespace UnityGameFramework.Editor
         private void RefreshTypeNames()
         {
             m_UIFormHelperInfo.Refresh();
+            m_UIFormAssetHelperInfo.Refresh();
             m_UIGroupHelperInfo.Refresh();
             serializedObject.ApplyModifiedProperties();
         }

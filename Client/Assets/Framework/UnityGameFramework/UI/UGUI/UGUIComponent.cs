@@ -5,21 +5,21 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
+using System.Collections.Generic;
 using GameFramework;
 using GameFramework.ObjectPool;
 using GameFramework.Resource;
 using GameFramework.UI;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnityGameFramework.Runtime
+namespace UnityGameFramework.Runtime.UGUI
 {
     /// <summary>
-    /// 界面组件。
+    /// 基于UGUI的界面组件。
     /// </summary>
     [DisallowMultipleComponent]
-    [AddComponentMenu("Game Framework/UI")]
-    public sealed partial class UIComponent : GameFrameworkComponent<UIComponent>
+    [AddComponentMenu("Game Framework/UGUI")]
+    public sealed class UGUIComponent : GameFrameworkComponent<UGUIComponent>
     {
         private const int DefaultPriority = 0;
 
@@ -59,13 +59,19 @@ namespace UnityGameFramework.Runtime
         private Transform m_InstanceRoot = null;
 
         [SerializeField]
-        private string m_UIFormHelperTypeName = "UnityGameFramework.Runtime.DefaultUIFormHelper";
+        private string m_UIFormHelperTypeName = "UnityGameFramework.Runtime.UGUI.DefaultUGUIFormHelper";
 
         [SerializeField]
         private UIFormHelperBase m_CustomUIFormHelper = null;
 
         [SerializeField]
-        private string m_UIGroupHelperTypeName = "UnityGameFramework.Runtime.DefaultUIGroupHelper";
+        private string m_UIFormAssetHelperTypeName = "UnityGameFramework.Runtime.UGUI.DefaultUGUIFormAssetHelper";
+        
+        [SerializeField]
+        private UIFormAssetHelperBase m_CustomUIFormAssetHelper = null;
+
+        [SerializeField]
+        private string m_UIGroupHelperTypeName = "UnityGameFramework.Runtime.UGUI.DefaultUGUIGroupHelper";
 
         [SerializeField]
         private UIGroupHelperBase m_CustomUIGroupHelper = null;
@@ -197,15 +203,6 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
-            if (baseComponent.EditorResourceMode)
-            {
-                m_UIManager.SetResourceManager(baseComponent.EditorResourceHelper);
-            }
-            else
-            {
-                m_UIManager.SetResourceManager(GameFrameworkEntry.GetModule<IResourceManager>());
-            }
-
             m_UIManager.SetObjectPoolManager(GameFrameworkEntry.GetModule<IObjectPoolManager>());
             m_UIManager.InstanceAutoReleaseInterval = m_InstanceAutoReleaseInterval;
             m_UIManager.InstanceCapacity = m_InstanceCapacity;
@@ -225,6 +222,20 @@ namespace UnityGameFramework.Runtime
             transform.localScale = Vector3.one;
 
             m_UIManager.SetUIFormHelper(uiFormHelper);
+            
+            UIFormAssetHelperBase uiFormAssetHelper = Helper.CreateHelper(m_UIFormAssetHelperTypeName, m_CustomUIFormAssetHelper);
+            if (uiFormAssetHelper == null)
+            {
+                Log.Error("Can not create UI form asset helper.");
+                return;
+            }
+            
+            uiFormAssetHelper.name = "UI Form Asset Helper";
+            transform = uiFormAssetHelper.transform;
+            transform.SetParent(this.transform);
+            transform.localScale = Vector3.one;
+            
+            m_UIManager.SetUIFormAssetHelper(uiFormAssetHelper);
 
             if (m_InstanceRoot == null)
             {
@@ -347,9 +358,9 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="serialId">界面序列编号。</param>
         /// <returns>要获取的界面。</returns>
-        public UIForm GetUIForm(int serialId)
+        public UGUIForm GetUIForm(int serialId)
         {
-            return (UIForm)m_UIManager.GetUIForm(serialId);
+            return (UGUIForm)m_UIManager.GetUIForm(serialId);
         }
 
         /// <summary>
@@ -357,9 +368,9 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <returns>要获取的界面。</returns>
-        public UIForm GetUIForm(string uiFormAssetName)
+        public UGUIForm GetUIForm(string uiFormAssetName)
         {
-            return (UIForm)m_UIManager.GetUIForm(uiFormAssetName);
+            return (UGUIForm)m_UIManager.GetUIForm(uiFormAssetName);
         }
 
         /// <summary>
@@ -367,13 +378,13 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <returns>要获取的界面。</returns>
-        public UIForm[] GetUIForms(string uiFormAssetName)
+        public UGUIForm[] GetUIForms(string uiFormAssetName)
         {
             IUIForm[] uiForms = m_UIManager.GetUIForms(uiFormAssetName);
-            UIForm[] uiFormImpls = new UIForm[uiForms.Length];
+            UGUIForm[] uiFormImpls = new UGUIForm[uiForms.Length];
             for (int i = 0; i < uiForms.Length; i++)
             {
-                uiFormImpls[i] = (UIForm)uiForms[i];
+                uiFormImpls[i] = (UGUIForm)uiForms[i];
             }
 
             return uiFormImpls;
@@ -384,7 +395,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <param name="results">要获取的界面。</param>
-        public void GetUIForms(string uiFormAssetName, List<UIForm> results)
+        public void GetUIForms(string uiFormAssetName, List<UGUIForm> results)
         {
             if (results == null)
             {
@@ -396,7 +407,7 @@ namespace UnityGameFramework.Runtime
             m_UIManager.GetUIForms(uiFormAssetName, m_InternalUIFormResults);
             foreach (IUIForm uiForm in m_InternalUIFormResults)
             {
-                results.Add((UIForm)uiForm);
+                results.Add((UGUIForm)uiForm);
             }
         }
 
@@ -404,13 +415,13 @@ namespace UnityGameFramework.Runtime
         /// 获取所有已加载的界面。
         /// </summary>
         /// <returns>所有已加载的界面。</returns>
-        public UIForm[] GetAllLoadedUIForms()
+        public UGUIForm[] GetAllLoadedUIForms()
         {
             IUIForm[] uiForms = m_UIManager.GetAllLoadedUIForms();
-            UIForm[] uiFormImpls = new UIForm[uiForms.Length];
+            UGUIForm[] uiFormImpls = new UGUIForm[uiForms.Length];
             for (int i = 0; i < uiForms.Length; i++)
             {
-                uiFormImpls[i] = (UIForm)uiForms[i];
+                uiFormImpls[i] = (UGUIForm)uiForms[i];
             }
 
             return uiFormImpls;
@@ -420,7 +431,7 @@ namespace UnityGameFramework.Runtime
         /// 获取所有已加载的界面。
         /// </summary>
         /// <param name="results">所有已加载的界面。</param>
-        public void GetAllLoadedUIForms(List<UIForm> results)
+        public void GetAllLoadedUIForms(List<UGUIForm> results)
         {
             if (results == null)
             {
@@ -432,7 +443,7 @@ namespace UnityGameFramework.Runtime
             m_UIManager.GetAllLoadedUIForms(m_InternalUIFormResults);
             foreach (IUIForm uiForm in m_InternalUIFormResults)
             {
-                results.Add((UIForm)uiForm);
+                results.Add((UGUIForm)uiForm);
             }
         }
 
@@ -479,7 +490,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="uiForm">界面。</param>
         /// <returns>界面是否合法。</returns>
-        public bool IsValidUIForm(UIForm uiForm)
+        public bool IsValidUIForm(UGUIForm uiForm)
         {
             return m_UIManager.IsValidUIForm(uiForm);
         }
@@ -607,7 +618,7 @@ namespace UnityGameFramework.Runtime
         /// 关闭界面。
         /// </summary>
         /// <param name="uiForm">要关闭的界面。</param>
-        public void CloseUIForm(UIForm uiForm)
+        public void CloseUIForm(UGUIForm uiForm)
         {
             m_UIManager.CloseUIForm(uiForm);
         }
@@ -617,7 +628,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="uiForm">要关闭的界面。</param>
         /// <param name="userData">用户自定义数据。</param>
-        public void CloseUIForm(UIForm uiForm, object userData)
+        public void CloseUIForm(UGUIForm uiForm, object userData)
         {
             m_UIManager.CloseUIForm(uiForm, userData);
         }
@@ -651,7 +662,7 @@ namespace UnityGameFramework.Runtime
         /// 激活界面。
         /// </summary>
         /// <param name="uiForm">要激活的界面。</param>
-        public void RefocusUIForm(UIForm uiForm)
+        public void RefocusUIForm(UGUIForm uiForm)
         {
             m_UIManager.RefocusUIForm(uiForm);
         }
@@ -661,7 +672,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="uiForm">要激活的界面。</param>
         /// <param name="userData">用户自定义数据。</param>
-        public void RefocusUIForm(UIForm uiForm, object userData)
+        public void RefocusUIForm(UGUIForm uiForm, object userData)
         {
             m_UIManager.RefocusUIForm(uiForm, userData);
         }
@@ -671,7 +682,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="uiForm">要设置是否被加锁的界面。</param>
         /// <param name="locked">界面是否被加锁。</param>
-        public void SetUIFormInstanceLocked(UIForm uiForm, bool locked)
+        public void SetUIFormInstanceLocked(UGUIForm uiForm, bool locked)
         {
             if (uiForm == null)
             {
@@ -687,7 +698,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="uiForm">要设置优先级的界面。</param>
         /// <param name="priority">界面优先级。</param>
-        public void SetUIFormInstancePriority(UIForm uiForm, int priority)
+        public void SetUIFormInstancePriority(UGUIForm uiForm, int priority)
         {
             if (uiForm == null)
             {

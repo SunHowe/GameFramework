@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
-namespace UnityGameFramework.Runtime
+namespace UnityGameFramework.Runtime.UGUI
 {
     /// <summary>
     /// 默认界面组辅助器。

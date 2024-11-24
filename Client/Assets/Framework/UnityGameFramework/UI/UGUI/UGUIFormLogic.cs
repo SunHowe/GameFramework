@@ -7,23 +7,23 @@
 
 using UnityEngine;
 
-namespace UnityGameFramework.Runtime
+namespace UnityGameFramework.Runtime.UGUI
 {
     /// <summary>
     /// 界面逻辑基类。
     /// </summary>
-    public abstract class UIFormLogic : MonoBehaviour
+    public abstract class UGUIFormLogic : MonoBehaviour
     {
         private bool m_Available = false;
         private bool m_Visible = false;
-        private UIForm m_UIForm = null;
+        private UGUIForm m_UIForm = null;
         private Transform m_CachedTransform = null;
         private int m_OriginalLayer = 0;
 
         /// <summary>
         /// 获取界面。
         /// </summary>
-        public UIForm UIForm
+        public UGUIForm UIForm
         {
             get
             {
@@ -106,7 +106,7 @@ namespace UnityGameFramework.Runtime
                 m_CachedTransform = transform;
             }
 
-            m_UIForm = GetComponent<UIForm>();
+            m_UIForm = GetComponent<UGUIForm>();
             m_OriginalLayer = gameObject.layer;
         }
 
