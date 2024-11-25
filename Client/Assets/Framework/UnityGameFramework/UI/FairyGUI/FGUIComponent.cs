@@ -77,6 +77,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         private FGUIPackageHelperBase m_FGUIPackageHelper;
         
         private readonly Dictionary<string, Type> m_FormLogicDictionary = new Dictionary<string, Type>();
+        private readonly Dictionary<Type, UIFormAttribute> m_FormAttributeDictionary = new Dictionary<Type, UIFormAttribute>();
         
         /// <summary>
         /// 获取界面组数量。
@@ -601,6 +602,113 @@ namespace UnityGameFramework.Runtime.FairyGUI
             return m_UIManager.OpenUIForm(uiFormAssetName, uiGroupName, priority, pauseCoveredUIForm, userData);
         }
 
+        /// <summary>
+        /// 打开单例型界面，若界面未打开，则打开新的实例；若界面已处于打开状态，则将其激活。
+        /// </summary>
+        /// <param name="uiFormAssetName">界面资源名称。</param>
+        /// <param name="uiGroupName">界面组名称。</param>
+        /// <returns>界面的序列编号。</returns>
+        public int OpenSingletonUIForm(string uiFormAssetName, string uiGroupName)
+        {
+            return OpenSingletonUIForm(uiFormAssetName, uiGroupName, DefaultPriority, false, null);
+        }
+
+        /// <summary>
+        /// 打开单例型界面，若界面未打开，则打开新的实例；若界面已处于打开状态，则将其激活。
+        /// </summary>
+        /// <param name="uiFormAssetName">界面资源名称。</param>
+        /// <param name="uiGroupName">界面组名称。</param>
+        /// <param name="priority">加载界面资源的优先级。</param>
+        /// <returns>界面的序列编号。</returns>
+        public int OpenSingletonUIForm(string uiFormAssetName, string uiGroupName, int priority)
+        {
+            return OpenSingletonUIForm(uiFormAssetName, uiGroupName, priority, false, null);
+        }
+
+        /// <summary>
+        /// 打开单例型界面，若界面未打开，则打开新的实例；若界面已处于打开状态，则将其激活。
+        /// </summary>
+        /// <param name="uiFormAssetName">界面资源名称。</param>
+        /// <param name="uiGroupName">界面组名称。</param>
+        /// <param name="pauseCoveredUIForm">是否暂停被覆盖的界面。</param>
+        /// <returns>界面的序列编号。</returns>
+        public int OpenSingletonUIForm(string uiFormAssetName, string uiGroupName, bool pauseCoveredUIForm)
+        {
+            return OpenSingletonUIForm(uiFormAssetName, uiGroupName, DefaultPriority, pauseCoveredUIForm, null);
+        }
+
+        /// <summary>
+        /// 打开单例型界面，若界面未打开，则打开新的实例；若界面已处于打开状态，则将其激活。
+        /// </summary>
+        /// <param name="uiFormAssetName">界面资源名称。</param>
+        /// <param name="uiGroupName">界面组名称。</param>
+        /// <param name="userData">用户自定义数据。</param>
+        /// <returns>界面的序列编号。</returns>
+        public int OpenSingletonUIForm(string uiFormAssetName, string uiGroupName, object userData)
+        {
+            return OpenSingletonUIForm(uiFormAssetName, uiGroupName, DefaultPriority, false, userData);
+        }
+
+        /// <summary>
+        /// 打开单例型界面，若界面未打开，则打开新的实例；若界面已处于打开状态，则将其激活。
+        /// </summary>
+        /// <param name="uiFormAssetName">界面资源名称。</param>
+        /// <param name="uiGroupName">界面组名称。</param>
+        /// <param name="priority">加载界面资源的优先级。</param>
+        /// <param name="pauseCoveredUIForm">是否暂停被覆盖的界面。</param>
+        /// <returns>界面的序列编号。</returns>
+        public int OpenSingletonUIForm(string uiFormAssetName, string uiGroupName, int priority, bool pauseCoveredUIForm)
+        {
+            return OpenSingletonUIForm(uiFormAssetName, uiGroupName, priority, pauseCoveredUIForm, null);
+        }
+
+        /// <summary>
+        /// 打开单例型界面，若界面未打开，则打开新的实例；若界面已处于打开状态，则将其激活。
+        /// </summary>
+        /// <param name="uiFormAssetName">界面资源名称。</param>
+        /// <param name="uiGroupName">界面组名称。</param>
+        /// <param name="priority">加载界面资源的优先级。</param>
+        /// <param name="userData">用户自定义数据。</param>
+        /// <returns>界面的序列编号。</returns>
+        public int OpenSingletonUIForm(string uiFormAssetName, string uiGroupName, int priority, object userData)
+        {
+            return OpenSingletonUIForm(uiFormAssetName, uiGroupName, priority, false, userData);
+        }
+
+        /// <summary>
+        /// 打开单例型界面，若界面未打开，则打开新的实例；若界面已处于打开状态，则将其激活。
+        /// </summary>
+        /// <param name="uiFormAssetName">界面资源名称。</param>
+        /// <param name="uiGroupName">界面组名称。</param>
+        /// <param name="pauseCoveredUIForm">是否暂停被覆盖的界面。</param>
+        /// <param name="userData">用户自定义数据。</param>
+        /// <returns>界面的序列编号。</returns>
+        public int OpenSingletonUIForm(string uiFormAssetName, string uiGroupName, bool pauseCoveredUIForm, object userData)
+        {
+            return OpenSingletonUIForm(uiFormAssetName, uiGroupName, DefaultPriority, pauseCoveredUIForm, userData);
+        }
+
+        /// <summary>
+        /// 打开单例型界面，若界面未打开，则打开新的实例；若界面已处于打开状态，则将其激活。
+        /// </summary>
+        /// <param name="uiFormAssetName">界面资源名称。</param>
+        /// <param name="uiGroupName">界面组名称。</param>
+        /// <param name="priority">加载界面资源的优先级。</param>
+        /// <param name="pauseCoveredUIForm">是否暂停被覆盖的界面。</param>
+        /// <param name="userData">用户自定义数据。</param>
+        /// <returns>界面的序列编号。</returns>
+        public int OpenSingletonUIForm(string uiFormAssetName, string uiGroupName, int priority, bool pauseCoveredUIForm, object userData)
+        {
+            IUIForm form = m_UIManager.GetUIForm(uiFormAssetName);
+            if (form != null)
+            {
+                m_UIManager.RefocusUIForm(form, userData);
+                return form.SerialId;
+            }
+            
+            return m_UIManager.OpenUIForm(uiFormAssetName, uiGroupName, priority, pauseCoveredUIForm, userData);
+        }
+        
         /// <summary>
         /// 关闭界面。
         /// </summary>
