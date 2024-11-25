@@ -49,9 +49,6 @@ namespace UnityGameFramework.Runtime.FairyGUI
         private int m_InstancePriority = 0;
 
         [SerializeField]
-        private Transform m_InstanceRoot = null;
-
-        [SerializeField]
         private string m_UIFormHelperTypeName = "UnityGameFramework.Runtime.FairyGUI.DefaultFUIFormHelper";
 
         [SerializeField]
@@ -68,12 +65,6 @@ namespace UnityGameFramework.Runtime.FairyGUI
         
         [SerializeField]
         private FUIAssetLoaderHelperBase m_CustomFUIAssetLoaderHelper = null;
-
-        [SerializeField]
-        private string m_UIGroupHelperTypeName = "UnityGameFramework.Runtime.FairyGUI.DefaultFUIGroupHelper";
-
-        [SerializeField]
-        private UIGroupHelperBase m_CustomUIGroupHelper = null;
 
         [SerializeField]
         private UIGroup[] m_UIGroups = null;
@@ -271,15 +262,6 @@ namespace UnityGameFramework.Runtime.FairyGUI
             
             m_UIManager.SetUIFormAssetHelper(uiFormAssetHelper);
 
-            if (m_InstanceRoot == null)
-            {
-                m_InstanceRoot = new GameObject("UI Form Instances").transform;
-                m_InstanceRoot.SetParent(gameObject.transform);
-                m_InstanceRoot.localScale = Vector3.one;
-            }
-
-            m_InstanceRoot.gameObject.layer = LayerMask.NameToLayer("UI");
-
             for (int i = 0; i < m_UIGroups.Length; i++)
             {
                 if (!AddUIGroup(m_UIGroups[i].Name, m_UIGroups[i].Depth))
@@ -351,20 +333,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
                 return false;
             }
 
-            UIGroupHelperBase uiGroupHelper = Helper.CreateHelper(m_UIGroupHelperTypeName, m_CustomUIGroupHelper, UIGroupCount);
-            if (uiGroupHelper == null)
-            {
-                Log.Error("Can not create UI group helper.");
-                return false;
-            }
-
-            uiGroupHelper.name = Utility.Text.Format("UI Group - {0}", uiGroupName);
-            uiGroupHelper.gameObject.layer = LayerMask.NameToLayer("UI");
-            Transform transform = uiGroupHelper.transform;
-            transform.SetParent(m_InstanceRoot);
-            transform.localScale = Vector3.one;
-
-            return m_UIManager.AddUIGroup(uiGroupName, depth, uiGroupHelper);
+            return m_UIManager.AddUIGroup(uiGroupName, depth, new FUIGroupHelper(uiGroupName, depth));
         }
 
         /// <summary>

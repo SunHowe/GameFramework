@@ -10,7 +10,7 @@ namespace UnityGameFramework.Runtime.UGUI
     /// <summary>
     /// 默认界面组辅助器。
     /// </summary>
-    public class DefaultUIGroupHelper : UIGroupHelperBase
+    public class DefaultUGUIGroupHelper : UIGroupHelperBase
     {
         /// <summary>
         /// 设置界面组深度。

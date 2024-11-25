@@ -316,6 +316,8 @@ namespace UnityGameFramework.Runtime.FairyGUI
         public void OnDepthChanged(int uiGroupDepth, int depthInUIGroup)
         {
             m_DepthInUIGroup = depthInUIGroup;
+            m_ContentPane.sortingOrder = (depthInUIGroup << 1) + 1; // 预留一位留给通用背景黑遮使用。
+            
             try
             {
                 m_UIFormLogic.OnDepthChanged(uiGroupDepth, depthInUIGroup);
