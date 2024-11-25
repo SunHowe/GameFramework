@@ -25,9 +25,10 @@ namespace UnityGameFramework.Editor
         private SerializedProperty m_InstancePriority = null;
         private SerializedProperty m_UIGroups = null;
         private SerializedProperty m_UnloadUnusedUIPackageImmediately = null;
+        private SerializedProperty m_FGUIPackageMappingOnResources = null;
+        private SerializedProperty m_FGUIPackageMappingHotfix = null;
 
         private HelperInfo<UIFormHelperBase> m_UIFormHelperInfo = new HelperInfo<UIFormHelperBase>("UIForm");
-        private HelperInfo<FGUIPackageHelperBase> m_FUIPackageHelperInfo = new HelperInfo<FGUIPackageHelperBase>("FGUIPackage");
         private HelperInfo<FGUIAssetLoaderHelperBase> m_FUIAssetLoaderHelperInfo = new HelperInfo<FGUIAssetLoaderHelperBase>("FGUIAssetLoader");
 
         public override void OnInspectorGUI()
@@ -103,9 +104,10 @@ namespace UnityGameFramework.Editor
             EditorGUI.BeginDisabledGroup(EditorApplication.isPlayingOrWillChangePlaymode);
             {
                 m_UIFormHelperInfo.Draw();
-                m_FUIPackageHelperInfo.Draw();
                 m_FUIAssetLoaderHelperInfo.Draw();
                 EditorGUILayout.PropertyField(m_UIGroups, true);
+                EditorGUILayout.PropertyField(m_FGUIPackageMappingOnResources);
+                EditorGUILayout.PropertyField(m_FGUIPackageMappingHotfix);
                 EditorGUILayout.PropertyField(m_UnloadUnusedUIPackageImmediately);
             }
             EditorGUI.EndDisabledGroup();
@@ -140,9 +142,10 @@ namespace UnityGameFramework.Editor
             m_InstancePriority = serializedObject.FindProperty("m_InstancePriority");
             m_UIGroups = serializedObject.FindProperty("m_UIGroups");
             m_UnloadUnusedUIPackageImmediately = serializedObject.FindProperty("m_UnloadUnusedUIPackageImmediately");
+            m_FGUIPackageMappingOnResources = serializedObject.FindProperty("m_FGUIPackageMappingOnResources");
+            m_FGUIPackageMappingHotfix = serializedObject.FindProperty("m_FGUIPackageMappingHotfix");
 
             m_UIFormHelperInfo.Init(serializedObject);
-            m_FUIPackageHelperInfo.Init(serializedObject);
             m_FUIAssetLoaderHelperInfo.Init(serializedObject);
 
             RefreshTypeNames();
@@ -151,7 +154,6 @@ namespace UnityGameFramework.Editor
         private void RefreshTypeNames()
         {
             m_UIFormHelperInfo.Refresh();
-            m_FUIPackageHelperInfo.Refresh();
             m_FUIAssetLoaderHelperInfo.Refresh();
             serializedObject.ApplyModifiedProperties();
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using FairyGUI.Dynamic;
 using GameFramework;
 using GameFramework.ObjectPool;
 using GameFramework.Resource;
@@ -58,12 +59,6 @@ namespace UnityGameFramework.Runtime.FairyGUI
         private UIFormHelperBase m_CustomUIFormHelper = null;
 
         [SerializeField]
-        private string m_FGUIPackageHelperTypeName = "UnityGameFramework.Runtime.FairyGUI.DefaultFGUIPackageHelper";
-
-        [SerializeField]
-        private FGUIPackageHelperBase m_CustomFGUIPackageHelper = null;
-
-        [SerializeField]
         private string m_FGUIAssetLoaderHelperTypeName = "UnityGameFramework.Runtime.FairyGUI.DefaultFGUIAssetLoaderHelper";
         
         [SerializeField]
@@ -73,9 +68,15 @@ namespace UnityGameFramework.Runtime.FairyGUI
         private string[] m_UIGroups = null;
 
         [SerializeField]
+        private UIPackageMapping m_FGUIPackageMappingOnResources;
+
+        [SerializeField]
+        private UIPackageMappingAssetRef m_FGUIPackageMappingHotfix;
+
+        [SerializeField]
         private bool m_UnloadUnusedUIPackageImmediately = true;
 
-        private FGUIPackageHelperBase m_FGUIPackageHelper;
+        private FGUIPackageHelper m_FGUIPackageHelper;
 
         private readonly Dictionary<string, UIFormBindingInfo> m_UIFormBindingInfoDict = new Dictionary<string, UIFormBindingInfo>();
         private readonly Dictionary<Type, UIFormBindingInfo> m_UIFormBindingInfoByLogicTypeDict = new Dictionary<Type, UIFormBindingInfo>();
@@ -154,7 +155,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// <summary>
         /// FairyGUI包辅助器。
         /// </summary>
-        public FGUIPackageHelperBase FGUIPackageHelper
+        public FGUIPackageHelper FGUIPackageHelper
         {
             get
             {
@@ -173,6 +174,12 @@ namespace UnityGameFramework.Runtime.FairyGUI
             if (m_UIManager == null)
             {
                 Log.Fatal("UI manager is invalid.");
+                return;
+            }
+
+            if (m_FGUIPackageMappingOnResources == null)
+            {
+                Log.Fatal("FGUI package mapping on resources is invalid.");
                 return;
             }
 
@@ -234,18 +241,12 @@ namespace UnityGameFramework.Runtime.FairyGUI
             transform.localScale = Vector3.one;
 
             m_UIManager.SetUIFormHelper(uiFormHelper);
-            
-            m_FGUIPackageHelper = Helper.CreateHelper(m_FGUIPackageHelperTypeName, m_CustomFGUIPackageHelper);
-            if (m_FGUIPackageHelper == null)
-            {
-                Log.Error("Can not create FUI package helper.");
-                return;
-            }
-            
-            m_FGUIPackageHelper.name = "FUI Package Helper";
+
+            m_FGUIPackageHelper = new GameObject("FGUI Package Helper").AddComponent<FGUIPackageHelper>();
             transform = m_FGUIPackageHelper.transform;
             transform.SetParent(this.transform);
             transform.localScale = Vector3.one;
+            m_FGUIPackageHelper.AddPackageMapping(m_FGUIPackageMappingOnResources);
             
             var assetLoaderHelper = Helper.CreateHelper(m_FGUIAssetLoaderHelperTypeName, m_CustomFGUIAssetLoaderHelper);
             if (assetLoaderHelper == null)
@@ -254,7 +255,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
                 return;
             }
             
-            assetLoaderHelper.name = "FUI Asset Loader Helper";
+            assetLoaderHelper.name = "FGUI Asset Loader Helper";
             transform = assetLoaderHelper.transform;
             transform.SetParent(this.transform);
             transform.localScale = Vector3.one;
@@ -956,6 +957,14 @@ namespace UnityGameFramework.Runtime.FairyGUI
         public string GetUIFormAssetName<T>() where T : FGUIFormLogic
         {
             return GetUIFormBindingInfo(typeof(T))?.UIFormAssetName ?? string.Empty;
+        }
+
+        /// <summary>
+        /// 判断是否是Resources目录下的包。
+        /// </summary>
+        public bool IsPackageOnResources(string packageName)
+        {
+            return Array.IndexOf(m_FGUIPackageMappingOnResources.PackageNames, packageName) >= 0;
         }
         
         private void OnOpenUIFormSuccess(object sender, GameFramework.UI.OpenUIFormSuccessEventArgs e)

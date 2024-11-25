@@ -2,6 +2,7 @@
 using GameFramework.Fsm;
 using GameFramework.Procedure;
 using GameMono.UI;
+using GameMono.UI.Launch;
 using UnityGameFramework.Runtime;
 using UnityGameFramework.Runtime.FairyGUI;
 

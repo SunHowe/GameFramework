@@ -1241,9 +1241,11 @@ MonoBehaviour:
   m_InstancePriority: 0
   m_UIFormHelperTypeName: UnityGameFramework.Runtime.FairyGUI.DefaultFGUIFormHelper
   m_CustomUIFormHelper: {fileID: 0}
-  m_FGUIPackageHelperTypeName: UnityGameFramework.Runtime.FairyGUI.DefaultFGUIPackageHelper
-  m_CustomFGUIPackageHelper: {fileID: 0}
   m_FGUIAssetLoaderHelperTypeName: UnityGameFramework.Runtime.FairyGUI.DefaultFGUIAssetLoaderHelper
   m_CustomFGUIAssetLoaderHelper: {fileID: 0}
   m_UIGroups: []
+  m_FGUIPackageMappingOnResources: {fileID: 11400000, guid: be581eab7f60645459b5d36f14a4dc60, type: 2}
+  m_FGUIPackageMappingHotfix:
+    m_AssetPath: Assets/GameMain/Res/UI/PackageMapping.asset
+    m_Guid: 10854a436738a5b45811c74c453431d1
   m_UnloadUnusedUIPackageImmediately: 1

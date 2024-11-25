@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using UnityGameFramework.Runtime;
+using UnityGameFramework.Runtime.FairyGUI;
 using Object = UnityEngine.Object;
 
 namespace UnityGameFramework.Editor
@@ -101,6 +102,11 @@ namespace UnityGameFramework.Editor
 
     [CustomPropertyDrawer(typeof(HotfixConfigurationAssetRef))]
     public class HotfixConfigurationAssetRefDrawer : AssetRefDrawer
+    {
+    }
+
+    [CustomPropertyDrawer(typeof(UIPackageMappingAssetRef))]
+    public class UIPackageMappingAssetRefDrawer : AssetRefDrawer
     {
     }
 }
