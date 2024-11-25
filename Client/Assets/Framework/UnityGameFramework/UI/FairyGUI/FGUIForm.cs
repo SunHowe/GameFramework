@@ -8,16 +8,16 @@ namespace UnityGameFramework.Runtime.FairyGUI
     /// <summary>
     /// FairyGUI界面。
     /// </summary>
-    public sealed class FUIForm : IUIForm
+    public sealed class FGUIForm : IUIForm
     {
         private int m_SerialId;
         private string m_UIFormAssetName;
         private IUIGroup m_UIGroup;
         private int m_DepthInUIGroup;
         private bool m_PauseCoveredUIForm;
+        private FGUIFormLogic m_UIFormLogic;
         
         private readonly GComponent m_ContentPane;
-        private readonly FUIFormLogic m_UIFormLogic;
         
         /// <summary>
         /// 获取界面序列编号。
@@ -110,7 +110,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// <summary>
         /// 获取界面逻辑。
         /// </summary>
-        public FUIFormLogic Logic
+        public FGUIFormLogic Logic
         {
             get
             {
@@ -118,11 +118,10 @@ namespace UnityGameFramework.Runtime.FairyGUI
             }
         }
 
-        public FUIForm(GComponent contentPane, FUIFormLogic uiFormLogic)
+        public FGUIForm(GComponent contentPane)
         {
             m_ContentPane = contentPane;
             m_ContentPane.data = this;
-            m_UIFormLogic = uiFormLogic;
         }
 
         /// <summary>
@@ -146,7 +145,17 @@ namespace UnityGameFramework.Runtime.FairyGUI
             {
                 return;
             }
-
+            
+            // 绑定界面逻辑
+            var formLogicType = FGUIComponent.Instance.GetFormLogicType(uiFormAssetName);
+            if (formLogicType == null)
+            {
+                Log.Error("UI form '{0}' can not get UI form logic type.", uiFormAssetName);
+                return;
+            }
+            
+            // 构造界面逻辑实例
+            m_UIFormLogic = Activator.CreateInstance(formLogicType) as FGUIFormLogic;
             if (m_UIFormLogic == null)
             {
                 Log.Error("UI form '{0}' can not get UI form logic.", uiFormAssetName);
@@ -316,7 +325,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         public void OnDepthChanged(int uiGroupDepth, int depthInUIGroup)
         {
             m_DepthInUIGroup = depthInUIGroup;
-            m_ContentPane.sortingOrder = (depthInUIGroup << 1) + 1; // 预留一位留给通用背景黑遮使用。
+            m_ContentPane.sortingOrder = depthInUIGroup + 1;
             
             try
             {

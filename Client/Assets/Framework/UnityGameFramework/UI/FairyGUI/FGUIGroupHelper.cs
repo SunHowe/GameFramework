@@ -6,7 +6,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
     /// <summary>
     /// FairyGUI界面组辅助器。
     /// </summary>
-    public sealed class FUIGroupHelper : IUIGroupHelper
+    public sealed class FGUIGroupHelper : IUIGroupHelper
     {
         private readonly GComponent m_GroupRoot;
 
@@ -21,7 +21,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
             }
         }
 
-        public FUIGroupHelper(string name, int depth)
+        public FGUIGroupHelper(string name, int depth)
         {
             var gRoot = GRoot.inst;
             
@@ -43,7 +43,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// <param name="depth">深度。</param>
         public void SetDepth(int depth)
         {
-            m_GroupRoot.sortingOrder = -depth; // 深度越大越靠后，sortingOrder越大越靠前，所以这里需要取反值
+            m_GroupRoot.sortingOrder = depth + 1;
         }
     }
 }

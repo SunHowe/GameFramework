@@ -9,7 +9,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
     /// <summary>
     /// 默认的FairyGUI资源加载器辅助工具。
     /// </summary>
-    public sealed class DefaultFUIAssetLoaderHelper : FUIAssetLoaderHelperBase
+    public sealed class DefaultFGUIAssetLoaderHelper : FGUIAssetLoaderHelperBase
     {
         private const string UIPackageAssetFormat = "Assets/GameMain/Res/UI/{0}_fui.bytes";
         private const string UITextureAssetFormat = "Assets/GameMain/Res/UI/{0}.{1}";

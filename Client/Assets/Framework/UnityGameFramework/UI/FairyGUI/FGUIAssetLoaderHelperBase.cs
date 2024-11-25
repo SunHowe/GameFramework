@@ -6,7 +6,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
     /// <summary>
     /// FairyGUI资源加载器基类。
     /// </summary>
-    public abstract class FUIAssetLoaderHelperBase : MonoBehaviour, IUIAssetLoader
+    public abstract class FGUIAssetLoaderHelperBase : MonoBehaviour, IUIAssetLoader
     {
         /// <summary>
         /// 异步加载UIPackage二进制数据

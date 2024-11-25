@@ -5,18 +5,18 @@ namespace UnityGameFramework.Runtime.FairyGUI
     /// <summary>
     /// FairyGUI界面逻辑基类。
     /// </summary>
-    public abstract class FUIFormLogic
+    public abstract class FGUIFormLogic
     {
         private bool m_Available = false;
         private bool m_Visible = false;
-        private FUIForm m_UIForm = null;
+        private FGUIForm m_UIForm = null;
         
         private readonly GComponent m_ContentPane = null;
 
         /// <summary>
         /// 获取界面。
         /// </summary>
-        public FUIForm UIForm
+        public FGUIForm UIForm
         {
             get
             {
@@ -88,7 +88,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
             }
         }
 
-        protected FUIFormLogic(GComponent contentPane)
+        protected FGUIFormLogic(GComponent contentPane)
         {
             m_ContentPane = contentPane;
         }
@@ -99,7 +99,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// <param name="userData">用户自定义数据。</param>
         protected internal virtual void OnInit(object userData)
         {
-            m_UIForm = m_ContentPane.data as FUIForm;
+            m_UIForm = m_ContentPane.data as FGUIForm;
         }
 
         /// <summary>

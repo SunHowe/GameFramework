@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GameFramework;
 using GameFramework.ObjectPool;
 using GameFramework.Resource;
 using GameFramework.UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace UnityGameFramework.Runtime.FairyGUI
 {
@@ -11,8 +13,8 @@ namespace UnityGameFramework.Runtime.FairyGUI
     /// 基于FairyGUI的界面组件。
     /// </summary>
     [DisallowMultipleComponent]
-    [AddComponentMenu("Game Framework/FUI")]
-    public class FUIComponent : GameFrameworkComponent<FUIComponent>
+    [AddComponentMenu("Game Framework/FGUI")]
+    public class FGUIComponent : GameFrameworkComponent<FGUIComponent>
     {
         private const int DefaultPriority = 0;
 
@@ -49,30 +51,32 @@ namespace UnityGameFramework.Runtime.FairyGUI
         private int m_InstancePriority = 0;
 
         [SerializeField]
-        private string m_UIFormHelperTypeName = "UnityGameFramework.Runtime.FairyGUI.DefaultFUIFormHelper";
+        private string m_UIFormHelperTypeName = "UnityGameFramework.Runtime.FairyGUI.DefaultFGUIFormHelper";
 
         [SerializeField]
         private UIFormHelperBase m_CustomUIFormHelper = null;
 
         [SerializeField]
-        private string m_FUIPackageHelperTypeName = "UnityGameFramework.Runtime.FairyGUI.DefaultFUIPackageHelper";
+        private string m_FGUIPackageHelperTypeName = "UnityGameFramework.Runtime.FairyGUI.DefaultFGUIPackageHelper";
 
         [SerializeField]
-        private FUIPackageHelperBase m_CustomFUIPackageHelper = null;
+        private FGUIPackageHelperBase m_CustomFGUIPackageHelper = null;
 
         [SerializeField]
-        private string m_FUIAssetLoaderHelperTypeName = "UnityGameFramework.Runtime.FairyGUI.DefaultFUIAssetLoaderHelper";
+        private string m_FGUIAssetLoaderHelperTypeName = "UnityGameFramework.Runtime.FairyGUI.DefaultFGUIAssetLoaderHelper";
         
         [SerializeField]
-        private FUIAssetLoaderHelperBase m_CustomFUIAssetLoaderHelper = null;
+        private FGUIAssetLoaderHelperBase m_CustomFGUIAssetLoaderHelper = null;
 
         [SerializeField]
-        private UIGroup[] m_UIGroups = null;
+        private string[] m_UIGroups = null;
 
         [SerializeField]
         private bool m_UnloadUnusedUIPackageImmediately = true;
 
-        private FUIPackageHelperBase m_FUIPackageHelper;
+        private FGUIPackageHelperBase m_FGUIPackageHelper;
+        
+        private readonly Dictionary<string, Type> m_FormLogicDictionary = new Dictionary<string, Type>();
         
         /// <summary>
         /// 获取界面组数量。
@@ -148,11 +152,11 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// <summary>
         /// FairyGUI包辅助器。
         /// </summary>
-        public FUIPackageHelperBase FUIPackageHelper
+        public FGUIPackageHelperBase FGUIPackageHelper
         {
             get
             {
-                return m_FUIPackageHelper;
+                return m_FGUIPackageHelper;
             }
         }
 
@@ -229,19 +233,19 @@ namespace UnityGameFramework.Runtime.FairyGUI
 
             m_UIManager.SetUIFormHelper(uiFormHelper);
             
-            m_FUIPackageHelper = Helper.CreateHelper(m_FUIPackageHelperTypeName, m_CustomFUIPackageHelper);
-            if (m_FUIPackageHelper == null)
+            m_FGUIPackageHelper = Helper.CreateHelper(m_FGUIPackageHelperTypeName, m_CustomFGUIPackageHelper);
+            if (m_FGUIPackageHelper == null)
             {
                 Log.Error("Can not create FUI package helper.");
                 return;
             }
             
-            m_FUIPackageHelper.name = "FUI Package Helper";
-            transform = m_FUIPackageHelper.transform;
+            m_FGUIPackageHelper.name = "FUI Package Helper";
+            transform = m_FGUIPackageHelper.transform;
             transform.SetParent(this.transform);
             transform.localScale = Vector3.one;
             
-            var assetLoaderHelper = Helper.CreateHelper(m_FUIAssetLoaderHelperTypeName, m_CustomFUIAssetLoaderHelper);
+            var assetLoaderHelper = Helper.CreateHelper(m_FGUIAssetLoaderHelperTypeName, m_CustomFGUIAssetLoaderHelper);
             if (assetLoaderHelper == null)
             {
                 Log.Error("Can not create FUI asset loader helper.");
@@ -253,20 +257,19 @@ namespace UnityGameFramework.Runtime.FairyGUI
             transform.SetParent(this.transform);
             transform.localScale = Vector3.one;
 
-            var uiFormAssetHelper = gameObject.AddComponent<FUIFormAssetHelper>();
-            uiFormAssetHelper.name = "UI Form Asset Helper";
+            var uiFormAssetHelper = new GameObject("UI Form Asset Helper").AddComponent<FGUIFormAssetHelper>();
             transform = uiFormAssetHelper.transform;
             transform.SetParent(this.transform);
             transform.localScale = Vector3.one;
-            uiFormAssetHelper.InitHelper(m_FUIPackageHelper, assetLoaderHelper, m_UnloadUnusedUIPackageImmediately);
+            uiFormAssetHelper.InitHelper(m_FGUIPackageHelper, assetLoaderHelper, m_UnloadUnusedUIPackageImmediately);
             
             m_UIManager.SetUIFormAssetHelper(uiFormAssetHelper);
 
             for (int i = 0; i < m_UIGroups.Length; i++)
             {
-                if (!AddUIGroup(m_UIGroups[i].Name, m_UIGroups[i].Depth))
+                if (!AddUIGroup(m_UIGroups[i], i))
                 {
-                    Log.Warning("Add UI group '{0}' failure.", m_UIGroups[i].Name);
+                    Log.Warning("Add UI group '{0}' failure.", m_UIGroups[i]);
                     continue;
                 }
             }
@@ -333,7 +336,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
                 return false;
             }
 
-            return m_UIManager.AddUIGroup(uiGroupName, depth, new FUIGroupHelper(uiGroupName, depth));
+            return m_UIManager.AddUIGroup(uiGroupName, depth, new FGUIGroupHelper(uiGroupName, depth));
         }
 
         /// <summary>
@@ -361,9 +364,9 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// </summary>
         /// <param name="serialId">界面序列编号。</param>
         /// <returns>要获取的界面。</returns>
-        public FUIForm GetUIForm(int serialId)
+        public FGUIForm GetUIForm(int serialId)
         {
-            return (FUIForm)m_UIManager.GetUIForm(serialId);
+            return (FGUIForm)m_UIManager.GetUIForm(serialId);
         }
 
         /// <summary>
@@ -371,9 +374,9 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <returns>要获取的界面。</returns>
-        public FUIForm GetUIForm(string uiFormAssetName)
+        public FGUIForm GetUIForm(string uiFormAssetName)
         {
-            return (FUIForm)m_UIManager.GetUIForm(uiFormAssetName);
+            return (FGUIForm)m_UIManager.GetUIForm(uiFormAssetName);
         }
 
         /// <summary>
@@ -381,13 +384,13 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <returns>要获取的界面。</returns>
-        public FUIForm[] GetUIForms(string uiFormAssetName)
+        public FGUIForm[] GetUIForms(string uiFormAssetName)
         {
             IUIForm[] uiForms = m_UIManager.GetUIForms(uiFormAssetName);
-            FUIForm[] uiFormImpls = new FUIForm[uiForms.Length];
+            FGUIForm[] uiFormImpls = new FGUIForm[uiForms.Length];
             for (int i = 0; i < uiForms.Length; i++)
             {
-                uiFormImpls[i] = (FUIForm)uiForms[i];
+                uiFormImpls[i] = (FGUIForm)uiForms[i];
             }
 
             return uiFormImpls;
@@ -398,7 +401,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <param name="results">要获取的界面。</param>
-        public void GetUIForms(string uiFormAssetName, List<FUIForm> results)
+        public void GetUIForms(string uiFormAssetName, List<FGUIForm> results)
         {
             if (results == null)
             {
@@ -410,7 +413,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
             m_UIManager.GetUIForms(uiFormAssetName, m_InternalUIFormResults);
             foreach (IUIForm uiForm in m_InternalUIFormResults)
             {
-                results.Add((FUIForm)uiForm);
+                results.Add((FGUIForm)uiForm);
             }
         }
 
@@ -418,13 +421,13 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// 获取所有已加载的界面。
         /// </summary>
         /// <returns>所有已加载的界面。</returns>
-        public FUIForm[] GetAllLoadedUIForms()
+        public FGUIForm[] GetAllLoadedUIForms()
         {
             IUIForm[] uiForms = m_UIManager.GetAllLoadedUIForms();
-            FUIForm[] uiFormImpls = new FUIForm[uiForms.Length];
+            FGUIForm[] uiFormImpls = new FGUIForm[uiForms.Length];
             for (int i = 0; i < uiForms.Length; i++)
             {
-                uiFormImpls[i] = (FUIForm)uiForms[i];
+                uiFormImpls[i] = (FGUIForm)uiForms[i];
             }
 
             return uiFormImpls;
@@ -434,7 +437,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// 获取所有已加载的界面。
         /// </summary>
         /// <param name="results">所有已加载的界面。</param>
-        public void GetAllLoadedUIForms(List<FUIForm> results)
+        public void GetAllLoadedUIForms(List<FGUIForm> results)
         {
             if (results == null)
             {
@@ -446,7 +449,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
             m_UIManager.GetAllLoadedUIForms(m_InternalUIFormResults);
             foreach (IUIForm uiForm in m_InternalUIFormResults)
             {
-                results.Add((FUIForm)uiForm);
+                results.Add((FGUIForm)uiForm);
             }
         }
 
@@ -493,7 +496,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// </summary>
         /// <param name="uiForm">界面。</param>
         /// <returns>界面是否合法。</returns>
-        public bool IsValidUIForm(FUIForm uiForm)
+        public bool IsValidUIForm(FGUIForm uiForm)
         {
             return m_UIManager.IsValidUIForm(uiForm);
         }
@@ -621,7 +624,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// 关闭界面。
         /// </summary>
         /// <param name="uiForm">要关闭的界面。</param>
-        public void CloseUIForm(FUIForm uiForm)
+        public void CloseUIForm(FGUIForm uiForm)
         {
             m_UIManager.CloseUIForm(uiForm);
         }
@@ -631,7 +634,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// </summary>
         /// <param name="uiForm">要关闭的界面。</param>
         /// <param name="userData">用户自定义数据。</param>
-        public void CloseUIForm(FUIForm uiForm, object userData)
+        public void CloseUIForm(FGUIForm uiForm, object userData)
         {
             m_UIManager.CloseUIForm(uiForm, userData);
         }
@@ -665,7 +668,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// 激活界面。
         /// </summary>
         /// <param name="uiForm">要激活的界面。</param>
-        public void RefocusUIForm(FUIForm uiForm)
+        public void RefocusUIForm(FGUIForm uiForm)
         {
             m_UIManager.RefocusUIForm(uiForm);
         }
@@ -675,7 +678,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// </summary>
         /// <param name="uiForm">要激活的界面。</param>
         /// <param name="userData">用户自定义数据。</param>
-        public void RefocusUIForm(FUIForm uiForm, object userData)
+        public void RefocusUIForm(FGUIForm uiForm, object userData)
         {
             m_UIManager.RefocusUIForm(uiForm, userData);
         }
@@ -685,7 +688,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// </summary>
         /// <param name="uiForm">要设置是否被加锁的界面。</param>
         /// <param name="locked">界面是否被加锁。</param>
-        public void SetUIFormInstanceLocked(FUIForm uiForm, bool locked)
+        public void SetUIFormInstanceLocked(FGUIForm uiForm, bool locked)
         {
             if (uiForm == null)
             {
@@ -701,7 +704,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// </summary>
         /// <param name="uiForm">要设置优先级的界面。</param>
         /// <param name="priority">界面优先级。</param>
-        public void SetUIFormInstancePriority(FUIForm uiForm, int priority)
+        public void SetUIFormInstancePriority(FGUIForm uiForm, int priority)
         {
             if (uiForm == null)
             {
@@ -712,6 +715,26 @@ namespace UnityGameFramework.Runtime.FairyGUI
             m_UIManager.SetUIFormInstancePriority(uiForm.GameObject, priority);
         }
 
+        /// <summary>
+        /// 注册界面逻辑类型。
+        /// </summary>
+        /// <param name="uiFormAssetName">界面资源名称。</param>
+        /// <param name="type">逻辑类型。</param>
+        public void RegisterFormLogicType(string uiFormAssetName, Type type)
+        {
+            m_FormLogicDictionary.Add(uiFormAssetName, type);
+        }
+
+        /// <summary>
+        /// 获取界面逻辑类型。
+        /// </summary>
+        /// <param name="uiFormAssetName">界面资源名称。</param>
+        /// <returns>逻辑类型。</returns>
+        public Type GetFormLogicType(string uiFormAssetName)
+        {
+            return m_FormLogicDictionary.TryGetValue(uiFormAssetName, out Type type) ? type : null;
+        }
+        
         private void OnOpenUIFormSuccess(object sender, GameFramework.UI.OpenUIFormSuccessEventArgs e)
         {
             m_EventComponent.Fire(this, OpenUIFormSuccessEventArgs.Create(e));

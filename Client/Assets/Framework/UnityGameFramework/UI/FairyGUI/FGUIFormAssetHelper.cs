@@ -12,7 +12,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("")]
-    public sealed class FUIFormAssetHelper : MonoBehaviour, IUIFormAssetHelper
+    public sealed class FGUIFormAssetHelper : MonoBehaviour, IUIFormAssetHelper
     {
         private UIAssetManager m_UIAssetManager = null;
 
@@ -22,12 +22,10 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// <param name="uiPackageHelper">UIPackage辅助工具。</param>
         /// <param name="uiAssetLoader">FairyGUI资源加载器。</param>
         /// <param name="unloadUnusedUIPackageImmediately">是否立即卸载未使用的UIPackage。</param>
-        public void InitHelper(FUIPackageHelperBase uiPackageHelper, FUIAssetLoaderHelperBase uiAssetLoader, bool unloadUnusedUIPackageImmediately)
+        public void InitHelper(FGUIPackageHelperBase uiPackageHelper, FGUIAssetLoaderHelperBase uiAssetLoader, bool unloadUnusedUIPackageImmediately)
         {
             m_UIAssetManager = new UIAssetManager();
             m_UIAssetManager.Initialize(new UIAssetManagerConfiguration(uiPackageHelper, uiAssetLoader, unloadUnusedUIPackageImmediately));
-
-            m_UIAssetManager.Dispose();
         }
 
         private void OnDestroy()

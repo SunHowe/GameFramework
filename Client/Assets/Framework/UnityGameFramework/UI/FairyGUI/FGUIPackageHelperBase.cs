@@ -6,7 +6,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
     /// <summary>
     /// UIPackage辅助工具基类。
     /// </summary>
-    public abstract class FUIPackageHelperBase : MonoBehaviour, IUIPackageHelper
+    public abstract class FGUIPackageHelperBase : MonoBehaviour, IUIPackageHelper
     {
         /// <summary>
         /// 通过包id获取包名。

@@ -309,6 +309,7 @@ Transform:
   - {fileID: 490662}
   - {fileID: 463618}
   - {fileID: 430602}
+  - {fileID: 74039983766771184}
   - {fileID: 450964}
   - {fileID: 2994344119614184352}
   - {fileID: 5937378777060504965}
@@ -815,12 +816,12 @@ GameObject:
   - component: {fileID: 430602}
   - component: {fileID: 11454530}
   m_Layer: 0
-  m_Name: UI
+  m_Name: UGUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &430602
 Transform:
   m_ObjectHideFlags: 0
@@ -858,9 +859,11 @@ MonoBehaviour:
   m_InstanceExpireTime: 60
   m_InstancePriority: 0
   m_InstanceRoot: {fileID: 0}
-  m_UIFormHelperTypeName: UnityGameFramework.Runtime.DefaultUIFormHelper
+  m_UIFormHelperTypeName: UnityGameFramework.Runtime.UGUI.DefaultUGUIFormHelper
   m_CustomUIFormHelper: {fileID: 0}
-  m_UIGroupHelperTypeName: UnityGameFramework.Runtime.DefaultUIGroupHelper
+  m_UIFormAssetHelperTypeName: UnityGameFramework.Runtime.UGUI.DefaultUGUIFormAssetHelper
+  m_CustomUIFormAssetHelper: {fileID: 0}
+  m_UIGroupHelperTypeName: UnityGameFramework.Runtime.UGUI.DefaultUGUIGroupHelper
   m_CustomUIGroupHelper: {fileID: 0}
   m_UIGroups: []
 --- !u!1 &176370
@@ -1183,3 +1186,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc1c6ab1a9084fe7b45dacf474f8c940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8299002124179271351
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 74039983766771184}
+  - component: {fileID: 7024159624654983208}
+  m_Layer: 0
+  m_Name: FGUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &74039983766771184
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8299002124179271351}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 433714}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7024159624654983208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8299002124179271351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a947cdc46a14581b45303e110522377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EnableOpenUIFormSuccessEvent: 1
+  m_EnableOpenUIFormFailureEvent: 1
+  m_EnableOpenUIFormUpdateEvent: 0
+  m_EnableOpenUIFormDependencyAssetEvent: 0
+  m_EnableCloseUIFormCompleteEvent: 1
+  m_InstanceAutoReleaseInterval: 60
+  m_InstanceCapacity: 16
+  m_InstanceExpireTime: 60
+  m_InstancePriority: 0
+  m_UIFormHelperTypeName: UnityGameFramework.Runtime.FairyGUI.DefaultFGUIFormHelper
+  m_CustomUIFormHelper: {fileID: 0}
+  m_FGUIPackageHelperTypeName: UnityGameFramework.Runtime.FairyGUI.DefaultFGUIPackageHelper
+  m_CustomFGUIPackageHelper: {fileID: 0}
+  m_FGUIAssetLoaderHelperTypeName: UnityGameFramework.Runtime.FairyGUI.DefaultFGUIAssetLoaderHelper
+  m_CustomFGUIAssetLoaderHelper: {fileID: 0}
+  m_UIGroups: []
+  m_UnloadUnusedUIPackageImmediately: 1

@@ -6,7 +6,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
     /// FairyGUI包名映射工具。
     /// </summary>
     [CreateAssetMenu]
-    public sealed class FUIPackageMapping : ScriptableObject
+    public sealed class FGUIPackageMapping : ScriptableObject
     {
         /// <summary>
         /// 包名列表 与PackageIds一一对应。

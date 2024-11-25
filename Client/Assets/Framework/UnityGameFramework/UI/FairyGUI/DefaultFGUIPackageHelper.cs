@@ -7,7 +7,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
     /// <summary>
     /// 默认的FairyGUI包辅助工具。
     /// </summary>
-    public sealed class DefaultFUIPackageHelper : FUIPackageHelperBase
+    public sealed class DefaultFGUIPackageHelper : FGUIPackageHelperBase
     {
         /// <summary>
         /// 启动所用的UI资源包名列表 与PackageIds一一对应。
