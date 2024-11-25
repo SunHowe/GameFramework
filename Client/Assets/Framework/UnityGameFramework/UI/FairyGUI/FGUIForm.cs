@@ -198,6 +198,8 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// <param name="userData">用户自定义数据。</param>
         public void OnOpen(object userData)
         {
+            ((FGUIGroupHelper)UIGroup.Helper).GroupRoot.AddChild(m_ContentPane);
+            
             try
             {
                 m_UIFormLogic.OnOpen(userData);
@@ -223,6 +225,8 @@ namespace UnityGameFramework.Runtime.FairyGUI
             {
                 Log.Error("UI form '[{0}]{1}' OnClose with exception '{2}'.", m_SerialId, m_UIFormAssetName, exception);
             }
+            
+            ((FGUIGroupHelper)UIGroup.Helper).GroupRoot.RemoveChild(m_ContentPane);
         }
 
         /// <summary>
