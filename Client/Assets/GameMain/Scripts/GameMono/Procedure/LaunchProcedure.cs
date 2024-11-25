@@ -1,5 +1,8 @@
-﻿using GameFramework.Fsm;
+﻿using GameFramework.Event;
+using GameFramework.Fsm;
 using GameFramework.Procedure;
+using GameMono.UI;
+using UnityGameFramework.Runtime;
 using UnityGameFramework.Runtime.FairyGUI;
 
 namespace GameMono
@@ -9,15 +12,45 @@ namespace GameMono
     /// </summary>
     internal class LaunchProcedure : ProcedureBase
     {
+        private bool m_IsComplete;
+        
         protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
         {
             base.OnEnter(procedureOwner);
+
+            m_IsComplete = false;
+            EventComponent.Instance.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
+            
+            FGUIComponent.Instance.RegisterUIFormBinding<LaunchForm>();
+            FGUIComponent.Instance.OpenUIForm<LaunchForm>();
+        }
+
+        protected override void OnLeave(IFsm<IProcedureManager> procedureOwner, bool isShutdown)
+        {
+            base.OnLeave(procedureOwner, isShutdown);
+            
+            EventComponent.Instance.Unsubscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
         }
 
         protected override void OnUpdate(IFsm<IProcedureManager> procedureOwner, float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
-            ChangeState<CheckAppVersionProcedure>(procedureOwner);
+            
+            if (m_IsComplete)
+            {
+                ChangeState<CheckAppVersionProcedure>(procedureOwner);
+            }
+        }
+
+        private void OnOpenUIFormSuccess(object sender, GameEventArgs e)
+        {
+            var eventArgs = (OpenUIFormSuccessEventArgs) e;
+            if (eventArgs.UIForm.UIFormAssetName != FGUIComponent.Instance.GetUIFormAssetName<LaunchForm>())
+            {
+                return;
+            }
+            
+            m_IsComplete = true;
         }
     }
 }

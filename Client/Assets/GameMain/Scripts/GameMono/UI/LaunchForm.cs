@@ -7,14 +7,9 @@ namespace GameMono.UI
     /// <summary>
     /// 启动界面逻辑。
     /// </summary>
+    [UIForm("ui://Launch/LaunchForm", "Main")]
     public class LaunchForm : FGUIFormLogic
     {
-        
-        
-        public LaunchForm(GComponent contentPane) : base(contentPane)
-        {
-        }
-
         protected override void OnOpen(object userData)
         {
             base.OnOpen(userData);
