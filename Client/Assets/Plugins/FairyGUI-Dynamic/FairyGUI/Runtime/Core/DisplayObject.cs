@@ -301,7 +301,13 @@ namespace FairyGUI
                             ((Container)this).InvalidateBatchingState(true);
                     }
                     else
+                    {
+#if UNITY_EDITOR
+                        if (gameObject == null)
+                            return;
+#endif
                         gameObject.SetActive(false);
+                    }
                 }
             }
         }
