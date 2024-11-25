@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="0jo9lqvc">
+  <resources>
+    <component id="n3k40" name="LaunchForm.xml" path="/" exported="true"/>
+    <component id="ysw91" name="Button.xml" path="/"/>
+    <image id="i0pm2" name="n1.png" path="/"/>
+  </resources>
+  <publish name=""/>
+</packageDescription>

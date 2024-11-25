@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="800,600">
+  <displayList>
+    <component id="n0_ysw9" name="btnTest" src="ysw91" fileName="Button.xml" xy="350,290">
+      <relation target="" sidePair="center-center,middle-middle"/>
+      <Button title="Test"/>
+    </component>
+    <image id="n1_i0pm" name="n1" src="i0pm2" fileName="n1.png" xy="205,81">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </image>
+  </displayList>
+</component>
