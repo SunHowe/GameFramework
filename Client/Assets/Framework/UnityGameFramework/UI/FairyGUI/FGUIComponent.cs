@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using GameFramework;
 using GameFramework.ObjectPool;
 using GameFramework.Resource;
@@ -75,9 +76,9 @@ namespace UnityGameFramework.Runtime.FairyGUI
         private bool m_UnloadUnusedUIPackageImmediately = true;
 
         private FGUIPackageHelperBase m_FGUIPackageHelper;
-        
-        private readonly Dictionary<string, Type> m_FormLogicDictionary = new Dictionary<string, Type>();
-        private readonly Dictionary<Type, UIFormAttribute> m_FormAttributeDictionary = new Dictionary<Type, UIFormAttribute>();
+
+        private readonly Dictionary<string, UIFormBindingInfo> m_UIFormBindingInfoDict = new Dictionary<string, UIFormBindingInfo>();
+        private readonly Dictionary<Type, UIFormBindingInfo> m_UIFormBindingInfoByLogicTypeDict = new Dictionary<Type, UIFormBindingInfo>();
         
         /// <summary>
         /// 获取界面组数量。
@@ -708,6 +709,74 @@ namespace UnityGameFramework.Runtime.FairyGUI
             
             return m_UIManager.OpenUIForm(uiFormAssetName, uiGroupName, priority, pauseCoveredUIForm, userData);
         }
+
+        /// <summary>
+        /// 打开界面，要求该界面已经完成界面信息绑定。
+        /// </summary>
+        /// <param name="uiFormAssetName">界面资源名称。</param>
+        /// <returns>界面的序列编号。</returns>
+        public int OpenUIForm(string uiFormAssetName)
+        {
+            return OpenUIForm(uiFormAssetName, null);
+        }
+
+        /// <summary>
+        /// 打开界面，要求该界面已经完成界面信息绑定。
+        /// </summary>
+        /// <param name="uiFormAssetName">界面资源名称。</param>
+        /// <param name="userData">用户自定义数据。</param>
+        /// <returns>界面的序列编号。</returns>
+        public int OpenUIForm(string uiFormAssetName, object userData)
+        {
+            var bindingInfo = GetUIFormBindingInfo(uiFormAssetName);
+            if (bindingInfo == null)
+            {
+                Log.Error("Cannot find binding info of UIForm '{0}'.", uiFormAssetName);
+                return 0;
+            }
+
+            if (bindingInfo.AllowMultiple)
+            {
+                return OpenUIForm(bindingInfo.UIFormAssetName, bindingInfo.UIGroupName, bindingInfo.Priority, bindingInfo.PauseCoveredUIForm, userData);
+            }
+            else
+            {
+                return OpenSingletonUIForm(bindingInfo.UIFormAssetName, bindingInfo.UIGroupName, bindingInfo.Priority, bindingInfo.PauseCoveredUIForm, userData);
+            }
+        }
+
+        /// <summary>
+        /// 通过界面逻辑类型打开界面，要求该界面已经完成界面信息绑定。
+        /// </summary>
+        /// <returns>界面的序列编号。</returns>
+        public int OpenUIForm<T>() where T : FGUIFormLogic
+        {
+            return OpenUIForm<T>(null);
+        }
+
+        /// <summary>
+        /// 通过界面逻辑类型打开界面，要求该界面已经完成界面信息绑定。
+        /// </summary>
+        /// <param name="userData">用户自定义数据。</param>
+        /// <returns>界面的序列编号。</returns>
+        public int OpenUIForm<T>(object userData) where T : FGUIFormLogic
+        {
+            var bindingInfo = GetUIFormBindingInfo(typeof(T));
+            if (bindingInfo == null)
+            {
+                Log.Error("Cannot find binding info of UIForm '{0}'.", typeof(T).Name);
+                return 0;
+            }
+
+            if (bindingInfo.AllowMultiple)
+            {
+                return OpenUIForm(bindingInfo.UIFormAssetName, bindingInfo.UIGroupName, bindingInfo.Priority, bindingInfo.PauseCoveredUIForm, userData);
+            }
+            else
+            {
+                return OpenSingletonUIForm(bindingInfo.UIFormAssetName, bindingInfo.UIGroupName, bindingInfo.Priority, bindingInfo.PauseCoveredUIForm, userData);
+            }
+        }
         
         /// <summary>
         /// 关闭界面。
@@ -824,13 +893,49 @@ namespace UnityGameFramework.Runtime.FairyGUI
         }
 
         /// <summary>
-        /// 注册界面逻辑类型。
+        /// 通过反射进行界面逻辑类型与界面信息的绑定。需要界面逻辑类型标注了UIFormAttribute特性。
+        /// </summary>
+        /// <param name="uiFormLogicType">界面逻辑类型。</param>
+        public void RegisterUIFormBinding(Type uiFormLogicType)
+        {
+            var attribute = uiFormLogicType.GetCustomAttribute<UIFormAttribute>(false);
+            if (attribute == null)
+            {
+                Log.Error("UIFormAttribute is invalid.");
+                return;
+            }
+
+            var bindingInfo = new UIFormBindingInfo(attribute, uiFormLogicType);
+            m_UIFormBindingInfoDict.Add(attribute.UIFormAssetName, bindingInfo);
+            m_UIFormBindingInfoByLogicTypeDict.Add(uiFormLogicType, bindingInfo);
+        }
+
+        /// <summary>
+        /// 通过反射进行界面逻辑类型与界面信息的绑定。需要界面逻辑类型标注了UIFormAttribute特性。
+        /// </summary>
+        public void RegisterUIFormBinding<T>() where T : FGUIFormLogic
+        {
+            RegisterUIFormBinding(typeof(T));
+        }
+
+        /// <summary>
+        /// 获取界面绑定信息。
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
-        /// <param name="type">逻辑类型。</param>
-        public void RegisterFormLogicType(string uiFormAssetName, Type type)
+        /// <returns>绑定信息实例。</returns>
+        public UIFormBindingInfo GetUIFormBindingInfo(string uiFormAssetName)
         {
-            m_FormLogicDictionary.Add(uiFormAssetName, type);
+            return m_UIFormBindingInfoDict.TryGetValue(uiFormAssetName, out var bindingInfo) ? bindingInfo : null;
+        }
+
+        /// <summary>
+        /// 通过逻辑类型获取界面绑定信息。
+        /// </summary>
+        /// <param name="uiFormLogicType">界面逻辑类型。</param>
+        /// <returns>绑定信息实例。</returns>
+        public UIFormBindingInfo GetUIFormBindingInfo(Type uiFormLogicType)
+        {
+            return m_UIFormBindingInfoByLogicTypeDict.TryGetValue(uiFormLogicType, out var bindingInfo) ? bindingInfo : null;
         }
 
         /// <summary>
@@ -838,9 +943,19 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <returns>逻辑类型。</returns>
-        public Type GetFormLogicType(string uiFormAssetName)
+        public Type GetUIFormLogicType(string uiFormAssetName)
         {
-            return m_FormLogicDictionary.TryGetValue(uiFormAssetName, out Type type) ? type : null;
+            return GetUIFormBindingInfo(uiFormAssetName)?.FormLogicType;
+        }
+
+        /// <summary>
+        /// 通过逻辑类型获取界面资源名。
+        /// </summary>
+        /// <typeparam name="T">界面逻辑类型。</typeparam>
+        /// <returns>界面资源名。</returns>
+        public string GetUIFormAssetName<T>() where T : FGUIFormLogic
+        {
+            return GetUIFormBindingInfo(typeof(T))?.UIFormAssetName ?? string.Empty;
         }
         
         private void OnOpenUIFormSuccess(object sender, GameFramework.UI.OpenUIFormSuccessEventArgs e)

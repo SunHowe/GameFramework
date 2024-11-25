@@ -11,7 +11,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         private bool m_Visible = false;
         private FGUIForm m_UIForm = null;
         
-        private readonly GComponent m_ContentPane = null;
+        private GComponent m_ContentPane = null;
 
         /// <summary>
         /// 获取界面。
@@ -86,11 +86,10 @@ namespace UnityGameFramework.Runtime.FairyGUI
             {
                 return m_ContentPane;
             }
-        }
-
-        protected FGUIFormLogic(GComponent contentPane)
-        {
-            m_ContentPane = contentPane;
+            internal set
+            {
+                m_ContentPane = value;
+            }
         }
 
         /// <summary>

@@ -12,8 +12,8 @@ namespace UnityGameFramework.Runtime.FairyGUI
     public sealed class DefaultFGUIAssetLoaderHelper : FGUIAssetLoaderHelperBase
     {
         private const string UIPackageAssetFormat = "Assets/GameMain/Res/UI/{0}_fui.bytes";
-        private const string UITextureAssetFormat = "Assets/GameMain/Res/UI/{0}.{1}";
-        private const string UIAudioAssetFormat = "Assets/GameMain/Res/UISound/{0}.{1}";
+        private const string UITextureAssetFormat = "Assets/GameMain/Res/UI/{0}_{1}{2}";
+        private const string UIAudioAssetFormat = "Assets/GameMain/Res/UISound/{0}{1}";
         
         private ResourceComponent m_ResourceComponent = null;
         private LoadBinaryCallbacks m_LoadBinaryCallbacks = null;
@@ -35,7 +35,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
 
         public override void LoadTextureAsync(string packageName, string assetName, string extension, LoadTextureCallback callback)
         {
-            assetName = Utility.Text.Format(UITextureAssetFormat, assetName, extension);
+            assetName = Utility.Text.Format(UITextureAssetFormat, packageName, assetName, extension);
             m_ResourceComponent.LoadAsset(assetName, typeof(Texture), m_LoadTextureAssetCallbacks, callback);
         }
 

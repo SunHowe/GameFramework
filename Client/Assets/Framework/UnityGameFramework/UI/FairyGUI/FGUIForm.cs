@@ -147,7 +147,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
             }
             
             // 绑定界面逻辑
-            var formLogicType = FGUIComponent.Instance.GetFormLogicType(uiFormAssetName);
+            var formLogicType = FGUIComponent.Instance.GetUIFormLogicType(uiFormAssetName);
             if (formLogicType == null)
             {
                 Log.Error("UI form '{0}' can not get UI form logic type.", uiFormAssetName);
@@ -161,6 +161,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
                 Log.Error("UI form '{0}' can not get UI form logic.", uiFormAssetName);
                 return;
             }
+            m_UIFormLogic.ContentPane = m_ContentPane;
 
             try
             {

@@ -3,10 +3,9 @@
 namespace UnityGameFramework.Runtime
 {
     /// <summary>
-    /// 界面标签，用于标注界面逻辑，以进行界面与逻辑类型的绑定以及提供通过反射方便打开指定界面的功能。
+    /// UI界面绑定信息。
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
-    public sealed class UIFormAttribute : Attribute
+    public class UIFormBindingInfo
     {
         /// <summary>
         /// 界面资源名称。
@@ -33,13 +32,19 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         public int Priority { get; }
 
-        public UIFormAttribute(string uiFormAssetName, string uiGroupName, bool pauseCoveredUIForm = false, bool allowMultiple = false, int priority = 0)
+        /// <summary>
+        /// 界面逻辑类型
+        /// </summary>
+        public Type FormLogicType { get; }
+
+        public UIFormBindingInfo(UIFormAttribute attribute, Type formLogicType)
         {
-            UIFormAssetName = uiFormAssetName;
-            UIGroupName = uiGroupName;
-            PauseCoveredUIForm = pauseCoveredUIForm;
-            AllowMultiple = allowMultiple;
-            Priority = priority;
+            UIFormAssetName = attribute.UIFormAssetName;
+            UIGroupName = attribute.UIGroupName;
+            PauseCoveredUIForm = attribute.PauseCoveredUIForm;
+            AllowMultiple = attribute.AllowMultiple;
+            Priority = attribute.Priority;
+            FormLogicType = formLogicType;
         }
     }
 }
