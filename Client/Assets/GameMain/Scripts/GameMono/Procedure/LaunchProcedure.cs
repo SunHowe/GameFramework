@@ -21,8 +21,12 @@ namespace GameMono
 
             m_IsComplete = false;
             EventComponent.Instance.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
-            
             FGUIComponent.Instance.RegisterUIFormBinding<LaunchForm>();
+            ResourceComponent.Instance.InitResources(OnInitResourcesComplete);
+        }
+
+        private void OnInitResourcesComplete()
+        {
             FGUIComponent.Instance.OpenUIForm<LaunchForm>();
         }
 
@@ -39,7 +43,6 @@ namespace GameMono
             
             if (m_IsComplete)
             {
-                ChangeState<CheckAppVersionProcedure>(procedureOwner);
             }
         }
 

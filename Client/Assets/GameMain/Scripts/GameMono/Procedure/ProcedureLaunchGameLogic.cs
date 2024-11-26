@@ -5,9 +5,9 @@ using UnityGameFramework.Runtime;
 namespace GameMono
 {
     /// <summary>
-    /// 启动游戏逻辑流程
+    /// 启动游戏逻辑流程。
     /// </summary>
-    internal class LaunchGameLogicProcedure : ProcedureBase
+    internal class ProcedureLaunchGameLogic : ProcedureBase
     {
         protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
         {

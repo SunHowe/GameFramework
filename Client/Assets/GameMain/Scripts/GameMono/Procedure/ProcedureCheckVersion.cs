@@ -3,9 +3,9 @@
 namespace GameMono
 {
     /// <summary>
-    /// 下载资源包流程
+    /// 检测版本流程。
     /// </summary>
-    internal class DownloadResPackageProcedure : ProcedureBase
+    public class ProcedureCheckVersion : ProcedureBase
     {
     }
 }
