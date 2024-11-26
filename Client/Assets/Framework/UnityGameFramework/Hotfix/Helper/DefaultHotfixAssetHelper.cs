@@ -12,7 +12,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         public override string GetAssemblyAssetName(AssemblyInfo assemblyInfo)
         {
-            return Utility.Text.Format("Assets/GameMain/Res/Hotfix/{0}.dll", assemblyInfo.Name);
+            return Utility.Text.Format("Assets/GameMain/Hotfix/{0}.dll", assemblyInfo.Name);
         }
     }
 }

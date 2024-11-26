@@ -28,8 +28,8 @@ namespace UnityGameFramework.Editor.FairyGUI
             },
             new FairyGUIResDirectorySetting
             {
-                DirectoryRoot = "Assets/GameMain/Res/UI/",
-                PackageMappingOutputPath = "Assets/GameMain/Res/UI/PackageMapping.asset",
+                DirectoryRoot = "Assets/GameMain/UI/",
+                PackageMappingOutputPath = "Assets/GameMain/UI/PackageMapping.asset",
                 CodeGenerateSetting = new FairyGUICodeGenerateSetting
                 {
                     Namespace = "GameLogic.UI",

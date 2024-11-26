@@ -5,7 +5,7 @@ set CONF_ROOT=.
 set OUTPUT_DATA_DIR_SERVER=output_server
 set OUTPUT_CODE_DIR_SERVER=output_code_server
 
-set OUTPUT_DATA_DIR_CLIENT=%WORKSPACE%\Client\Assets\GameMain\Res\DataTable
+set OUTPUT_DATA_DIR_CLIENT=%WORKSPACE%\Client\Assets\GameMain\DataTable
 set OUTPUT_CODE_DIR_CLIENT=%WORKSPACE%\Client\Assets\GameMain\Scripts\GameLogic\DataTable\AutoGen
 
 dotnet %LUBAN_DLL% ^

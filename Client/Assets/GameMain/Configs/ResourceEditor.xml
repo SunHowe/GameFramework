@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<UnityGameFramework>
+  <ResourceEditor>
+    <Settings>
+      <SourceAssetRootPath>Assets</SourceAssetRootPath>
+      <SourceAssetSearchPaths />
+      <SourceAssetUnionTypeFilter>
+      </SourceAssetUnionTypeFilter>
+      <SourceAssetUnionLabelFilter>
+      </SourceAssetUnionLabelFilter>
+      <SourceAssetExceptTypeFilter>
+      </SourceAssetExceptTypeFilter>
+      <SourceAssetExceptLabelFilter>
+      </SourceAssetExceptLabelFilter>
+      <AssetSorter>Path</AssetSorter>
+    </Settings>
+  </ResourceEditor>
+</UnityGameFramework>

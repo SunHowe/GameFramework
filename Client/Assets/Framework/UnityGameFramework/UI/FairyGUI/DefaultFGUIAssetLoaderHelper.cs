@@ -11,9 +11,9 @@ namespace UnityGameFramework.Runtime.FairyGUI
     /// </summary>
     public sealed class DefaultFGUIAssetLoaderHelper : FGUIAssetLoaderHelperBase
     {
-        private const string UI_PACKAGE_ASSET_FORMAT = "Assets/GameMain/Res/UI/{0}_fui.bytes";
-        private const string UI_TEXTURE_ASSET_FORMAT = "Assets/GameMain/Res/UI/{0}_{1}{2}";
-        private const string UI_AUDIO_ASSET_FORMAT = "Assets/GameMain/Res/UISound/{0}{1}";
+        private const string UI_PACKAGE_ASSET_FORMAT = "Assets/GameMain/UI/{0}_fui.bytes";
+        private const string UI_TEXTURE_ASSET_FORMAT = "Assets/GameMain/UI/{0}_{1}{2}";
+        private const string UI_AUDIO_ASSET_FORMAT = "Assets/GameMain/UISound/{0}{1}";
         
         private const string RESOURCES_UI_PACKAGE_ASSET_FORMAT = "Assets/GameMain/Resources/UI/{0}_fui.bytes";
         private const string RESOURCES_UI_TEXTURE_ASSET_FORMAT = "Assets/GameMain/Resources/UI/{0}_{1}{2}";

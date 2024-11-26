@@ -10,7 +10,7 @@ namespace GameLogic
     /// </summary>
     public sealed partial class DataTableModule : GameLogicBase<DataTableModule>
     {
-        private const string DATA_TABLE_ASSET_PATH = "Assets/GameMain/Res/DataTable/{0}.bytes";
+        private const string DATA_TABLE_ASSET_PATH = "Assets/GameMain/DataTable/{0}.bytes";
         
         private UniTask<ByteBuf> LoadDataTableAsync(string outputDataTableName)
         {
