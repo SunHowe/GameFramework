@@ -34,7 +34,7 @@ namespace GameMono.UI.Launch
         /// </summary>
         private void RegisterFeatures()
         {
-            this.AddScreenAdaptor(UIFormScreenAdaptorType.FullScreen); // 设置屏幕适配器
+            this.AddScreenAdaptor(FGUIFormScreenAdaptorType.FullScreen); // 设置屏幕适配器
         }
     }
 }

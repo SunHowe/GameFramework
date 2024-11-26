@@ -3,7 +3,7 @@
     /// <summary>
     /// 界面屏幕适配器类型。
     /// </summary>
-    public enum UIFormScreenAdaptorType
+    public enum FGUIFormScreenAdaptorType
     {
         /// <summary>
         /// 固定尺寸界面适配器。

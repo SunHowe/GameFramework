@@ -10,27 +10,27 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// <summary>
         /// 添加屏幕适配器。
         /// </summary>
-        public static void AddScreenAdaptor(this FGUIFormLogic fguiFormLogic, UIFormScreenAdaptorType adaptorType)
+        public static void AddScreenAdaptor(this FGUIFormLogic fguiFormLogic, FGUIFormScreenAdaptorType adaptorType)
         {
             switch (adaptorType)
             {
-                case UIFormScreenAdaptorType.Constant:
+                case FGUIFormScreenAdaptorType.Constant:
                     // 不用处理
                     break;
-                case UIFormScreenAdaptorType.ConstantHorizontalCenter:
-                    fguiFormLogic.AddFeature<UIFormConstantFeature>().Configure(isHorizontalCenter: true);
+                case FGUIFormScreenAdaptorType.ConstantHorizontalCenter:
+                    fguiFormLogic.AddFeature<FGUIFormConstantFeature>().Configure(isHorizontalCenter: true);
                     break;
-                case UIFormScreenAdaptorType.ConstantVerticalCenter:
-                    fguiFormLogic.AddFeature<UIFormConstantFeature>().Configure(isVerticalCenter: true);
+                case FGUIFormScreenAdaptorType.ConstantVerticalCenter:
+                    fguiFormLogic.AddFeature<FGUIFormConstantFeature>().Configure(isVerticalCenter: true);
                     break;
-                case UIFormScreenAdaptorType.ConstantCenter:
-                    fguiFormLogic.AddFeature<UIFormConstantFeature>().Configure(true, true);
+                case FGUIFormScreenAdaptorType.ConstantCenter:
+                    fguiFormLogic.AddFeature<FGUIFormConstantFeature>().Configure(true, true);
                     break;
-                case UIFormScreenAdaptorType.FullScreen:
-                    fguiFormLogic.AddFeature<UIFormFullScreenFeature>();
+                case FGUIFormScreenAdaptorType.FullScreen:
+                    fguiFormLogic.AddFeature<FGUIFormFullScreenFeature>();
                     break;
-                case UIFormScreenAdaptorType.SafeAreaFullScreen:
-                    fguiFormLogic.AddFeature<UIFormSafeAreaFeature>();
+                case FGUIFormScreenAdaptorType.SafeAreaFullScreen:
+                    fguiFormLogic.AddFeature<FGUIFormSafeAreaFeature>();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(adaptorType), adaptorType, null);

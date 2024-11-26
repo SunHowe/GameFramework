@@ -6,7 +6,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
     /// <summary>
     /// 安全区域屏幕界面适配器, 界面尺寸始终与安全区域尺寸相同且位置始终与安全区域位置相同。
     /// </summary>
-    internal class UIFormSafeAreaFeature : Feature<FGUIFormLogic>
+    internal class FGUIFormSafeAreaFeature : Feature<FGUIFormLogic>
     {
         public override void Awake(IFeatureOwner featureOwner)
         {

@@ -7,7 +7,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
     /// <summary>
     /// 全屏界面适配器, 界面尺寸随屏幕尺寸变化, 提供安全区域适配功能 节点名固定为safeArea。
     /// </summary>
-    internal class UIFormFullScreenFeature : Feature<FGUIFormLogic>
+    internal class FGUIFormFullScreenFeature : Feature<FGUIFormLogic>
     {
         private GObject m_SafeAreaObject;
         

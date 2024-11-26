@@ -6,7 +6,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
     /// <summary>
     /// 固定尺寸界面适配器, 界面尺寸不随屏幕尺寸变化, 提供位置适配功能。
     /// </summary>
-    internal class UIFormConstantFeature : Feature<FGUIFormLogic>
+    internal class FGUIFormConstantFeature : Feature<FGUIFormLogic>
     {
         private bool m_IsHorizontalCenter;
         private bool m_IsVerticalCenter;
