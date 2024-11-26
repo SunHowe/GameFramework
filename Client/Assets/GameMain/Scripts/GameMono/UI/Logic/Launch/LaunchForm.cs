@@ -12,6 +12,7 @@ namespace GameMono.UI.Launch
             base.OnInit(userData);
             RegisterComponents(); // 绑定UI组件
             RegisterUIEvents();   // 注册UI事件
+            RegisterFeatures();   // 注册UI功能
         }
 
         protected override void OnOpen(object userData)
@@ -26,6 +27,14 @@ namespace GameMono.UI.Launch
         /// </summary>
         private void RegisterUIEvents()
         {
+        }
+
+        /// <summary>
+        /// 注册UI功能。
+        /// </summary>
+        private void RegisterFeatures()
+        {
+            this.AddScreenAdaptor(UIFormScreenAdaptorType.FullScreen); // 设置屏幕适配器
         }
     }
 }
