@@ -10,7 +10,7 @@
         /// </summary>
         public static T GetFeature<T>(this IFeatureOwner owner) where T : class, IFeature
         {
-            return owner.FeatureContainer.GetFeature<T>();
+            return owner.FeatureContainer?.GetFeature<T>();
         }
 
         /// <summary>
@@ -18,7 +18,7 @@
         /// </summary>
         public static bool HasFeature<T>(this IFeatureOwner owner) where T : class, IFeature
         {
-            return owner.FeatureContainer.HasFeature<T>();
+            return owner.FeatureContainer?.HasFeature<T>() ?? false;
         }
 
         /// <summary>
@@ -26,7 +26,14 @@
         /// </summary>
         public static T AddFeature<T>(this IFeatureOwner owner) where T : class, IFeature, new()
         {
-            return owner.FeatureContainer.AddFeature<T>();
+            var featureContainer = owner.FeatureContainer;
+            if (featureContainer == null)
+            {
+                featureContainer = new FeatureContainer(owner);
+                owner.FeatureContainer = featureContainer;
+            }
+            
+            return featureContainer.AddFeature<T>();
         }
 
         /// <summary>
@@ -34,7 +41,7 @@
         /// </summary>
         public static void RemoveFeature<T>(this IFeatureOwner owner) where T : class, IFeature
         {
-            owner.FeatureContainer.RemoveFeature<T>();
+            owner.FeatureContainer?.RemoveFeature<T>();
         }
     }
 }

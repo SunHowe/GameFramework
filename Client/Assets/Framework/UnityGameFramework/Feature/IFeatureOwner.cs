@@ -8,6 +8,6 @@
         /// <summary>
         /// 功能容器。需要功能持有者维护其生命周期。
         /// </summary>
-        FeatureContainer FeatureContainer { get; }
+        FeatureContainer FeatureContainer { get; set; }
     }
 }

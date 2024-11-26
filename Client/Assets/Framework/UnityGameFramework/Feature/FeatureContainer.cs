@@ -49,9 +49,9 @@ namespace UnityGameFramework.Runtime
         public T AddFeature<T>() where T : class, IFeature, new()
         {
             var featureType = typeof(T);
-            if (m_FeatureDict.ContainsKey(featureType))
+            if (m_FeatureDict.TryGetValue(featureType, out var existingFeature))
             {
-                throw new Exception($"Feature {featureType} already added.");
+                return (T)existingFeature;
             }
 
             var feature = new T();
