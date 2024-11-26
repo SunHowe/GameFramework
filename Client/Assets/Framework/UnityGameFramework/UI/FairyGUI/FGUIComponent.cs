@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using FairyGUI;
 using FairyGUI.Dynamic;
 using GameFramework;
 using GameFramework.ObjectPool;
@@ -75,6 +76,15 @@ namespace UnityGameFramework.Runtime.FairyGUI
 
         [SerializeField]
         private bool m_UnloadUnusedUIPackageImmediately = true;
+
+        [SerializeField]
+        private int m_DesignResolutionX = 1280;
+        
+        [SerializeField]
+        private int m_DesignResolutionY = 720;
+        
+        [SerializeField]
+        private UIContentScaler.ScreenMatchMode m_ScreenMatchMode = UIContentScaler.ScreenMatchMode.MatchWidthOrHeight;
 
         private FGUIPackageHelper m_FGUIPackageHelper;
 
@@ -267,6 +277,9 @@ namespace UnityGameFramework.Runtime.FairyGUI
             uiFormAssetHelper.InitHelper(m_FGUIPackageHelper, assetLoaderHelper, m_UnloadUnusedUIPackageImmediately);
             
             m_UIManager.SetUIFormAssetHelper(uiFormAssetHelper);
+            
+            // 设置设计分辨率。
+            GRoot.inst.SetContentScaleFactor(m_DesignResolutionX, m_DesignResolutionY, m_ScreenMatchMode);
 
             for (int i = 0; i < m_UIGroups.Length; i++)
             {

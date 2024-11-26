@@ -27,6 +27,9 @@ namespace UnityGameFramework.Editor
         private SerializedProperty m_UnloadUnusedUIPackageImmediately = null;
         private SerializedProperty m_FGUIPackageMappingOnResources = null;
         private SerializedProperty m_FGUIPackageMappingHotfix = null;
+        private SerializedProperty m_DesignResolutionX = null;
+        private SerializedProperty m_DesignResolutionY = null;
+        private SerializedProperty m_ScreenMatchMode = null;
 
         private HelperInfo<UIFormHelperBase> m_UIFormHelperInfo = new HelperInfo<UIFormHelperBase>("UIForm");
         private HelperInfo<FGUIAssetLoaderHelperBase> m_FUIAssetLoaderHelperInfo = new HelperInfo<FGUIAssetLoaderHelperBase>("FGUIAssetLoader");
@@ -109,6 +112,9 @@ namespace UnityGameFramework.Editor
                 EditorGUILayout.PropertyField(m_FGUIPackageMappingOnResources);
                 EditorGUILayout.PropertyField(m_FGUIPackageMappingHotfix);
                 EditorGUILayout.PropertyField(m_UnloadUnusedUIPackageImmediately);
+                EditorGUILayout.PropertyField(m_DesignResolutionX);
+                EditorGUILayout.PropertyField(m_DesignResolutionY);
+                EditorGUILayout.PropertyField(m_ScreenMatchMode);
             }
             EditorGUI.EndDisabledGroup();
 
@@ -144,6 +150,9 @@ namespace UnityGameFramework.Editor
             m_UnloadUnusedUIPackageImmediately = serializedObject.FindProperty("m_UnloadUnusedUIPackageImmediately");
             m_FGUIPackageMappingOnResources = serializedObject.FindProperty("m_FGUIPackageMappingOnResources");
             m_FGUIPackageMappingHotfix = serializedObject.FindProperty("m_FGUIPackageMappingHotfix");
+            m_DesignResolutionX = serializedObject.FindProperty("m_DesignResolutionX");
+            m_DesignResolutionY = serializedObject.FindProperty("m_DesignResolutionY");
+            m_ScreenMatchMode = serializedObject.FindProperty("m_ScreenMatchMode");
 
             m_UIFormHelperInfo.Init(serializedObject);
             m_FUIAssetLoaderHelperInfo.Init(serializedObject);
