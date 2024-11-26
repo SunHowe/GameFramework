@@ -54,6 +54,9 @@ namespace UnityGameFramework.Runtime.FairyGUI
         private int m_InstancePriority = 0;
 
         [SerializeField]
+        private bool m_EnableUIFormOpenQueue;
+
+        [SerializeField]
         private string m_UIFormHelperTypeName = "UnityGameFramework.Runtime.FairyGUI.DefaultFGUIFormHelper";
 
         [SerializeField]
@@ -237,6 +240,11 @@ namespace UnityGameFramework.Runtime.FairyGUI
             m_UIManager.InstanceCapacity = m_InstanceCapacity;
             m_UIManager.InstanceExpireTime = m_InstanceExpireTime;
             m_UIManager.InstancePriority = m_InstancePriority;
+
+            if (m_EnableUIFormOpenQueue)
+            {
+                m_UIManager.EnableOpenUIQueueMode();
+            }
 
             UIFormHelperBase uiFormHelper = Helper.CreateHelper(m_UIFormHelperTypeName, m_CustomUIFormHelper);
             if (uiFormHelper == null)

@@ -34,6 +34,11 @@ namespace GameFramework.UI
         private EventHandler<OpenUIFormDependencyAssetEventArgs> m_OpenUIFormDependencyAssetEventHandler;
         private EventHandler<CloseUIFormCompleteEventArgs> m_CloseUIFormCompleteEventHandler;
 
+        private readonly GameFrameworkLinkedList<OpenUIFormInfo> m_UIFormOpenQueue;
+        private readonly Dictionary<int, OpenUIFormInfo> m_UIFormOpenDict;
+        private bool m_EnableUIFormOpenQueue;
+        private bool m_CheckingUIFormOpenQueue;
+
         /// <summary>
         /// 初始化界面管理器的新实例。
         /// </summary>
@@ -55,6 +60,10 @@ namespace GameFramework.UI
             m_OpenUIFormUpdateEventHandler = null;
             m_OpenUIFormDependencyAssetEventHandler = null;
             m_CloseUIFormCompleteEventHandler = null;
+            m_UIFormOpenQueue = new GameFrameworkLinkedList<OpenUIFormInfo>();
+            m_UIFormOpenDict = new Dictionary<int, OpenUIFormInfo>();
+            m_EnableUIFormOpenQueue = false;
+            m_CheckingUIFormOpenQueue = false;
         }
 
         /// <summary>
@@ -217,6 +226,11 @@ namespace GameFramework.UI
                 m_InstancePool.Unspawn(uiForm.Handle);
             }
 
+            if (m_EnableUIFormOpenQueue)
+            {
+                CheckUIFormOpenQueue();
+            }
+
             foreach (KeyValuePair<string, UIGroup> uiGroup in m_UIGroups)
             {
                 uiGroup.Value.Update(elapseSeconds, realElapseSeconds);
@@ -234,6 +248,8 @@ namespace GameFramework.UI
             m_UIFormsBeingLoaded.Clear();
             m_UIFormsToReleaseOnLoad.Clear();
             m_RecycleQueue.Clear();
+            m_UIFormOpenQueue.Clear();
+            m_UIFormOpenDict.Clear();
         }
 
         /// <summary>
@@ -277,6 +293,15 @@ namespace GameFramework.UI
             }
             
             m_UIFormAssetHelper = uiFormAssetHelper;
+        }
+
+        /// <summary>
+        /// 开启界面打开队列模式。
+        /// 打开该模式后，会按照调用OpenForm的顺序依次打开界面，如果前一个界面还未加载完成，即使后面的界面加载完成了也不会显示。
+        /// </summary>
+        public void EnableOpenUIQueueMode()
+        {
+            m_EnableUIFormOpenQueue = true;
         }
 
         /// <summary>
@@ -750,14 +775,28 @@ namespace GameFramework.UI
 
             int serialId = ++m_Serial;
             UIFormInstanceObject uiFormInstanceObject = m_InstancePool.Spawn(uiFormAssetName);
+            OpenUIFormInfo openUIFormInfo = OpenUIFormInfo.Create(serialId, uiFormAssetName, uiFormInstanceObject?.Target, uiGroup, pauseCoveredUIForm, userData);
+
+            if (m_EnableUIFormOpenQueue)
+            {
+                // 加到队列结尾。
+                m_UIFormOpenQueue.AddLast(openUIFormInfo);
+                m_UIFormOpenDict.Add(serialId, openUIFormInfo);
+            }
+            
             if (uiFormInstanceObject == null)
             {
                 m_UIFormsBeingLoaded.Add(serialId, uiFormAssetName);
-                m_UIFormAssetHelper.LoadUIFormAsset(uiFormAssetName, priority, m_LoadAssetCallbacks, OpenUIFormInfo.Create(serialId, uiGroup, pauseCoveredUIForm, userData));
+                m_UIFormAssetHelper.LoadUIFormAsset(uiFormAssetName, priority, m_LoadAssetCallbacks, openUIFormInfo);
+            }
+            else if (m_EnableUIFormOpenQueue)
+            {
+                m_UIFormsBeingLoaded.Add(serialId, uiFormAssetName);
+                CheckUIFormOpenQueue();
             }
             else
             {
-                InternalOpenUIForm(serialId, uiFormAssetName, uiGroup, uiFormInstanceObject.Target, pauseCoveredUIForm, false, 0f, userData);
+                InternalOpenUIForm(openUIFormInfo);
             }
 
             return serialId;
@@ -783,6 +822,14 @@ namespace GameFramework.UI
             {
                 m_UIFormsToReleaseOnLoad.Add(serialId);
                 m_UIFormsBeingLoaded.Remove(serialId);
+
+                if (m_EnableUIFormOpenQueue && m_UIFormOpenDict.TryGetValue(serialId, out OpenUIFormInfo openUIFormInfo))
+                {
+                    // 这里不做openUIFormInfo的回收 等事件返回后再回收。
+                    m_UIFormOpenDict.Remove(serialId);
+                    m_UIFormOpenQueue.Remove(openUIFormInfo);
+                }
+                
                 return;
             }
 
@@ -873,6 +920,13 @@ namespace GameFramework.UI
             }
 
             m_UIFormsBeingLoaded.Clear();
+            
+            if (m_EnableUIFormOpenQueue)
+            {
+                // 这里不做openUIFormInfo的回收 等事件返回后再回收。
+                m_UIFormOpenDict.Clear();
+                m_UIFormOpenQueue.Clear();
+            }
         }
 
         /// <summary>
@@ -937,24 +991,24 @@ namespace GameFramework.UI
             m_InstancePool.SetPriority(uiFormInstance, priority);
         }
 
-        private void InternalOpenUIForm(int serialId, string uiFormAssetName, UIGroup uiGroup, object uiFormInstance, bool pauseCoveredUIForm, bool isNewInstance, float duration, object userData)
+        private void InternalOpenUIForm(OpenUIFormInfo openUIFormInfo)
         {
             try
             {
-                IUIForm uiForm = m_UIFormHelper.CreateUIForm(uiFormInstance, uiGroup, userData);
+                IUIForm uiForm = m_UIFormHelper.CreateUIForm(openUIFormInfo.FormInstance, openUIFormInfo.UIGroup, openUIFormInfo.UserData);
                 if (uiForm == null)
                 {
                     throw new GameFrameworkException("Can not create UI form in UI form helper.");
                 }
 
-                uiForm.OnInit(serialId, uiFormAssetName, uiGroup, pauseCoveredUIForm, isNewInstance, userData);
-                uiGroup.AddUIForm(uiForm);
-                uiForm.OnOpen(userData);
-                uiGroup.Refresh();
+                uiForm.OnInit(openUIFormInfo.SerialId, openUIFormInfo.UIFormAssetName, openUIFormInfo.UIGroup, openUIFormInfo.PauseCoveredUIForm, openUIFormInfo.IsNewInstance, openUIFormInfo.UserData);
+                openUIFormInfo.UIGroup.AddUIForm(uiForm);
+                uiForm.OnOpen(openUIFormInfo.UserData);
+                openUIFormInfo.UIGroup.Refresh();
 
                 if (m_OpenUIFormSuccessEventHandler != null)
                 {
-                    OpenUIFormSuccessEventArgs openUIFormSuccessEventArgs = OpenUIFormSuccessEventArgs.Create(uiForm, duration, userData);
+                    OpenUIFormSuccessEventArgs openUIFormSuccessEventArgs = OpenUIFormSuccessEventArgs.Create(uiForm, openUIFormInfo.Duration, openUIFormInfo.UserData);
                     m_OpenUIFormSuccessEventHandler(this, openUIFormSuccessEventArgs);
                     ReferencePool.Release(openUIFormSuccessEventArgs);
                 }
@@ -963,7 +1017,7 @@ namespace GameFramework.UI
             {
                 if (m_OpenUIFormFailureEventHandler != null)
                 {
-                    OpenUIFormFailureEventArgs openUIFormFailureEventArgs = OpenUIFormFailureEventArgs.Create(serialId, uiFormAssetName, uiGroup.Name, pauseCoveredUIForm, exception.ToString(), userData);
+                    OpenUIFormFailureEventArgs openUIFormFailureEventArgs = OpenUIFormFailureEventArgs.Create(openUIFormInfo.SerialId, openUIFormInfo.UIFormAssetName, openUIFormInfo.UIGroup.Name, openUIFormInfo.PauseCoveredUIForm, exception.ToString(), openUIFormInfo.UserData);
                     m_OpenUIFormFailureEventHandler(this, openUIFormFailureEventArgs);
                     ReferencePool.Release(openUIFormFailureEventArgs);
                     return;
@@ -971,6 +1025,54 @@ namespace GameFramework.UI
 
                 throw;
             }
+            finally
+            {
+                ReferencePool.Release(openUIFormInfo);
+            }
+        }
+
+        /// <summary>
+        /// 检查打开队列。
+        /// </summary>
+        private void CheckUIFormOpenQueue()
+        {
+            if (m_CheckingUIFormOpenQueue)
+            {
+                return;
+            }
+
+            if (m_UIFormOpenQueue.Count == 0)
+            {
+                return;
+            }
+
+            m_CheckingUIFormOpenQueue = true;
+
+            while (m_UIFormOpenQueue.Count > 0)
+            {
+                OpenUIFormInfo openUIFormInfo = m_UIFormOpenQueue.First.Value;
+                
+                // 如果正在加载，则等待加载完成
+                if (!openUIFormInfo.IsLoaded)
+                {
+                    break;
+                }
+                
+                m_UIFormOpenQueue.RemoveFirst();
+                m_UIFormsBeingLoaded.Remove(openUIFormInfo.SerialId);
+
+                try
+                {
+                    InternalOpenUIForm(openUIFormInfo);
+                }
+                catch (Exception)
+                {
+                    m_CheckingUIFormOpenQueue = false;
+                    throw;
+                }
+            }
+
+            m_CheckingUIFormOpenQueue = false;
         }
 
         private void LoadAssetSuccessCallback(string uiFormAssetName, object uiFormAsset, float duration, object userData)
@@ -989,12 +1091,19 @@ namespace GameFramework.UI
                 return;
             }
 
-            m_UIFormsBeingLoaded.Remove(openUIFormInfo.SerialId);
             UIFormInstanceObject uiFormInstanceObject = UIFormInstanceObject.Create(uiFormAssetName, uiFormAsset, m_UIFormHelper.InstantiateUIForm(uiFormAsset), m_UIFormHelper);
             m_InstancePool.Register(uiFormInstanceObject, true);
 
-            InternalOpenUIForm(openUIFormInfo.SerialId, uiFormAssetName, openUIFormInfo.UIGroup, uiFormInstanceObject.Target, openUIFormInfo.PauseCoveredUIForm, true, duration, openUIFormInfo.UserData);
-            ReferencePool.Release(openUIFormInfo);
+            openUIFormInfo.OnLoadDone(uiFormInstanceObject.Target, duration);
+            if (m_EnableUIFormOpenQueue)
+            {
+                CheckUIFormOpenQueue();
+            }
+            else
+            {
+                m_UIFormsBeingLoaded.Remove(openUIFormInfo.SerialId);
+                InternalOpenUIForm(openUIFormInfo);
+            }
         }
 
         private void LoadAssetFailureCallback(string uiFormAssetName, LoadResourceStatus status, string errorMessage, object userData)
@@ -1008,19 +1117,28 @@ namespace GameFramework.UI
             if (m_UIFormsToReleaseOnLoad.Contains(openUIFormInfo.SerialId))
             {
                 m_UIFormsToReleaseOnLoad.Remove(openUIFormInfo.SerialId);
+                ReferencePool.Release(openUIFormInfo);
                 return;
             }
 
             m_UIFormsBeingLoaded.Remove(openUIFormInfo.SerialId);
+            if (m_EnableUIFormOpenQueue)
+            {
+                m_UIFormOpenDict.Remove(openUIFormInfo.SerialId);
+                m_UIFormOpenQueue.Remove(openUIFormInfo);
+            }
+            
             string appendErrorMessage = Utility.Text.Format("Load UI form failure, asset name '{0}', status '{1}', error message '{2}'.", uiFormAssetName, status, errorMessage);
             if (m_OpenUIFormFailureEventHandler != null)
             {
                 OpenUIFormFailureEventArgs openUIFormFailureEventArgs = OpenUIFormFailureEventArgs.Create(openUIFormInfo.SerialId, uiFormAssetName, openUIFormInfo.UIGroup.Name, openUIFormInfo.PauseCoveredUIForm, appendErrorMessage, openUIFormInfo.UserData);
                 m_OpenUIFormFailureEventHandler(this, openUIFormFailureEventArgs);
+                ReferencePool.Release(openUIFormInfo);
                 ReferencePool.Release(openUIFormFailureEventArgs);
-                return;
             }
 
+            ReferencePool.Release(openUIFormInfo);
+            
             throw new GameFrameworkException(appendErrorMessage);
         }
 

@@ -58,6 +58,9 @@ namespace UnityGameFramework.Runtime.UGUI
         private int m_InstancePriority = 0;
 
         [SerializeField]
+        private bool m_EnableUIFormOpenQueue;
+
+        [SerializeField]
         private Transform m_InstanceRoot = null;
 
         [SerializeField]
@@ -213,6 +216,11 @@ namespace UnityGameFramework.Runtime.UGUI
             m_UIManager.InstanceCapacity = m_InstanceCapacity;
             m_UIManager.InstanceExpireTime = m_InstanceExpireTime;
             m_UIManager.InstancePriority = m_InstancePriority;
+
+            if (m_EnableUIFormOpenQueue)
+            {
+                m_UIManager.EnableOpenUIQueueMode();
+            }
 
             UIFormHelperBase uiFormHelper = Helper.CreateHelper(m_UIFormHelperTypeName, m_CustomUIFormHelper);
             if (uiFormHelper == null)

@@ -23,6 +23,7 @@ namespace UnityGameFramework.Editor
         private SerializedProperty m_InstanceCapacity = null;
         private SerializedProperty m_InstanceExpireTime = null;
         private SerializedProperty m_InstancePriority = null;
+        private SerializedProperty m_EnableUIFormOpenQueue = null;
         private SerializedProperty m_UIGroups = null;
         private SerializedProperty m_UnloadUnusedUIPackageImmediately = null;
         private SerializedProperty m_FGUIPackageMappingOnResources = null;
@@ -49,6 +50,14 @@ namespace UnityGameFramework.Editor
                 EditorGUILayout.PropertyField(m_EnableOpenUIFormUpdateEvent);
                 EditorGUILayout.PropertyField(m_EnableOpenUIFormDependencyAssetEvent);
                 EditorGUILayout.PropertyField(m_EnableCloseUIFormCompleteEvent);
+                EditorGUILayout.PropertyField(m_EnableUIFormOpenQueue);
+                EditorGUILayout.PropertyField(m_UnloadUnusedUIPackageImmediately);
+                EditorGUILayout.PropertyField(m_DesignResolutionX);
+                EditorGUILayout.PropertyField(m_DesignResolutionY);
+                EditorGUILayout.PropertyField(m_ScreenMatchMode);
+                EditorGUILayout.PropertyField(m_UIGroups, true);
+                EditorGUILayout.PropertyField(m_FGUIPackageMappingOnResources);
+                EditorGUILayout.PropertyField(m_FGUIPackageMappingHotfix);
             }
             EditorGUI.EndDisabledGroup();
 
@@ -108,13 +117,6 @@ namespace UnityGameFramework.Editor
             {
                 m_UIFormHelperInfo.Draw();
                 m_FUIAssetLoaderHelperInfo.Draw();
-                EditorGUILayout.PropertyField(m_UIGroups, true);
-                EditorGUILayout.PropertyField(m_FGUIPackageMappingOnResources);
-                EditorGUILayout.PropertyField(m_FGUIPackageMappingHotfix);
-                EditorGUILayout.PropertyField(m_UnloadUnusedUIPackageImmediately);
-                EditorGUILayout.PropertyField(m_DesignResolutionX);
-                EditorGUILayout.PropertyField(m_DesignResolutionY);
-                EditorGUILayout.PropertyField(m_ScreenMatchMode);
             }
             EditorGUI.EndDisabledGroup();
 
@@ -146,6 +148,7 @@ namespace UnityGameFramework.Editor
             m_InstanceCapacity = serializedObject.FindProperty("m_InstanceCapacity");
             m_InstanceExpireTime = serializedObject.FindProperty("m_InstanceExpireTime");
             m_InstancePriority = serializedObject.FindProperty("m_InstancePriority");
+            m_EnableUIFormOpenQueue = serializedObject.FindProperty("m_EnableUIFormOpenQueue");
             m_UIGroups = serializedObject.FindProperty("m_UIGroups");
             m_UnloadUnusedUIPackageImmediately = serializedObject.FindProperty("m_UnloadUnusedUIPackageImmediately");
             m_FGUIPackageMappingOnResources = serializedObject.FindProperty("m_FGUIPackageMappingOnResources");

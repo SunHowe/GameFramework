@@ -23,6 +23,7 @@ namespace UnityGameFramework.Editor
         private SerializedProperty m_InstanceCapacity = null;
         private SerializedProperty m_InstanceExpireTime = null;
         private SerializedProperty m_InstancePriority = null;
+        private SerializedProperty m_EnableUIFormOpenQueue = null;
         private SerializedProperty m_InstanceRoot = null;
         private SerializedProperty m_UIGroups = null;
 
@@ -45,6 +46,7 @@ namespace UnityGameFramework.Editor
                 EditorGUILayout.PropertyField(m_EnableOpenUIFormUpdateEvent);
                 EditorGUILayout.PropertyField(m_EnableOpenUIFormDependencyAssetEvent);
                 EditorGUILayout.PropertyField(m_EnableCloseUIFormCompleteEvent);
+                EditorGUILayout.PropertyField(m_EnableUIFormOpenQueue);
             }
             EditorGUI.EndDisabledGroup();
 
@@ -138,6 +140,7 @@ namespace UnityGameFramework.Editor
             m_InstanceCapacity = serializedObject.FindProperty("m_InstanceCapacity");
             m_InstanceExpireTime = serializedObject.FindProperty("m_InstanceExpireTime");
             m_InstancePriority = serializedObject.FindProperty("m_InstancePriority");
+            m_EnableUIFormOpenQueue = serializedObject.FindProperty("m_EnableUIFormOpenQueue");
             m_InstanceRoot = serializedObject.FindProperty("m_InstanceRoot");
             m_UIGroups = serializedObject.FindProperty("m_UIGroups");
 

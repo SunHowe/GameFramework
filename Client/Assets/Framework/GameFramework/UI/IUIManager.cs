@@ -105,6 +105,12 @@ namespace GameFramework.UI
         void SetUIFormAssetHelper(IUIFormAssetHelper uiFormAssetHelper);
 
         /// <summary>
+        /// 开启界面打开队列模式。
+        /// 打开该模式后，会按照调用OpenForm的顺序依次打开界面，如果前一个界面还未加载完成，即使后面的界面加载完成了也不会显示。
+        /// </summary>
+        void EnableOpenUIQueueMode();
+
+        /// <summary>
         /// 是否存在界面组。
         /// </summary>
         /// <param name="uiGroupName">界面组名称。</param>
