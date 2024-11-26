@@ -5,7 +5,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
     /// <summary>
     /// FairyGUI界面逻辑基类。
     /// </summary>
-    public abstract class FGUIFormLogic
+    public abstract class FGUIFormLogic : IFeatureOwner
     {
         private bool m_Available = false;
         private bool m_Visible = false;
@@ -92,6 +92,12 @@ namespace UnityGameFramework.Runtime.FairyGUI
             }
         }
 
+        public FeatureContainer FeatureContainer
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// 界面初始化。
         /// </summary>
@@ -106,6 +112,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// </summary>
         protected internal virtual void OnRecycle()
         {
+            FeatureContainer?.Shutdown();
         }
 
         /// <summary>
