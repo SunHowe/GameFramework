@@ -36,5 +36,21 @@ namespace UnityGameFramework.Runtime.FairyGUI
                     throw new ArgumentOutOfRangeException(nameof(adaptorType), adaptorType, null);
             }
         }
+
+        /// <summary>
+        /// 添加通用窗体框架。
+        /// </summary>
+        public static void AddFrameFeature(this FGUIFormLogic fguiFormLogic)
+        {
+            fguiFormLogic.AddFeature<FGUIFormFrameFeature>();
+        }
+
+        /// <summary>
+        /// 关闭该界面。
+        /// </summary>
+        public static void CloseForm(this FGUIFormLogic fguiFormLogic)
+        {
+            // TODO
+        }
     }
 }

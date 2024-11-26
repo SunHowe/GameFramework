@@ -27,6 +27,7 @@ namespace GameLogic.UI.{{ package_name }}
         /// </summary>
         private void RegisterFeatures()
         {
+            this.AddFrameFeature(); // 添加通用窗体框架
             this.AddScreenAdaptor(UIFormScreenAdaptorType.Constant); // 设置屏幕适配器
         }
     }
