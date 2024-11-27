@@ -1,5 +1,7 @@
 fileFormatVersion: 2
 guid: b44186a95f95d1e4ab983e88e39bbedc
+labels:
+- ResourceExclusive
 AssemblyDefinitionImporter:
   externalObjects: {}
   userData: 
