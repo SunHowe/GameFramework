@@ -207,6 +207,14 @@ PrefabInstance:
       propertyPath: m_AvailableProcedureTypeNames.Array.data[4]
       value: GameMono.ProcedureSplash
       objectReference: {fileID: 0}
+    - target: {fileID: 11497722, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_ResourceMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11497722, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_ReadWritePathType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 11499388, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_EditorResourceMode
       value: 0
@@ -235,6 +243,10 @@ PrefabInstance:
       propertyPath: m_UIGroups.Array.data[3]
       value: Effect
       objectReference: {fileID: 0}
+    - target: {fileID: 7024159624654983208, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_FGUIPackageMappingOnPack
+      value: 
+      objectReference: {fileID: 11400000, guid: be581eab7f60645459b5d36f14a4dc60, type: 2}
     - target: {fileID: 7024159624654983208, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_UIGroups.Array.data[0].m_Name
       value: Bottom

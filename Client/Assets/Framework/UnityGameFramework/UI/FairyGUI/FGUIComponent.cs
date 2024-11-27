@@ -72,7 +72,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         private string[] m_UIGroups = null;
 
         [SerializeField]
-        private UIPackageMapping m_FGUIPackageMappingOnResources;
+        private UIPackageMapping m_FGUIPackageMappingOnPack;
 
         [SerializeField]
         private UIPackageMappingAssetRef m_FGUIPackageMappingHotfix;
@@ -190,7 +190,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
                 return;
             }
 
-            if (m_FGUIPackageMappingOnResources == null)
+            if (m_FGUIPackageMappingOnPack == null)
             {
                 Log.Fatal("FGUI package mapping on resources is invalid.");
                 return;
@@ -264,7 +264,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
             transform = m_FGUIPackageHelper.transform;
             transform.SetParent(this.transform);
             transform.localScale = Vector3.one;
-            m_FGUIPackageHelper.AddPackageMapping(m_FGUIPackageMappingOnResources);
+            m_FGUIPackageHelper.AddPackageMapping(m_FGUIPackageMappingOnPack);
             
             var assetLoaderHelper = Helper.CreateHelper(m_FGUIAssetLoaderHelperTypeName, m_CustomFGUIAssetLoaderHelper);
             if (assetLoaderHelper == null)
@@ -981,11 +981,11 @@ namespace UnityGameFramework.Runtime.FairyGUI
         }
 
         /// <summary>
-        /// 判断是否是Resources目录下的包。
+        /// 判断是否是Pack目录下的包。
         /// </summary>
-        public bool IsPackageOnResources(string packageName)
+        public bool IsPackageOnPack(string packageName)
         {
-            return Array.IndexOf(m_FGUIPackageMappingOnResources.PackageNames, packageName) >= 0;
+            return Array.IndexOf(m_FGUIPackageMappingOnPack.PackageNames, packageName) >= 0;
         }
         
         private void OnOpenUIFormSuccess(object sender, GameFramework.UI.OpenUIFormSuccessEventArgs e)

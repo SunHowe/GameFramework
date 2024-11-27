@@ -26,7 +26,7 @@ namespace UnityGameFramework.Editor
         private SerializedProperty m_EnableUIFormOpenQueue = null;
         private SerializedProperty m_UIGroups = null;
         private SerializedProperty m_UnloadUnusedUIPackageImmediately = null;
-        private SerializedProperty m_FGUIPackageMappingOnResources = null;
+        private SerializedProperty m_FGUIPackageMappingOnPack = null;
         private SerializedProperty m_FGUIPackageMappingHotfix = null;
         private SerializedProperty m_DesignResolutionX = null;
         private SerializedProperty m_DesignResolutionY = null;
@@ -56,7 +56,7 @@ namespace UnityGameFramework.Editor
                 EditorGUILayout.PropertyField(m_DesignResolutionY);
                 EditorGUILayout.PropertyField(m_ScreenMatchMode);
                 EditorGUILayout.PropertyField(m_UIGroups, true);
-                EditorGUILayout.PropertyField(m_FGUIPackageMappingOnResources);
+                EditorGUILayout.PropertyField(m_FGUIPackageMappingOnPack);
                 EditorGUILayout.PropertyField(m_FGUIPackageMappingHotfix);
             }
             EditorGUI.EndDisabledGroup();
@@ -151,7 +151,7 @@ namespace UnityGameFramework.Editor
             m_EnableUIFormOpenQueue = serializedObject.FindProperty("m_EnableUIFormOpenQueue");
             m_UIGroups = serializedObject.FindProperty("m_UIGroups");
             m_UnloadUnusedUIPackageImmediately = serializedObject.FindProperty("m_UnloadUnusedUIPackageImmediately");
-            m_FGUIPackageMappingOnResources = serializedObject.FindProperty("m_FGUIPackageMappingOnResources");
+            m_FGUIPackageMappingOnPack = serializedObject.FindProperty("m_FGUIPackageMappingOnPack");
             m_FGUIPackageMappingHotfix = serializedObject.FindProperty("m_FGUIPackageMappingHotfix");
             m_DesignResolutionX = serializedObject.FindProperty("m_DesignResolutionX");
             m_DesignResolutionY = serializedObject.FindProperty("m_DesignResolutionY");

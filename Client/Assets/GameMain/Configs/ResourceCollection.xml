@@ -2,10 +2,12 @@
 <UnityGameFramework>
   <ResourceCollection>
     <Resources>
-      <Resource Name="DataTable" LoadType="5" Packed="True" />
+      <Resource Name="DataTable/item_tbitem" LoadType="5" Packed="False" />
+      <Resource Name="Hotfix/HotfixConfiguration" LoadType="0" Packed="False" />
     </Resources>
     <Assets>
-      <Asset Guid="3ee26fb2e26f84f4e9bc26962581681f" ResourceName="DataTable" />
+      <Asset Guid="13102bc81fb2548479d68032f07959a1" ResourceName="Hotfix/HotfixConfiguration" />
+      <Asset Guid="3ee26fb2e26f84f4e9bc26962581681f" ResourceName="DataTable/item_tbitem" />
     </Assets>
   </ResourceCollection>
 </UnityGameFramework>
