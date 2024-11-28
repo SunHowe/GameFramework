@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GameFramework.ObjectPool;
 
 namespace GameFramework.Resource
 {
@@ -9,17 +10,58 @@ namespace GameFramework.Resource
     public interface IResourceManager
     {
         /// <summary>
+        /// 获取或设置资源对象池自动释放可释放对象的间隔秒数。
+        /// </summary>
+        float AssetAutoReleaseInterval { get; set; }
+
+        /// <summary>
+        /// 获取或设置资源对象池的容量。
+        /// </summary>
+        int AssetCapacity { get; set; }
+
+        /// <summary>
+        /// 获取或设置资源对象池对象过期秒数。
+        /// </summary>
+        float AssetExpireTime { get; set; }
+
+        /// <summary>
+        /// 获取或设置资源对象池的优先级。
+        /// </summary>
+        int AssetPriority { get; set; }
+        
+        /// <summary>
         /// 设置资源包辅助工具实例。
         /// </summary>
         /// <param name="helper">资源包辅助工具。</param>
         void SetResourcePackageHelper(IResourcePackageHelper helper);
         
-        #region [Resource Package]
+        /// <summary>
+        /// 设置对象池管理器。
+        /// </summary>
+        /// <param name="objectPoolManager">对象池管理器实例。</param>
+        void SetObjectPoolManager(IObjectPoolManager objectPoolManager);
+        
+        /// <summary>
+        /// 默认资源包名。
+        /// </summary>
+        string DefaultPackageName { get; }
+        
+        /// <summary>
+        /// 默认资源包模式。
+        /// </summary>
+        ResourceMode DefaultPackageResourceMode { get; }
 
         /// <summary>
         /// 默认资源包实例（需要先通过CreateDefaultResourcePackage创建）。
         /// </summary>
         IResourcePackage DefaultPackage { get; }
+        
+        /// <summary>
+        /// 默认资源包资源版本号。
+        /// </summary>
+        string DefaultPackageResourceVersion { get; }
+        
+        #region [Resource Package]
 
         /// <summary>
         /// 获取当前已创建的资源包实例列表。
@@ -42,12 +84,30 @@ namespace GameFramework.Resource
         void CreateDefaultResourcePackage(string packageName, ResourceMode resourceMode, CreatePackageCallbacks callbacks);
 
         /// <summary>
+        /// 创建默认的资源包。
+        /// </summary>
+        /// <param name="packageName">默认资源包包名。</param>
+        /// <param name="resourceMode">资源模式。</param>
+        /// <param name="callbacks">加载回调。</param>
+        /// <param name="userData">用户数据。</param>
+        void CreateDefaultResourcePackage(string packageName, ResourceMode resourceMode, CreatePackageCallbacks callbacks, object userData);
+
+        /// <summary>
         /// 创建指定名字的资源包。
         /// </summary>
         /// <param name="packageName">包名。</param>
         /// <param name="resourceMode">资源模式。</param>
         /// <param name="callbacks">加载回调。</param>
         void CreateResourcePackage(string packageName, ResourceMode resourceMode, CreatePackageCallbacks callbacks);
+
+        /// <summary>
+        /// 创建指定名字的资源包。
+        /// </summary>
+        /// <param name="packageName">包名。</param>
+        /// <param name="resourceMode">资源模式。</param>
+        /// <param name="callbacks">加载回调。</param>
+        /// <param name="userData">用户数据。</param>
+        void CreateResourcePackage(string packageName, ResourceMode resourceMode, CreatePackageCallbacks callbacks, object userData);
 
         /// <summary>
         /// 销毁指定的资源包。

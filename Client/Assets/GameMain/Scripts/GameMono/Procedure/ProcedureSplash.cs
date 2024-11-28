@@ -18,24 +18,24 @@ namespace GameMono
             
             // 初始化一些基础工具。
 
-            if (BaseComponent.Instance.EditorResourceMode)
-            {
-                // 编辑器模式
-                Log.Info("Use EditorResourceMode.");
-                ChangeState<ProcedureLaunchGameLogic>(procedureOwner);
-            }
-            else if (ResourceComponent.Instance.ResourceMode == ResourceMode.Package)
-            {
-                // 单机模式
-                Log.Info("Use PackageResourceMode.");
-                ChangeState<ProcedureInitResource>(procedureOwner);
-            }
-            else
-            {
-                // 可更新模式
-                Log.Info("Use UpdatableResourceMode.");
-                ChangeState<ProcedureCheckVersion>(procedureOwner);
-            }
+            // if (BaseComponent.Instance.EditorResourceMode)
+            // {
+            //     // 编辑器模式
+            //     Log.Info("Use EditorResourceMode.");
+            //     ChangeState<ProcedureLaunchGameLogic>(procedureOwner);
+            // }
+            // else if (ResourceComponent.Instance.ResourceMode == ResourceMode.Package)
+            // {
+            //     // 单机模式
+            //     Log.Info("Use PackageResourceMode.");
+            //     ChangeState<ProcedureInitResource>(procedureOwner);
+            // }
+            // else
+            // {
+            //     // 可更新模式
+            //     Log.Info("Use UpdatableResourceMode.");
+            //     ChangeState<ProcedureCheckVersion>(procedureOwner);
+            // }
         }
     }
 }

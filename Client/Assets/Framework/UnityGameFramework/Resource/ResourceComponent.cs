@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GameFramework;
+using GameFramework.ObjectPool;
 using GameFramework.Resource;
 using UnityEngine;
 
@@ -10,7 +11,9 @@ namespace UnityGameFramework.Runtime
     [AddComponentMenu("Game Framework/Resource")]
     public sealed partial class ResourceComponent : GameFrameworkComponent<ResourceComponent>
     {
+        private IObjectPoolManager m_ObjectPoolManager = null;
         private IResourceManager m_ResourceManager = null;
+        private bool m_EditorResourceMode = false;
 
         private bool m_ForceUnloadUnusedAssets = false;
         private bool m_PreorderUnloadUnusedAssets = false;
@@ -19,8 +22,11 @@ namespace UnityGameFramework.Runtime
         private float m_LastUnloadUnusedAssetsOperationElapseSeconds = 0f;
 
         [SerializeField]
+        private ResourceMode m_DefaultPackageResourceMode = ResourceMode.Unspecified;
+
+        [SerializeField]
         private string m_ResourcePackageHelperTypeName = "UnityGameFramework.Runtime.FairyGUI.DefaultResourcePackageHelper";
-        
+
         [SerializeField]
         private ResourcePackageHelperBase m_CustomResourcePackageHelper = null;
 
@@ -29,6 +35,124 @@ namespace UnityGameFramework.Runtime
 
         [SerializeField]
         private float m_MaxUnloadUnusedAssetsInterval = 300f;
+        
+        [SerializeField]
+        private float m_AssetAutoReleaseInterval = 60f;
+
+        [SerializeField]
+        private int m_AssetCapacity = 64;
+
+        [SerializeField]
+        private float m_AssetExpireTime = 60f;
+
+        [SerializeField]
+        private int m_AssetPriority = 0;
+
+        public string DefaultPackageName => m_ResourceManager.DefaultPackageName;
+        public ResourceMode DefaultPackageResourceMode => m_ResourceManager.DefaultPackageResourceMode;
+        public string DefaultPackageResourceVersion => m_ResourceManager.DefaultPackageResourceVersion;
+        
+        
+        /// <summary>
+        /// 获取无用资源释放的等待时长，以秒为单位。
+        /// </summary>
+        public float LastUnloadUnusedAssetsOperationElapseSeconds
+        {
+            get
+            {
+                return m_LastUnloadUnusedAssetsOperationElapseSeconds;
+            }
+        }
+        
+        /// <summary>
+        /// 获取或设置无用资源释放的最小间隔时间，以秒为单位。
+        /// </summary>
+        public float MinUnloadUnusedAssetsInterval
+        {
+            get
+            {
+                return m_MinUnloadUnusedAssetsInterval;
+            }
+            set
+            {
+                m_MinUnloadUnusedAssetsInterval = value;
+            }
+        }
+        
+        /// <summary>
+        /// 获取或设置无用资源释放的最大间隔时间，以秒为单位。
+        /// </summary>
+        public float MaxUnloadUnusedAssetsInterval
+        {
+            get
+            {
+                return m_MaxUnloadUnusedAssetsInterval;
+            }
+            set
+            {
+                m_MaxUnloadUnusedAssetsInterval = value;
+            }
+        }
+        
+        /// <summary>
+        /// 获取或设置资源对象池自动释放可释放对象的间隔秒数。
+        /// </summary>
+        public float AssetAutoReleaseInterval
+        {
+            get
+            {
+                return m_ResourceManager.AssetAutoReleaseInterval;
+            }
+            set
+            {
+                m_ResourceManager.AssetAutoReleaseInterval = m_AssetAutoReleaseInterval = value;
+            }
+        }
+        
+        /// <summary>
+        /// 获取或设置资源对象池的容量。
+        /// </summary>
+        public int AssetCapacity
+        {
+            get
+            {
+                return m_ResourceManager.AssetCapacity;
+            }
+            set
+            {
+                m_ResourceManager.AssetCapacity = m_AssetCapacity = value;
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置资源对象池对象过期秒数。
+        /// </summary>
+        public float AssetExpireTime
+        {
+            get
+            {
+                return m_ResourceManager.AssetExpireTime;
+            }
+            set
+            {
+                m_ResourceManager.AssetExpireTime = m_AssetExpireTime = value;
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置资源对象池的优先级。
+        /// </summary>
+        public int AssetPriority
+        {
+            get
+            {
+                return m_ResourceManager.AssetPriority;
+            }
+            set
+            {
+                m_ResourceManager.AssetPriority = m_AssetPriority = value;
+            }
+        }
 
         #region [Resource Package]
 
@@ -350,12 +474,33 @@ namespace UnityGameFramework.Runtime
         protected override void Awake()
         {
             base.Awake();
+            
+            BaseComponent baseComponent = GameEntry.GetComponent<BaseComponent>();
+            if (baseComponent == null)
+            {
+                Log.Fatal("Base component is invalid.");
+                return;
+            }
+            m_EditorResourceMode = baseComponent.EditorResourceMode;
+            
             m_ResourceManager = GameFrameworkEntry.GetModule<IResourceManager>();
             if (m_ResourceManager == null)
             {
                 Log.Fatal("Resource manager is invalid.");
                 return;
             }
+
+            m_ObjectPoolManager = GameFrameworkEntry.GetModule<IObjectPoolManager>();
+            if (m_ObjectPoolManager == null)
+            {
+                Log.Fatal("Object pool manager is invalid.");
+                return;
+            }
+            m_ResourceManager.SetObjectPoolManager(m_ObjectPoolManager);
+            m_ResourceManager.AssetAutoReleaseInterval = m_AssetAutoReleaseInterval;
+            m_ResourceManager.AssetCapacity = m_AssetCapacity;
+            m_ResourceManager.AssetExpireTime = m_AssetExpireTime;
+            m_ResourceManager.AssetPriority = m_AssetPriority;
 
             var packageHelper = Helper.CreateHelper(m_ResourcePackageHelperTypeName, m_CustomResourcePackageHelper);
             if (packageHelper == null)

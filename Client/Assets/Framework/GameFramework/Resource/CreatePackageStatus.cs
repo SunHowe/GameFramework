@@ -19,5 +19,15 @@
         /// 重复创建。
         /// </summary>
         DuplicateCreate,
+        
+        /// <summary>
+        /// 重复创建默认资源包。
+        /// </summary>
+        DuplicateCreateDefault,
+        
+        /// <summary>
+        /// 取消创建。
+        /// </summary>
+        Cancel,
     }
 }

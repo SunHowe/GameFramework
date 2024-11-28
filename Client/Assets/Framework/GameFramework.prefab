@@ -44,71 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac872c3ce4121bb46a74927b35780534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &108464
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 432002}
-  - component: {fileID: 11497722}
-  m_Layer: 0
-  m_Name: Resource
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &432002
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 108464}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 433714}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &11497722
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 108464}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7eff66e40586ec14d8a301d416f17f1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ResourceMode: 1
-  m_ReadWritePathType: 0
-  m_MinUnloadUnusedAssetsInterval: 60
-  m_MaxUnloadUnusedAssetsInterval: 300
-  m_AssetAutoReleaseInterval: 60
-  m_AssetCapacity: 64
-  m_AssetExpireTime: 60
-  m_AssetPriority: 10000
-  m_ResourceAutoReleaseInterval: 60
-  m_ResourceCapacity: 16
-  m_ResourceExpireTime: 60
-  m_ResourcePriority: 20000
-  m_UpdatePrefixUri: 
-  m_GenerateReadWriteVersionListLength: 1048576
-  m_UpdateRetryCount: 3
-  m_InstanceRoot: {fileID: 0}
-  m_ResourceHelperTypeName: UnityGameFramework.Runtime.DefaultResourceHelper
-  m_CustomResourceHelper: {fileID: 0}
-  m_LoadResourceAgentHelperTypeName: UnityGameFramework.Runtime.DefaultLoadResourceAgentHelper
-  m_CustomLoadResourceAgentHelper: {fileID: 0}
-  m_LoadResourceAgentHelperCount: 3
 --- !u!1 &109252
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,7 +205,6 @@ GameObject:
   m_Component:
   - component: {fileID: 433714}
   - component: {fileID: 11499388}
-  - component: {fileID: 11463816}
   m_Layer: 0
   m_Name: GameFramework
   m_TagString: Untagged
@@ -304,7 +238,6 @@ Transform:
   - {fileID: 431700}
   - {fileID: 407686}
   - {fileID: 461836}
-  - {fileID: 432002}
   - {fileID: 449996}
   - {fileID: 490662}
   - {fileID: 463618}
@@ -315,6 +248,7 @@ Transform:
   - {fileID: 5937378777060504965}
   - {fileID: 1843844919333341263}
   - {fileID: 984690288506151419}
+  - {fileID: 370784347809961360}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11499388
@@ -340,22 +274,6 @@ MonoBehaviour:
   m_GameSpeed: 1
   m_RunInBackground: 1
   m_NeverSleep: 1
---- !u!114 &11463816
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 116470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c26ec20b78ec32048bfb6c0ff875d8cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EnableCachedAssets: 1
-  m_LoadAssetCountPerFrame: 1
-  m_MinLoadAssetRandomDelaySeconds: 0
-  m_MaxLoadAssetRandomDelaySeconds: 0
 --- !u!1 &118246
 GameObject:
   m_ObjectHideFlags: 0
@@ -657,10 +575,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AvailableProcedureTypeNames:
-  - GameMono.CheckAppVersionProcedure
-  - GameMono.CheckResVersionProcedure
-  - GameMono.DownloadResPackageProcedure
-  - GameMono.LaunchGameLogicProcedure
   - GameMono.LaunchProcedure
   m_EntranceProcedureTypeName: GameMono.LaunchProcedure
 --- !u!1 &140694
@@ -1047,6 +961,59 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EnableStrictCheck: 0
+--- !u!1 &2186281720488307634
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 370784347809961360}
+  - component: {fileID: 8994057068626019411}
+  m_Layer: 0
+  m_Name: Resource
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &370784347809961360
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2186281720488307634}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 433714}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8994057068626019411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2186281720488307634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68b1cb3be91449eab23bfef43d786b55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_DefaultPackageResourceMode: 0
+  m_ResourcePackageHelperTypeName: 
+  m_CustomResourcePackageHelper: {fileID: 0}
+  m_MinUnloadUnusedAssetsInterval: 60
+  m_MaxUnloadUnusedAssetsInterval: 300
+  m_AssetAutoReleaseInterval: 60
+  m_AssetCapacity: 64
+  m_AssetExpireTime: 60
+  m_AssetPriority: 0
 --- !u!1 &2426327757937575851
 GameObject:
   m_ObjectHideFlags: 0
@@ -1294,7 +1261,7 @@ MonoBehaviour:
   m_FGUIAssetLoaderHelperTypeName: UnityGameFramework.Runtime.FairyGUI.DefaultFGUIAssetLoaderHelper
   m_CustomFGUIAssetLoaderHelper: {fileID: 0}
   m_UIGroups: []
-  m_FGUIPackageMappingOnResources: {fileID: 11400000, guid: be581eab7f60645459b5d36f14a4dc60, type: 2}
+  m_FGUIPackageMappingOnPack: {fileID: 0}
   m_FGUIPackageMappingHotfix:
     m_AssetPath: Assets/GameMain/UI/PackageMapping.asset
     m_Guid: 10854a436738a5b45811c74c453431d1

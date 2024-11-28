@@ -22,7 +22,7 @@ namespace GameMono
             m_IsComplete = false;
             EventComponent.Instance.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
             FGUIComponent.Instance.RegisterUIFormBinding<LaunchForm>();
-            ResourceComponent.Instance.InitResources(OnInitResourcesComplete);
+            // ResourceComponent.Instance.InitResources(OnInitResourcesComplete);
         }
 
         private void OnInitResourcesComplete()

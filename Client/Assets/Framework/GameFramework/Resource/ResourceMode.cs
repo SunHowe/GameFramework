@@ -6,9 +6,9 @@
     public enum ResourceMode
     {
         /// <summary>
-        /// Editor模拟。
+        /// 未指定。
         /// </summary>
-        EditorSimulator,
+        Unspecified = 0,
         
         /// <summary>
         /// 单机模式（不可更新）
