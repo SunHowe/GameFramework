@@ -29,5 +29,15 @@
         /// 取消创建。
         /// </summary>
         Cancel,
+        
+        /// <summary>
+        /// 触发异常。
+        /// </summary>
+        Exception,
+        
+        /// <summary>
+        /// 未支持的资源模式。
+        /// </summary>
+        NotSupportResourceMode,
     }
 }

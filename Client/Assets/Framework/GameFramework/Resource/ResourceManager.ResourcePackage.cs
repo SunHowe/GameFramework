@@ -70,7 +70,7 @@ namespace GameFramework.Resource
             var packInfo = CreatePackagePackInfo.Create(packageName, resourceMode, callbacks, userData);
             m_ResourcePackagesWhileCreate.Add(packageName, packInfo);
 
-            m_ResourcePackageHelper.CreateResourcePackage(packageName, resourceMode, m_CreateDefaultPackageCallbacks);
+            m_ResourcePackageHelper.CreateDefaultResourcePackage(packageName, resourceMode, m_CreateDefaultPackageCallbacks);
         }
 
         public void CreateResourcePackage(string packageName, ResourceMode resourceMode, CreatePackageCallbacks callbacks)

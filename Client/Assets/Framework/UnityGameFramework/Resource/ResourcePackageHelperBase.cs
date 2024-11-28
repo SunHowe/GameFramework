@@ -9,6 +9,14 @@ namespace UnityGameFramework.Runtime
     public abstract class ResourcePackageHelperBase : MonoBehaviour, IResourcePackageHelper
     {
         /// <summary>
+        /// 创建默认资源包。
+        /// </summary>
+        /// <param name="packageName">包名。</param>
+        /// <param name="resourceMode">资源模式。</param>
+        /// <param name="callbacks">加载回调。</param>
+        public abstract void CreateDefaultResourcePackage(string packageName, ResourceMode resourceMode, CreatePackageCallbacks callbacks);
+        
+        /// <summary>
         /// 创建指定名字的资源包。
         /// </summary>
         /// <param name="packageName">包名。</param>
