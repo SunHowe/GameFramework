@@ -35,7 +35,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         {
             var format = FGUIComponent.Instance.IsPackageOnPack(packageName) ? RESOURCES_UI_PACKAGE_ASSET_FORMAT : UI_PACKAGE_ASSET_FORMAT;
             var assetName = Utility.Text.Format(format, packageName);
-            bytes = m_ResourceComponent.LoadBinaryFromFileSystem(assetName);
+            bytes = m_ResourceComponent.LoadBinary(assetName);
             assetNamePrefix = string.Empty;
         }
 
