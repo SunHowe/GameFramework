@@ -19,6 +19,12 @@ namespace UnityGameFramework.Runtime
         private float m_LastUnloadUnusedAssetsOperationElapseSeconds = 0f;
 
         [SerializeField]
+        private string m_ResourcePackageHelperTypeName = "UnityGameFramework.Runtime.FairyGUI.DefaultResourcePackageHelper";
+        
+        [SerializeField]
+        private ResourcePackageHelperBase m_CustomResourcePackageHelper = null;
+
+        [SerializeField]
         private float m_MinUnloadUnusedAssetsInterval = 60f;
 
         [SerializeField]
@@ -350,6 +356,19 @@ namespace UnityGameFramework.Runtime
                 Log.Fatal("Resource manager is invalid.");
                 return;
             }
+
+            var packageHelper = Helper.CreateHelper(m_ResourcePackageHelperTypeName, m_CustomResourcePackageHelper);
+            if (packageHelper == null)
+            {
+                Log.Fatal("Can not create resource package helper.");
+                return;
+            }
+
+            packageHelper.gameObject.name = "Resource Package Helper";
+            var helperTransform = packageHelper.transform;
+            helperTransform.SetParent(transform);
+            helperTransform.localScale = Vector3.one;
+            m_ResourceManager.SetResourcePackageHelper(packageHelper);
         }
 
         private void Update()

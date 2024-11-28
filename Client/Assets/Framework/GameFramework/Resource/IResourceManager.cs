@@ -8,6 +8,12 @@ namespace GameFramework.Resource
     /// </summary>
     public interface IResourceManager
     {
+        /// <summary>
+        /// 设置资源包辅助工具实例。
+        /// </summary>
+        /// <param name="helper">资源包辅助工具。</param>
+        void SetResourcePackageHelper(IResourcePackageHelper helper);
+        
         #region [Resource Package]
 
         /// <summary>
