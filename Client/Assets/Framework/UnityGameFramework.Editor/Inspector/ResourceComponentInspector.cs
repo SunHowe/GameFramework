@@ -21,6 +21,7 @@ namespace UnityGameFramework.Editor
     {
         private static readonly string[] ResourceModeNames = new string[] { "Package", "Updatable", "Updatable While Playing" };
 
+        private SerializedProperty m_DefaultPackageName = null;
         private SerializedProperty m_DefaultPackageResourceMode = null;
         private SerializedProperty m_MinUnloadUnusedAssetsInterval = null;
         private SerializedProperty m_MaxUnloadUnusedAssetsInterval = null;
@@ -53,16 +54,20 @@ namespace UnityGameFramework.Editor
             {
                 if (EditorApplication.isPlaying && IsPrefabInHierarchy(t.gameObject))
                 {
-                    EditorGUILayout.EnumPopup("Resource Mode", t.DefaultPackageResourceMode);
+                    EditorGUILayout.EnumPopup("Default Package Resource Mode", t.DefaultPackageResourceMode);
                 }
                 else
                 {
-                    int selectedIndex = EditorGUILayout.Popup("Resource Mode", m_ResourceModeIndex, ResourceModeNames);
+                    EditorGUILayout.PropertyField(m_DefaultPackageName);
+                    
+                    int selectedIndex = EditorGUILayout.Popup("Default Package Resource Mode", m_ResourceModeIndex, ResourceModeNames);
                     if (selectedIndex != m_ResourceModeIndex)
                     {
                         m_ResourceModeIndex = selectedIndex;
                         m_DefaultPackageResourceMode.enumValueIndex = selectedIndex + 1;
                     }
+                    
+                    m_ResourcePackageHelperInfo.Draw();
                 }
 
                 // m_ReadWritePathType.enumValueIndex = (int)(ReadWritePathType)EditorGUILayout.EnumPopup("Read-Write Path Type", t.ReadWritePathType);
@@ -174,6 +179,7 @@ namespace UnityGameFramework.Editor
 
         private void OnEnable()
         {
+            m_DefaultPackageName = serializedObject.FindProperty("m_DefaultPackageName");
             m_DefaultPackageResourceMode = serializedObject.FindProperty("m_DefaultPackageResourceMode");
             m_MinUnloadUnusedAssetsInterval = serializedObject.FindProperty("m_MinUnloadUnusedAssetsInterval");
             m_MaxUnloadUnusedAssetsInterval = serializedObject.FindProperty("m_MaxUnloadUnusedAssetsInterval");

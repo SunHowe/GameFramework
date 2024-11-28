@@ -217,7 +217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11499388, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_EditorResourceMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7024159624654983208, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_UIGroups.Array.size
@@ -254,10 +254,6 @@ PrefabInstance:
     - target: {fileID: 7024159624654983208, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_FGUIPackageMappingHotfix.m_AssetPath
       value: Assets/GameMain/UI/PackageMapping.asset
-      objectReference: {fileID: 0}
-    - target: {fileID: 7864302717678418167, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
-      propertyPath: m_SafeAreaHelperTypeName
-      value: UnityGameFramework.Runtime.DebuggableSafeAreaHelper
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -40,16 +40,6 @@ namespace GameFramework.Resource
         /// </summary>
         /// <param name="objectPoolManager">对象池管理器实例。</param>
         void SetObjectPoolManager(IObjectPoolManager objectPoolManager);
-        
-        /// <summary>
-        /// 默认资源包名。
-        /// </summary>
-        string DefaultPackageName { get; }
-        
-        /// <summary>
-        /// 默认资源包模式。
-        /// </summary>
-        ResourceMode DefaultPackageResourceMode { get; }
 
         /// <summary>
         /// 默认资源包实例（需要先通过CreateDefaultResourcePackage创建）。

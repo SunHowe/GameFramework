@@ -88,15 +88,6 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 获取或设置编辑器资源辅助器。
-        /// </summary>
-        public IResourceManager EditorResourceHelper
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// 获取或设置游戏帧率。
         /// </summary>
         public int FrameRate

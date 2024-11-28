@@ -47,8 +47,6 @@ namespace GameFramework.Resource
             set { m_AssetPool.Priority = value; }
         }
 
-        public string DefaultPackageName => m_DefaultPackageName;
-        public ResourceMode DefaultPackageResourceMode => DefaultPackage?.ResourceMode ?? ResourceMode.Unspecified;
         public string DefaultPackageResourceVersion => DefaultPackage?.ResourceVersion ?? string.Empty;
 
         public ResourceManager()
