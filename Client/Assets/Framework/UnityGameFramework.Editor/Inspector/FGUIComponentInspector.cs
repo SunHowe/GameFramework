@@ -26,8 +26,8 @@ namespace UnityGameFramework.Editor
         private SerializedProperty m_EnableUIFormOpenQueue = null;
         private SerializedProperty m_UIGroups = null;
         private SerializedProperty m_UnloadUnusedUIPackageImmediately = null;
-        private SerializedProperty m_FGUIPackageMappingOnPack = null;
-        private SerializedProperty m_FGUIPackageMappingHotfix = null;
+        private SerializedProperty m_LauncherPackageMapping = null;
+        private SerializedProperty m_MainPackageMapping = null;
         private SerializedProperty m_DesignResolutionX = null;
         private SerializedProperty m_DesignResolutionY = null;
         private SerializedProperty m_ScreenMatchMode = null;
@@ -56,8 +56,8 @@ namespace UnityGameFramework.Editor
                 EditorGUILayout.PropertyField(m_DesignResolutionY);
                 EditorGUILayout.PropertyField(m_ScreenMatchMode);
                 EditorGUILayout.PropertyField(m_UIGroups, true);
-                EditorGUILayout.PropertyField(m_FGUIPackageMappingOnPack);
-                EditorGUILayout.PropertyField(m_FGUIPackageMappingHotfix);
+                EditorGUILayout.PropertyField(m_LauncherPackageMapping);
+                EditorGUILayout.PropertyField(m_MainPackageMapping);
             }
             EditorGUI.EndDisabledGroup();
 
@@ -151,8 +151,8 @@ namespace UnityGameFramework.Editor
             m_EnableUIFormOpenQueue = serializedObject.FindProperty("m_EnableUIFormOpenQueue");
             m_UIGroups = serializedObject.FindProperty("m_UIGroups");
             m_UnloadUnusedUIPackageImmediately = serializedObject.FindProperty("m_UnloadUnusedUIPackageImmediately");
-            m_FGUIPackageMappingOnPack = serializedObject.FindProperty("m_FGUIPackageMappingOnPack");
-            m_FGUIPackageMappingHotfix = serializedObject.FindProperty("m_FGUIPackageMappingHotfix");
+            m_LauncherPackageMapping = serializedObject.FindProperty("m_LauncherPackageMapping");
+            m_MainPackageMapping = serializedObject.FindProperty("m_MainPackageMapping");
             m_DesignResolutionX = serializedObject.FindProperty("m_DesignResolutionX");
             m_DesignResolutionY = serializedObject.FindProperty("m_DesignResolutionY");
             m_ScreenMatchMode = serializedObject.FindProperty("m_ScreenMatchMode");

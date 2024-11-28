@@ -16,8 +16,8 @@ namespace UnityGameFramework.Editor.FairyGUI
         {
             new FairyGUIResDirectorySetting
             {
-                DirectoryRoot = "Assets/GameMain/UI_Pack/",
-                PackageMappingOutputPath = "Assets/GameMain/UI_Pack/PackageMapping.asset",
+                DirectoryRoot = "Assets/GameLauncher/UI/",
+                PackageMappingOutputPath = "Assets/GameLauncher/UI/PackageMapping.asset",
                 CodeGenerateSetting = new FairyGUICodeGenerateSetting
                 {
                     Namespace = "GameMono.UI",

@@ -11,13 +11,9 @@ namespace UnityGameFramework.Runtime.FairyGUI
     /// </summary>
     public sealed class DefaultFGUIAssetLoaderHelper : FGUIAssetLoaderHelperBase
     {
-        private const string UI_PACKAGE_ASSET_FORMAT = "Assets/GameMain/UI/{0}_fui.bytes";
-        private const string UI_TEXTURE_ASSET_FORMAT = "Assets/GameMain/UI/{0}_{1}{2}";
-        private const string UI_AUDIO_ASSET_FORMAT = "Assets/GameMain/UISound/{0}{1}";
-        
-        private const string RESOURCES_UI_PACKAGE_ASSET_FORMAT = "Assets/GameMain/UI_Pack/{0}_fui.bytes";
-        private const string RESOURCES_UI_TEXTURE_ASSET_FORMAT = "Assets/GameMain/UI_Pack/{0}_{1}{2}";
-        private const string RESOURCES_UI_AUDIO_ASSET_FORMAT = "Assets/GameMain/UISound_Pack/{0}{1}";
+        private const string UI_PACKAGE_ASSET_FORMAT = "{0}_fui";
+        private const string UI_TEXTURE_ASSET_FORMAT = "{0}_{1}";
+        private const string UI_AUDIO_ASSET_FORMAT = "{0}";
         
         private ResourceComponent m_ResourceComponent = null;
         private LoadBinaryCallbacks m_LoadBinaryCallbacks = null;
@@ -26,23 +22,20 @@ namespace UnityGameFramework.Runtime.FairyGUI
         
         public override void LoadUIPackageBytesAsync(string packageName, LoadUIPackageBytesCallback callback)
         {
-            var format = FGUIComponent.Instance.IsPackageOnPack(packageName) ? RESOURCES_UI_PACKAGE_ASSET_FORMAT : UI_PACKAGE_ASSET_FORMAT;
-            var assetName = Utility.Text.Format(format, packageName);
+            var assetName = Utility.Text.Format(UI_PACKAGE_ASSET_FORMAT, packageName);
             m_ResourceComponent.LoadBinary(assetName, m_LoadBinaryCallbacks, callback);
         }
 
         public override void LoadUIPackageBytes(string packageName, out byte[] bytes, out string assetNamePrefix)
         {
-            var format = FGUIComponent.Instance.IsPackageOnPack(packageName) ? RESOURCES_UI_PACKAGE_ASSET_FORMAT : UI_PACKAGE_ASSET_FORMAT;
-            var assetName = Utility.Text.Format(format, packageName);
+            var assetName = Utility.Text.Format(UI_PACKAGE_ASSET_FORMAT, packageName);
             bytes = m_ResourceComponent.LoadBinary(assetName);
             assetNamePrefix = string.Empty;
         }
 
         public override void LoadTextureAsync(string packageName, string assetName, string extension, LoadTextureCallback callback)
         {
-            var format = FGUIComponent.Instance.IsPackageOnPack(packageName) ? RESOURCES_UI_TEXTURE_ASSET_FORMAT : UI_TEXTURE_ASSET_FORMAT;
-            assetName = Utility.Text.Format(format, packageName, assetName, extension);
+            assetName = Utility.Text.Format(UI_TEXTURE_ASSET_FORMAT, packageName, assetName, extension);
             m_ResourceComponent.LoadAsset(assetName, typeof(Texture), m_LoadTextureAssetCallbacks, callback);
         }
 
@@ -53,8 +46,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
 
         public override void LoadAudioClipAsync(string packageName, string assetName, string extension, LoadAudioClipCallback callback)
         {
-            var format = FGUIComponent.Instance.IsPackageOnPack(packageName) ? RESOURCES_UI_AUDIO_ASSET_FORMAT : UI_AUDIO_ASSET_FORMAT;
-            assetName = Utility.Text.Format(format, assetName, extension);
+            assetName = Utility.Text.Format(UI_AUDIO_ASSET_FORMAT, assetName, extension);
             m_ResourceComponent.LoadAsset(assetName, typeof(AudioClip), m_LoadAudioAssetCallbacks, callback);
         }
 

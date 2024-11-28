@@ -72,10 +72,10 @@ namespace UnityGameFramework.Runtime.FairyGUI
         private string[] m_UIGroups = null;
 
         [SerializeField]
-        private UIPackageMapping m_FGUIPackageMappingOnPack;
+        private UIPackageMappingAssetRef m_LauncherPackageMapping;
 
         [SerializeField]
-        private UIPackageMappingAssetRef m_FGUIPackageMappingHotfix;
+        private UIPackageMappingAssetRef m_MainPackageMapping;
 
         [SerializeField]
         private bool m_UnloadUnusedUIPackageImmediately = true;
@@ -177,6 +177,16 @@ namespace UnityGameFramework.Runtime.FairyGUI
         }
 
         /// <summary>
+        /// 启动器UI映射文件资源引用。
+        /// </summary>
+        public UIPackageMappingAssetRef LauncherPackageMapping => m_LauncherPackageMapping;
+
+        /// <summary>
+        /// 游戏UI映射文件资源引用。
+        /// </summary>
+        public UIPackageMappingAssetRef MainPackageMapping => m_MainPackageMapping;
+
+        /// <summary>
         /// 游戏框架组件初始化。
         /// </summary>
         protected override void Awake()
@@ -187,12 +197,6 @@ namespace UnityGameFramework.Runtime.FairyGUI
             if (m_UIManager == null)
             {
                 Log.Fatal("UI manager is invalid.");
-                return;
-            }
-
-            if (m_FGUIPackageMappingOnPack == null)
-            {
-                Log.Fatal("FGUI package mapping on resources is invalid.");
                 return;
             }
 
@@ -264,7 +268,6 @@ namespace UnityGameFramework.Runtime.FairyGUI
             transform = m_FGUIPackageHelper.transform;
             transform.SetParent(this.transform);
             transform.localScale = Vector3.one;
-            m_FGUIPackageHelper.AddPackageMapping(m_FGUIPackageMappingOnPack);
             
             var assetLoaderHelper = Helper.CreateHelper(m_FGUIAssetLoaderHelperTypeName, m_CustomFGUIAssetLoaderHelper);
             if (assetLoaderHelper == null)
@@ -978,14 +981,6 @@ namespace UnityGameFramework.Runtime.FairyGUI
         public string GetUIFormAssetName<T>() where T : FGUIFormLogic
         {
             return GetUIFormBindingInfo(typeof(T))?.UIFormAssetName ?? string.Empty;
-        }
-
-        /// <summary>
-        /// 判断是否是Pack目录下的包。
-        /// </summary>
-        public bool IsPackageOnPack(string packageName)
-        {
-            return Array.IndexOf(m_FGUIPackageMappingOnPack.PackageNames, packageName) >= 0;
         }
         
         private void OnOpenUIFormSuccess(object sender, GameFramework.UI.OpenUIFormSuccessEventArgs e)

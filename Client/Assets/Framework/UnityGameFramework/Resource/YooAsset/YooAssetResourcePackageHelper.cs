@@ -54,6 +54,11 @@ namespace UnityGameFramework.Runtime
             YooAssets.Initialize();
         }
 
+        private void OnDestroy()
+        {
+            YooAssets.Destroy();
+        }
+
         private void CreateResourcePackage(string packageName, ResourceMode resourceMode, bool isSetDefault, CreatePackageCallbacks callbacks)
         {
             if (resourceMode == ResourceMode.Unspecified)

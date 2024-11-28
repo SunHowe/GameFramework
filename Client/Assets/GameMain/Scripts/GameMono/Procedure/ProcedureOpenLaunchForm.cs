@@ -1,7 +1,7 @@
 ﻿using GameFramework.Event;
 using GameFramework.Fsm;
 using GameFramework.Procedure;
-using GameMono.UI;
+using GameFramework.Resource;
 using GameMono.UI.Launch;
 using UnityGameFramework.Runtime;
 using UnityGameFramework.Runtime.FairyGUI;
@@ -9,24 +9,24 @@ using UnityGameFramework.Runtime.FairyGUI;
 namespace GameMono
 {
     /// <summary>
-    /// 启动流程 进行必要的工具初始化工作
+    /// 启动器流程。
     /// </summary>
-    internal class LaunchProcedure : ProcedureBase
+    public class ProcedureOpenLaunchForm : ProcedureBase
     {
-        private bool m_IsComplete;
+        private bool m_IsDone;
         
+        protected override void OnInit(IFsm<IProcedureManager> procedureOwner)
+        {
+            base.OnInit(procedureOwner);
+            FGUIComponent.Instance.RegisterUIFormBinding<LaunchForm>();
+        }
+
         protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
         {
             base.OnEnter(procedureOwner);
-
-            m_IsComplete = false;
+            m_IsDone = false;
             EventComponent.Instance.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
-            FGUIComponent.Instance.RegisterUIFormBinding<LaunchForm>();
-            // ResourceComponent.Instance.InitResources(OnInitResourcesComplete);
-        }
-
-        private void OnInitResourcesComplete()
-        {
+            
             FGUIComponent.Instance.OpenUIForm<LaunchForm>();
         }
 
@@ -40,10 +40,13 @@ namespace GameMono
         protected override void OnUpdate(IFsm<IProcedureManager> procedureOwner, float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
-            
-            if (m_IsComplete)
+
+            if (!m_IsDone)
             {
+                return;
             }
+            
+            ChangeState<ProcedureCreateDefaultPackage>(procedureOwner);
         }
 
         private void OnOpenUIFormSuccess(object sender, GameEventArgs e)
@@ -54,7 +57,7 @@ namespace GameMono
                 return;
             }
             
-            m_IsComplete = true;
+            m_IsDone = true;
         }
     }
 }

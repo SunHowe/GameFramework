@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AssetBundleCollectorSetting
   m_EditorClassIdentifier: 
   ShowPackageView: 1
-  ShowEditorAlias: 1
+  ShowEditorAlias: 0
   UniqueBundleName: 1
   Packages:
   - PackageName: GameMain
@@ -24,3 +24,32 @@ MonoBehaviour:
     AutoCollectShaders: 1
     IgnoreRuleName: NormalIgnoreRule
     Groups: []
+  - PackageName: GameLauncher
+    PackageDesc: 
+    EnableAddressable: 0
+    LocationToLower: 0
+    IncludeAssetGUID: 0
+    AutoCollectShaders: 1
+    IgnoreRuleName: NormalIgnoreRule
+    Groups:
+    - GroupName: UI
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/GameLauncher/UI
+        CollectorGUID: b51c43c1222d4424c80a67a5d7d698ec
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectByRegex
+        AssetTags: 
+        UserData: \w+\.[^bytes]
+      - CollectPath: Assets/GameLauncher/UI
+        CollectorGUID: b51c43c1222d4424c80a67a5d7d698ec
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackRawFile
+        FilterRuleName: CollectBytes
+        AssetTags: 
+        UserData: 
