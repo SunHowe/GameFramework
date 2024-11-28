@@ -1,35 +1,28 @@
-﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2021 Jiang Yin. All rights reserved.
-// Homepage: https://gameframework.cn/
-// Feedback: mailto:ellan@gameframework.cn
-//------------------------------------------------------------
-
-namespace GameFramework.Resource
+﻿namespace GameFramework.Resource
 {
     /// <summary>
     /// 资源模式。
     /// </summary>
-    public enum ResourceMode : byte
+    public enum ResourceMode
     {
         /// <summary>
-        /// 未指定。
+        /// Editor模拟。
         /// </summary>
-        Unspecified = 0,
-
+        EditorSimulator,
+        
         /// <summary>
-        /// 单机模式。
+        /// 单机模式（不可更新）
         /// </summary>
         Package,
-
+        
         /// <summary>
-        /// 预下载的可更新模式。
+        /// 可更新（预下载模式）。
         /// </summary>
         Updatable,
-
+        
         /// <summary>
-        /// 使用时下载的可更新模式。
+        /// 可更新（边玩边下模式）。
         /// </summary>
-        UpdatableWhilePlaying
+        UpdatableWhilePlaying,
     }
 }
