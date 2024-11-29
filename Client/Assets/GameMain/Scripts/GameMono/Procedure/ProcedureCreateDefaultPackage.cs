@@ -48,7 +48,7 @@ namespace GameMono
             {
                 // 单机模式
                 Log.Info("Use PackageResourceMode.");
-                ChangeState<ProcedureInitResource>(procedureOwner);
+                ChangeState<ProcedureLaunchGameLogic>(procedureOwner);
             }
             else
             {
