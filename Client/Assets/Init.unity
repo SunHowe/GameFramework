@@ -183,6 +183,10 @@ PrefabInstance:
       propertyPath: m_EditorResourceMode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 276531760175048351, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_LoadMode
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

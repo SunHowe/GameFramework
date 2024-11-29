@@ -1,5 +1,8 @@
 using Luban;
 using Cysharp.Threading.Tasks;
+using GameLogic;
+using GameFramework.DataTable;
+using System.Collections.Generic;
 
 {{namespace_with_grace_begin __namespace}}
     public partial class {{__name}}
@@ -13,24 +16,51 @@ using Cysharp.Threading.Tasks;
         public {{table.full_name}} {{format_property_name __code_style table.name}} { get; private set; }
         {{~end~}}
         
-        public async UniTask LoadAsync()
+        private List<IDataTable> m_PreloadDataTables;
+        
+        public void Init(DataTableLoadMode mode)
         {
-            var tasks = new System.Collections.Generic.List<UniTask>
-            {
-                {{~for table in __tables ~}}
-                LoadDataTableAsync("{{table.output_data_file}}").ContinueWith(buf => {{format_property_name __code_style table.name}} = new {{table.full_name}}(buf)),
-                {{~end~}}
-            };
-            await UniTask.WhenAll(tasks);
+            var isPreloadAll = mode == DataTableLoadMode.AsyncLoad || mode == DataTableLoadMode.SyncLoad;
+            {{~for table in __tables ~}}
+            {{format_property_name __code_style table.name}} = new {{table.full_name}}(this, "{{table.output_data_file}}", LoadDataTable, LoadDataTableAsync);
+            {{~end~}}
             
-            ResolveRef();
+            if (isPreloadAll)
+            {
+                m_PreloadDataTables = new List<IDataTable> 
+                {
+                    {{~for table in __tables ~}}
+                    {{format_property_name __code_style table.name}},
+                    {{~end~}}
+                };
+            }
+            else
+            {
+                m_PreloadDataTables = GetPreloadDataTables();
+            }
         }
         
-        private void ResolveRef()
+        public void Preload()
         {
-            {{~for table in __tables ~}}
-            {{format_property_name __code_style table.name}}.ResolveRef(this);
-            {{~end~}}
+            foreach (var dataTable in m_PreloadDataTables)
+            {
+                dataTable.Load(false);
+            }
+            
+            foreach (var dataTable in m_PreloadDataTables)
+            {
+                dataTable.ResolveRef();
+            }
+        }
+        
+        public async UniTask PreloadAsync()
+        {
+            await UniTask.WhenAll(m_PreloadDataTables.Select(dataTable => dataTable.LoadAsync(false)));
+            
+            foreach (var dataTable in m_PreloadDataTables)
+            {
+                dataTable.ResolveRef();
+            }
         }
     }
 

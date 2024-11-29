@@ -8,16 +8,92 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using Cysharp.Threading.Tasks;
+using UnityGameFramework.Runtime;
 
 
 namespace GameLogic.item
 {
-public partial class TbItem
+public partial class TbItem : IDataTable
 {
-    private readonly System.Collections.Generic.Dictionary<int, item.Item> _dataMap;
-    private readonly System.Collections.Generic.List<item.Item> _dataList;
+    private readonly string m_DataTableName;
+    private readonly LoadDataTableFunc m_LoadDataTableFunc;
+    private readonly LoadDataTableAsyncFunc m_LoadDataTableAsyncFunc;
+    private readonly DataTableModule m_Manager;
     
-    public TbItem(ByteBuf _buf)
+    public DataTableLoadStatus LoadStatus { get; private set; }
+    
+    public TbItem(DataTableModule manager, string dataTableName, LoadDataTableFunc loadDataTableFunc, LoadDataTableAsyncFunc loadDataTableAsyncFunc)
+    {
+        m_Manager = manager;
+        m_DataTableName = dataTableName;
+        m_LoadDataTableFunc = loadDataTableFunc;
+        m_LoadDataTableAsyncFunc = loadDataTableAsyncFunc;
+        LoadStatus = DataTableLoadStatus.None;
+    }
+    
+    public void Load(bool autoResolveRef = true)
+    {
+        if (LoadStatus == DataTableLoadStatus.Loaded)
+        {
+            return;
+        }
+        
+        if (LoadStatus == DataTableLoadStatus.Loading)
+        {
+            Log.Error("DataTable TbItem is loading");
+            return;
+        }
+        
+        LoadStatus = DataTableLoadStatus.Loading;
+        var _buf = m_LoadDataTableFunc(m_DataTableName);
+        if (_buf == null)
+        {
+            LoadStatus = DataTableLoadStatus.None;
+            Log.Error("DataTable TbItem load failed");
+            return;
+        }
+        
+        LoadStatus = DataTableLoadStatus.Loaded;
+        OnLoadSuccess(_buf);
+        if (autoResolveRef)
+        {
+            ResolveRef();
+        }
+    }
+    
+    public async UniTask LoadAsync(bool autoResolveRef = true)
+    {
+        if (LoadStatus == DataTableLoadStatus.Loaded)
+        {
+            return;
+        }
+        
+        if (LoadStatus == DataTableLoadStatus.Loading)
+        {
+            throw new System.Exception("DataTable TbItem is loading");
+        }
+        
+        LoadStatus = DataTableLoadStatus.Loading;
+        var _buf = await m_LoadDataTableAsyncFunc(m_DataTableName);
+        if (_buf == null)
+        {
+            LoadStatus = DataTableLoadStatus.None;
+            throw new System.Exception("DataTable TbItem load failed");
+        }
+        
+        LoadStatus = DataTableLoadStatus.Loaded;
+        OnLoadSuccess(_buf);
+        if (autoResolveRef)
+        {
+            ResolveRef();
+        }
+    }
+
+    private System.Collections.Generic.Dictionary<int, item.Item> _dataMap;
+    private System.Collections.Generic.List<item.Item> _dataList;
+    
+    private void OnLoadSuccess(ByteBuf _buf)
     {
         _dataMap = new System.Collections.Generic.Dictionary<int, item.Item>();
         _dataList = new System.Collections.Generic.List<item.Item>();
@@ -31,18 +107,38 @@ public partial class TbItem
         }
     }
 
-    public System.Collections.Generic.Dictionary<int, item.Item> DataMap => _dataMap;
-    public System.Collections.Generic.List<item.Item> DataList => _dataList;
-
-    public item.Item GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
-    public item.Item Get(int key) => _dataMap[key];
-    public item.Item this[int key] => _dataMap[key];
-
-    public void ResolveRef(DataTableModule tables)
+    public System.Collections.Generic.Dictionary<int, item.Item> DataMap
     {
+        get
+        {
+            Load();
+            return _dataMap;
+        }
+    }
+    
+    public System.Collections.Generic.List<item.Item> DataList
+    {
+        get
+        {
+            Load();
+            return _dataList;
+        }
+    }
+
+    public item.Item GetOrDefault(int key) => DataMap.TryGetValue(key, out var v) ? v : null;
+    public item.Item Get(int key) => DataMap[key];
+    public item.Item this[int key] => DataMap[key];
+
+    public void ResolveRef()
+    {
+        if (LoadStatus != DataTableLoadStatus.Loaded)
+        {
+            return;
+        }
+        
         foreach(var _v in _dataList)
         {
-            _v.ResolveRef(tables);
+            _v.ResolveRef(m_Manager);
         }
     }
 

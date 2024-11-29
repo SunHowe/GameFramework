@@ -9,6 +9,9 @@
 
 using Luban;
 using Cysharp.Threading.Tasks;
+using GameLogic;
+using GameFramework.DataTable;
+using System.Collections.Generic;
 
 namespace GameLogic
 {
@@ -16,20 +19,47 @@ namespace GameLogic
     {
         public item.TbItem TbItem { get; private set; }
         
-        public async UniTask LoadAsync()
+        private List<IDataTable> m_PreloadDataTables;
+        
+        public void Init(DataTableLoadMode mode)
         {
-            var tasks = new System.Collections.Generic.List<UniTask>
-            {
-                LoadDataTableAsync("item_tbitem").ContinueWith(buf => TbItem = new item.TbItem(buf)),
-            };
-            await UniTask.WhenAll(tasks);
+            var isPreloadAll = mode == DataTableLoadMode.AsyncLoad || mode == DataTableLoadMode.SyncLoad;
+            TbItem = new item.TbItem(this, "item_tbitem", LoadDataTable, LoadDataTableAsync);
             
-            ResolveRef();
+            if (isPreloadAll)
+            {
+                m_PreloadDataTables = new List<IDataTable> 
+                {
+                    TbItem,
+                };
+            }
+            else
+            {
+                m_PreloadDataTables = GetPreloadDataTables();
+            }
         }
         
-        private void ResolveRef()
+        public void Preload()
         {
-            TbItem.ResolveRef(this);
+            foreach (var dataTable in m_PreloadDataTables)
+            {
+                dataTable.Load(false);
+            }
+            
+            foreach (var dataTable in m_PreloadDataTables)
+            {
+                dataTable.ResolveRef();
+            }
+        }
+        
+        public async UniTask PreloadAsync()
+        {
+            await UniTask.WhenAll(m_PreloadDataTables.Select(dataTable => dataTable.LoadAsync(false)));
+            
+            foreach (var dataTable in m_PreloadDataTables)
+            {
+                dataTable.ResolveRef();
+            }
         }
     }
 
