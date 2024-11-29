@@ -30,6 +30,12 @@ namespace UnityGameFramework.Runtime
         [SerializeField]
         private YooAssetDecryptionHelperBase m_DecryptionHelper;
 
+        /// <summary>
+        /// 资源分发辅助工具。
+        /// </summary>
+        [SerializeField]
+        private YooAssetDeliveryQueryHelperBase m_AssetDeliveryQueryHelper;
+
         private IRemoteServices m_RemoteServices;
         
         public override void CreateDefaultResourcePackage(string packageName, ResourceMode resourceMode, CreatePackageCallbacks callbacks)
@@ -133,6 +139,7 @@ namespace UnityGameFramework.Runtime
             var initParameters = new HostPlayModeParameters
             {
                 BuildinQueryServices = new GameQueryServices(),
+                DeliveryQueryServices = m_AssetDeliveryQueryHelper,
                 DecryptionServices = m_DecryptionHelper,
                 RemoteServices = m_RemoteServices,
             };

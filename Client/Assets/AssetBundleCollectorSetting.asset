@@ -13,16 +13,14 @@ MonoBehaviour:
   m_Name: AssetBundleCollectorSetting
   m_EditorClassIdentifier: 
   ShowPackageView: 1
-  ShowEditorAlias: 0
+  EnableAddressable: 1
+  LocationToLower: 0
+  IncludeAssetGUID: 0
   UniqueBundleName: 1
+  ShowEditorAlias: 0
   Packages:
   - PackageName: GameMain
     PackageDesc: 
-    EnableAddressable: 1
-    LocationToLower: 0
-    IncludeAssetGUID: 0
-    AutoCollectShaders: 1
-    IgnoreRuleName: NormalIgnoreRule
     Groups:
     - GroupName: UI
       GroupDesc: 
@@ -65,11 +63,6 @@ MonoBehaviour:
         UserData: 
   - PackageName: GameLauncher
     PackageDesc: 
-    EnableAddressable: 1
-    LocationToLower: 0
-    IncludeAssetGUID: 0
-    AutoCollectShaders: 1
-    IgnoreRuleName: NormalIgnoreRule
     Groups:
     - GroupName: UI
       GroupDesc: 

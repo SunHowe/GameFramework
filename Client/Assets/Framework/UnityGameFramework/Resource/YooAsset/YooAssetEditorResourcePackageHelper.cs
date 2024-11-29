@@ -63,7 +63,7 @@ namespace UnityGameFramework.Runtime
         private IEnumerator InitializeAsEditorMode(YooAssetResourcePackage resourcePackage, CreatePackageCallbacks callbacks)
         {
             var initParameters = new EditorSimulateModeParameters();
-            var simulateManifestFilePath = EditorSimulateModeHelper.SimulateBuild(EDefaultBuildPipeline.BuiltinBuildPipeline, resourcePackage.PackageName);
+            var simulateManifestFilePath = EditorSimulateModeHelper.SimulateBuild(resourcePackage.PackageName);
             initParameters.SimulateManifestFilePath = simulateManifestFilePath;
             var initOperation = resourcePackage.ResourcePackage.InitializeAsync(initParameters);
             

@@ -1080,6 +1080,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4926401463115071947}
   - component: {fileID: 8976720364790610879}
+  - component: {fileID: 1129757078758195954}
   m_Layer: 0
   m_Name: YooAsset
   m_TagString: Untagged
@@ -1117,6 +1118,19 @@ MonoBehaviour:
   m_CDNHostServer: http://127.0.0.1:8080/{1}/{0}
   m_FallbackCDNHostServer: http://127.0.0.1:8080/{1}/{0}
   m_DecryptionHelper: {fileID: 0}
+  m_AssetDeliveryQueryHelper: {fileID: 1129757078758195954}
+--- !u!114 &1129757078758195954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2430278160623780025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b206959b2704291b2efa0958f04212f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3051010266739882229
 GameObject:
   m_ObjectHideFlags: 0

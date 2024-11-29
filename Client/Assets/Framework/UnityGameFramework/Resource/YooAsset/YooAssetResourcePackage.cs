@@ -18,8 +18,8 @@ namespace UnityGameFramework.Runtime
         public ResourcePackage ResourcePackage { get; }
         private ResourcePackageHelperBase m_Helper;
 
-        private readonly Dictionary<object, AssetHandle> m_AssetHandleDict = new Dictionary<object, AssetHandle>();
-        private readonly Dictionary<string, SceneHandle> m_SceneHandleDict = new Dictionary<string, SceneHandle>();
+        private readonly Dictionary<object, AssetOperationHandle> m_AssetHandleDict = new Dictionary<object, AssetOperationHandle>();
+        private readonly Dictionary<string, SceneOperationHandle> m_SceneHandleDict = new Dictionary<string, SceneOperationHandle>();
 
         public YooAssetResourcePackage(string packageName, ResourceMode resourceMode, ResourcePackage resourcePackage, ResourcePackageHelperBase helper)
         {
@@ -155,7 +155,7 @@ namespace UnityGameFramework.Runtime
         private IEnumerator LoadAssetAsync(string assetName, Type assetType, int priority, LoadAssetCallbacks callbacks, object userData)
         {
             var time = DateTime.UtcNow;
-            var handle = ResourcePackage.LoadAssetAsync(assetName, assetType, (uint)priority);
+            var handle = ResourcePackage.LoadAssetAsync(assetName, assetType);
             yield return handle;
 
             if (handle.Status != EOperationStatus.Succeed)
@@ -179,7 +179,7 @@ namespace UnityGameFramework.Runtime
         private IEnumerator LoadSceneAsync(string sceneAssetName, int priority, LoadSceneCallbacks callbacks, object userData)
         {
             var time = DateTime.UtcNow;
-            var handle = ResourcePackage.LoadSceneAsync(sceneAssetName, LoadSceneMode.Additive, false, (uint)priority);
+            var handle = ResourcePackage.LoadSceneAsync(sceneAssetName, LoadSceneMode.Additive, false);
             yield return handle;
 
             if (handle.Status != EOperationStatus.Succeed)
@@ -198,7 +198,7 @@ namespace UnityGameFramework.Runtime
             callbacks.LoadSceneSuccessCallback(sceneAssetName, (float)(DateTime.UtcNow - time).TotalSeconds, userData);
         }
 
-        private IEnumerator UnloadSceneAsync(string sceneAssetName, SceneHandle handle, UnloadSceneCallbacks callbacks, object userData)
+        private IEnumerator UnloadSceneAsync(string sceneAssetName, SceneOperationHandle handle, UnloadSceneCallbacks callbacks, object userData)
         {
             var operation = handle.UnloadAsync();
             yield return operation;

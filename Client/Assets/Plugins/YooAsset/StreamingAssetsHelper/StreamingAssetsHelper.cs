@@ -8,15 +8,10 @@ using YooAsset;
 /// </summary>
 public class GameQueryServices : IBuildinQueryServices
 {
-    /// <summary>
-    /// 查询内置文件的时候，是否比对文件哈希值
-    /// </summary>
-    public static bool CompareFileCRC = false;
-
-    public bool Query(string packageName, string fileName, string fileCRC)
+    public bool QueryStreamingAssets(string packageName, string fileName)
     {
         // 注意：fileName包含文件格式
-        return StreamingAssetsHelper.FileExists(packageName, fileName, fileCRC);
+        return StreamingAssetsHelper.FileExists(packageName, fileName);
     }
 }
 
@@ -24,20 +19,12 @@ public class GameQueryServices : IBuildinQueryServices
 public sealed class StreamingAssetsHelper
 {
     public static void Init() { }
-    public static bool FileExists(string packageName, string fileName, string fileCRC)
+    public static bool FileExists(string packageName, string fileName)
     {
         string filePath = Path.Combine(Application.streamingAssetsPath, StreamingAssetsDefine.RootFolderName, packageName, fileName);
         if (File.Exists(filePath))
         {
-            if (GameQueryServices.CompareFileCRC)
-            {
-                string crc32 = YooAsset.HashUtility.FileCRC32(filePath);
-                return crc32 == fileCRC;
-            }
-            else
-            {
-                return true;
-            }
+            return true;
         }
         else
         {
@@ -84,7 +71,7 @@ public sealed class StreamingAssetsHelper
     /// <summary>
     /// 内置文件查询方法
     /// </summary>
-    public static bool FileExists(string packageName, string fileName, string fileCRC32)
+    public static bool FileExists(string packageName, string fileName)
     {
         if (_isInit == false)
             Init();
@@ -95,14 +82,7 @@ public sealed class StreamingAssetsHelper
         if (package.Elements.TryGetValue(fileName, out var element) == false)
             return false;
 
-        if (GameQueryServices.CompareFileCRC)
-        {
-            return element.FileCRC32 == fileCRC32;
-        }
-        else
-        {
-            return true;
-        }
+        return true;
     }
 }
 #endif
@@ -146,7 +126,6 @@ internal class PreprocessBuild : UnityEditor.Build.IPreprocessBuildWithReport
 
             BuildinFileManifest.Element element = new BuildinFileManifest.Element();
             element.PackageName = fileInfo.Directory.Name;
-            element.FileCRC32 = YooAsset.HashUtility.FileCRC32(fileInfo.FullName);
             element.FileName = fileInfo.Name;
             manifest.BuildinFiles.Add(element);
         }

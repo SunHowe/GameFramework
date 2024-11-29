@@ -6,8 +6,9 @@ namespace UnityGameFramework.Runtime
 {
     public abstract class YooAssetDecryptionHelperBase : MonoBehaviour, IDecryptionServices
     {
-        public abstract AssetBundle LoadAssetBundle(DecryptFileInfo fileInfo, out Stream managedStream);
-
-        public abstract AssetBundleCreateRequest LoadAssetBundleAsync(DecryptFileInfo fileInfo, out Stream managedStream);
+        public abstract ulong LoadFromFileOffset(DecryptFileInfo fileInfo);
+        public abstract byte[] LoadFromMemory(DecryptFileInfo fileInfo);
+        public abstract Stream LoadFromStream(DecryptFileInfo fileInfo);
+        public abstract uint GetManagedReadBufferSize();
     }
 }

@@ -12,7 +12,6 @@ public class BuildinFileManifest : ScriptableObject
     {
         public string PackageName;
         public string FileName;
-        public string FileCRC32;
     }
 
     public List<Element> BuildinFiles = new List<Element>();
