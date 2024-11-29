@@ -33,10 +33,12 @@ namespace GameMono
         protected override void OnUpdate(IFsm<IProcedureManager> procedureOwner, float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
-            if (m_IsDone)
+            if (!m_IsDone)
             {
-                
+                return;
             }
+            
+            ChangeState<ProcedureOpenLaunchForm>(procedureOwner);
         }
 
         private void OnLoadAssetSuccess(string assetname, object asset, float duration, object userdata)

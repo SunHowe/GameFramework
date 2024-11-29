@@ -18,7 +18,7 @@ MonoBehaviour:
   Packages:
   - PackageName: GameMain
     PackageDesc: 
-    EnableAddressable: 0
+    EnableAddressable: 1
     LocationToLower: 0
     IncludeAssetGUID: 0
     AutoCollectShaders: 1
@@ -26,7 +26,7 @@ MonoBehaviour:
     Groups: []
   - PackageName: GameLauncher
     PackageDesc: 
-    EnableAddressable: 0
+    EnableAddressable: 1
     LocationToLower: 0
     IncludeAssetGUID: 0
     AutoCollectShaders: 1

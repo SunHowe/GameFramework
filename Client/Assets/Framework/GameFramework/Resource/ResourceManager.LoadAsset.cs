@@ -110,6 +110,7 @@ namespace GameFramework.Resource
                 
                 packsInfo = LoadAssetPacksInfo.Create();
                 packsInfo.PackInfos.Enqueue(LoadAssetPackInfo.Create(callbacks, userData));
+                m_LoadAssetPacksInfoDict.Add(assetName, packsInfo);
 
                 package.LoadAsset(assetName, assetType, priority, m_LoadAssetCallbacks, package);
             }

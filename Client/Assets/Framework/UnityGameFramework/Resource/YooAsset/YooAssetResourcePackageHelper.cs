@@ -74,7 +74,7 @@ namespace UnityGameFramework.Runtime
 
             try
             {
-                var resourcePackage = new YooAssetResourcePackage(packageName, resourceMode, YooAssets.CreatePackage(packageName));
+                var resourcePackage = new YooAssetResourcePackage(packageName, resourceMode, YooAssets.CreatePackage(packageName), this);
                 if (isSetDefault)
                 {
                     // 设置为默认资源包

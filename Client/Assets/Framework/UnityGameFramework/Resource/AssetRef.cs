@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using GameFramework.Resource;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -11,6 +12,11 @@ namespace UnityGameFramework.Runtime
     [Serializable]
     public class AssetRef
     {
+        /// <summary>
+        /// 是否启用Addressable。
+        /// </summary>
+        public static bool EnableAddressable = true;
+        
         [SerializeField]
         private string m_AssetPath;
 
@@ -40,7 +46,7 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
-            component.LoadAsset(AssetPath, ResourceType, loadAssetCallbacks);
+            component.LoadAsset(GetLoadAssetName(), ResourceType, loadAssetCallbacks);
         }
 
         /// <summary>
@@ -57,7 +63,7 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
-            component.LoadAsset(AssetPath, ResourceType, priority, loadAssetCallbacks);
+            component.LoadAsset(GetLoadAssetName(), ResourceType, priority, loadAssetCallbacks);
         }
 
         /// <summary>
@@ -75,7 +81,17 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
-            component.LoadAsset(AssetPath, ResourceType, priority, loadAssetCallbacks, userdata);
+            component.LoadAsset(GetLoadAssetName(), ResourceType, priority, loadAssetCallbacks, userdata);
+        }
+
+        private string GetLoadAssetName()
+        {
+            if (!EnableAddressable)
+            {
+                return AssetPath;
+            }
+
+            return Path.GetFileNameWithoutExtension(AssetPath);
         }
     }
 

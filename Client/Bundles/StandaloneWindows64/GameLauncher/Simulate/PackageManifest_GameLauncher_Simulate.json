@@ -1,6 +1,6 @@
 {
     "FileVersion": "2.0.0",
-    "EnableAddressable": false,
+    "EnableAddressable": true,
     "LocationToLower": false,
     "IncludeAssetGUID": false,
     "OutputNameStyle": 0,
@@ -9,21 +9,21 @@
     "PackageVersion": "Simulate",
     "AssetList": [
         {
-            "Address": "",
+            "Address": "Launch_atlas0",
             "AssetPath": "Assets/GameLauncher/UI/Launch_atlas0.png",
             "AssetGUID": "",
             "AssetTags": [],
             "BundleID": 0
         },
         {
-            "Address": "",
-            "AssetPath": "Assets/GameLauncher/UI/PackageMapping.asset",
+            "Address": "LauncherPackageMapping",
+            "AssetPath": "Assets/GameLauncher/UI/LauncherPackageMapping.asset",
             "AssetGUID": "",
             "AssetTags": [],
             "BundleID": 0
         },
         {
-            "Address": "",
+            "Address": "Launch_fui",
             "AssetPath": "Assets/GameLauncher/UI/Launch_fui.bytes",
             "AssetGUID": "",
             "AssetTags": [],
@@ -36,7 +36,7 @@
             "UnityCRC": 0,
             "FileHash": "d3998869e99a6f47827d04f18b2694c6",
             "FileCRC": "00000000",
-            "FileSize": 1325,
+            "FileSize": 1333,
             "Encrypted": false,
             "Tags": [],
             "DependIDs": []

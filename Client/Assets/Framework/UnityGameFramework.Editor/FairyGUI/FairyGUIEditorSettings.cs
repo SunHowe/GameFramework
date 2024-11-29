@@ -17,7 +17,7 @@ namespace UnityGameFramework.Editor.FairyGUI
             new FairyGUIResDirectorySetting
             {
                 DirectoryRoot = "Assets/GameLauncher/UI/",
-                PackageMappingOutputPath = "Assets/GameLauncher/UI/PackageMapping.asset",
+                PackageMappingOutputPath = "Assets/GameLauncher/UI/LauncherPackageMapping.asset",
                 CodeGenerateSetting = new FairyGUICodeGenerateSetting
                 {
                     Namespace = "GameMono.UI",
@@ -29,7 +29,7 @@ namespace UnityGameFramework.Editor.FairyGUI
             new FairyGUIResDirectorySetting
             {
                 DirectoryRoot = "Assets/GameMain/UI/",
-                PackageMappingOutputPath = "Assets/GameMain/UI/PackageMapping.asset",
+                PackageMappingOutputPath = "Assets/GameMain/UI/MainPackageMapping.asset",
                 CodeGenerateSetting = new FairyGUICodeGenerateSetting
                 {
                     Namespace = "GameLogic.UI",
