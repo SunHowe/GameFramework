@@ -1185,7 +1185,7 @@ namespace YooAsset
             }
         }
 
-        [Conditional("DEBUG")]
+        [Conditional("DEBUG_DISABLE")]
         private void DebugCheckRawFileLoadMethod(string method)
         {
             if (_playModeImpl.ActiveManifest.BuildPipeline != EDefaultBuildPipeline.RawFileBuildPipeline.ToString())
@@ -1194,7 +1194,7 @@ namespace YooAsset
             }
         }
 
-        [Conditional("DEBUG")]
+        [Conditional("DEBUG_DISABLE")]
         private void DebugCheckAssetLoadMethod(string method)
         {
             if (_playModeImpl.ActiveManifest.BuildPipeline == EDefaultBuildPipeline.RawFileBuildPipeline.ToString())
