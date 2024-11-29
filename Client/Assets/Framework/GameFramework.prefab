@@ -579,7 +579,6 @@ MonoBehaviour:
   - GameMono.ProcedureCheckVersion
   - GameMono.ProcedureCreateDefaultPackage
   - GameMono.ProcedureCreateLauncherPackage
-  - GameMono.ProcedureInitResource
   - GameMono.ProcedureLaunchGameLogic
   - GameMono.ProcedureLoadLauncherUIMapping
   - GameMono.ProcedureOpenLaunchForm

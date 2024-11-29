@@ -21,14 +21,12 @@ namespace UnityGameFramework.Editor
         {
             "UnityGameFramework.Runtime",
             "GameMono",
-            "GameLogic",
         };
 
         private static readonly string[] RuntimeOrEditorAssemblyNames =
         {
             "UnityGameFramework.Runtime",
             "GameMono",
-            "GameLogic",
             "UnityGameFramework.Editor",
         };
 

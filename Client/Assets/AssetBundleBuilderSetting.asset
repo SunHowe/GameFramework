@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BuildPipeline: 0
   BuildMode: 0
-  BuildPackage: GameLauncher
+  BuildPackage: GameMain
   CompressOption: 2
   OutputNameStyle: 1
   CopyBuildinFileOption: 1
