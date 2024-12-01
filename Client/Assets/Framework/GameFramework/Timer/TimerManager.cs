@@ -1,43 +1,133 @@
-﻿namespace GameFramework.Timer
+﻿using System;
+using System.Collections.Generic;
+
+namespace GameFramework.Timer
 {
     /// <summary>
     /// 定时器管理器。
     /// </summary>
-    internal class TimerManager : GameFrameworkModule, ITimerManager
+    internal partial class TimerManager : GameFrameworkModule, ITimerManager
     {
+        private readonly Dictionary<int, TimerInfo> m_TimerInfoDict = new Dictionary<int, TimerInfo>();
+        private readonly List<TimerInfo> m_TimerInfoList = new List<TimerInfo>();
+        private readonly Queue<TimerInfo> m_TimerInfoQueue = new Queue<TimerInfo>();
+        private int m_IncrementTimerId;
+        private float m_ElapsedTime;
+        
         internal override void Update(float elapseSeconds, float realElapseSeconds)
         {
-            throw new System.NotImplementedException();
+            m_ElapsedTime += elapseSeconds;
+            
+            // 将等待队列中的定时器添加到定时器列表中.
+            while (m_TimerInfoQueue.Count > 0)
+            {
+                m_TimerInfoList.Add(m_TimerInfoQueue.Dequeue());
+            }
+            
+            // 遍历定时器列表，更新定时器状态.
+            for (var index = 0; index < m_TimerInfoList.Count; ++index)
+            {
+                var info = m_TimerInfoList[index];
+                var willRemove = false;
+                if (info.IsCancel)
+                {
+                    // 已经被取消的定时器. 从列表中移除.
+                    willRemove = true;
+                }
+                else if (info.NextInvokeTime <= m_ElapsedTime)
+                {
+                    // 到达触发时间, 执行回调函数.
+                    // 令次数+1
+                    ++info.InvokeTimes;
+                    try
+                    {
+                        info.TimerCallback(info.TimerId, m_ElapsedTime - info.PreviousInvokeTime, info.InvokeTimes, info.UserData);
+                    }
+                    catch (Exception e)
+                    {
+                        GameFrameworkLog.Fatal(e.ToString());
+                    }
+
+                    if (info.TimerRepeatTimes <= 0 || info.InvokeTimes < info.TimerRepeatTimes)
+                    {
+                        // 未达到指定次数上限. 更新下次触发时间.
+                        info.PreviousInvokeTime = m_ElapsedTime;
+                        info.NextInvokeTime += info.TimerInterval;
+                    }
+                    else
+                    {
+                        // 达到指定次数上限, 标记为需要移除
+                        willRemove = true;
+                    }
+                }
+
+                if (!willRemove)
+                {
+                    continue;
+                }
+                
+                // 从列表中移除
+                ReferencePool.Release(info);
+                
+                // 将列表中最后一个定时器移到当前位置
+                var lastIndex = m_TimerInfoList.Count - 1;
+                if (index < lastIndex)
+                {
+                    m_TimerInfoList[index] = m_TimerInfoList[lastIndex];
+                    m_TimerInfoList.RemoveAt(lastIndex);
+                    index -= 1; // 需要减1防止这个定时器未执行到
+                }
+                else
+                {
+                    // 已经是最后一个定时器, 直接移除
+                    m_TimerInfoList.RemoveAt(index);
+                }
+            }
         }
 
         internal override void Shutdown()
         {
-            throw new System.NotImplementedException();
         }
 
         public int AddTimer(float interval, TimerCallback callback)
         {
-            throw new System.NotImplementedException();
+            return AddTimer(interval, 0, callback, null);
         }
 
         public int AddTimer(float interval, TimerCallback callback, object userData)
         {
-            throw new System.NotImplementedException();
+            return AddTimer(interval, 0, callback, userData);
         }
 
         public int AddTimer(float interval, int repeatTimes, TimerCallback callback)
         {
-            throw new System.NotImplementedException();
+            return AddTimer(interval, repeatTimes, callback, null);
         }
 
         public int AddTimer(float interval, int repeatTimes, TimerCallback callback, object userData)
         {
-            throw new System.NotImplementedException();
+            if (m_IncrementTimerId >= int.MaxValue)
+                m_IncrementTimerId = 0;
+            
+            var timerId = ++m_IncrementTimerId;
+            var info = TimerInfo.Create(timerId, interval, repeatTimes, callback, userData);
+            info.PreviousInvokeTime = m_ElapsedTime;
+            info.NextInvokeTime = m_ElapsedTime + interval;
+            
+            m_TimerInfoQueue.Enqueue(info);
+            m_TimerInfoDict.Add(timerId, info);
+            
+            return timerId;
         }
 
         public void RemoveTimer(int timerId)
         {
-            throw new System.NotImplementedException();
+            if (!m_TimerInfoDict.TryGetValue(timerId, out var info))
+            {
+                return;
+            }
+
+            info.IsCancel = true;
         }
     }
 }
