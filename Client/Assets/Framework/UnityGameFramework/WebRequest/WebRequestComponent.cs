@@ -17,7 +17,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Web Request")]
-    public sealed class WebRequestComponent : GameFrameworkComponent<WebRequestComponent>
+    public sealed partial class WebRequestComponent : GameFrameworkComponent<WebRequestComponent>
     {
         private const int DefaultPriority = 0;
 
@@ -552,12 +552,23 @@ namespace UnityGameFramework.Runtime
 
         private void OnWebRequestSuccess(object sender, GameFramework.WebRequest.WebRequestSuccessEventArgs e)
         {
+            if (TrySetAwaitResult(e.SerialId, e))
+            {
+                return;
+            }
+            
             m_EventComponent.Fire(this, WebRequestSuccessEventArgs.Create(e));
         }
 
         private void OnWebRequestFailure(object sender, GameFramework.WebRequest.WebRequestFailureEventArgs e)
         {
             Log.Warning("Web request failure, web request serial id '{0}', web request uri '{1}', error message '{2}'.", e.SerialId, e.WebRequestUri, e.ErrorMessage);
+
+            if (TrySetAwaitResult(e.SerialId, e))
+            {
+                return;
+            }
+            
             m_EventComponent.Fire(this, WebRequestFailureEventArgs.Create(e));
         }
     }

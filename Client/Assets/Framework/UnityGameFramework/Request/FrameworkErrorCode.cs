@@ -33,6 +33,11 @@
         RequestException,
         
         /// <summary>
+        /// Web请求失败。
+        /// </summary>
+        WebRequestFailure,
+        
+        /// <summary>
         /// 超过该值的错误码给游戏逻辑使用。
         /// </summary>
         Max = 100000,
