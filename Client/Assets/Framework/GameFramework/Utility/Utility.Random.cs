@@ -6,6 +6,7 @@
 //------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 
 namespace GameFramework
 {
@@ -73,6 +74,24 @@ namespace GameFramework
             public static void GetRandomBytes(byte[] buffer)
             {
                 s_Random.NextBytes(buffer);
+            }
+
+            /// <summary>
+            /// 打乱数组。
+            /// </summary>
+            /// <param name="arr">要打乱的数组。</param>
+            public static void BreakRank<T>(List<T> arr)
+            {
+                if (arr == null || arr.Count < 2)
+                {
+                    return;
+                }
+
+                for (var i = 0; i < arr.Count; i++)
+                {
+                    var index = GetRandom(0, arr.Count);
+                    (arr[index], arr[i]) = (arr[i], arr[index]);
+                }
             }
         }
     }
