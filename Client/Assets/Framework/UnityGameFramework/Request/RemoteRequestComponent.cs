@@ -13,7 +13,7 @@ namespace UnityGameFramework.Runtime
     [AddComponentMenu("Game Framework/RemoteRequest")]
     public sealed class RemoteRequestComponent : GameFrameworkComponent<RemoteRequestComponent>
     {
-        private readonly Dictionary<int, AutoResetUniTaskCompletionSource<UniTask<Response>>> m_TaskDict = new();
+        private readonly Dictionary<int, AutoResetUniTaskCompletionSource<Response>> m_TaskDict = new();
         private int m_RequestId = 0;
 
         /// <summary>
@@ -23,14 +23,27 @@ namespace UnityGameFramework.Runtime
         /// <returns>唯一的请求id和用于等待的task</returns>
         public (int requestId, UniTask<T> uniTask) RegisterRemoteRequest<T>(CancellationToken token = default) where T : Response, new()
         {
+            var (requestId, uniTask) = RegisterRemoteRequest(token);
+            
+            // 这里会根据响应包类型做进一步检测。
+            return (requestId, uniTask.As<T>());
+        }
+
+        /// <summary>
+        /// 注册一个远程请求。远程请求会分配全局唯一的请求id，用于设置响应包时与响应关联。
+        /// </summary>
+        /// <param name="token">取消令牌，当令牌被标记为取消时，会直接返回。</param>
+        /// <returns>唯一的请求id和用于等待的task</returns>
+        public (int requestId, UniTask<Response> uniTask) RegisterRemoteRequest(CancellationToken token = default)
+        {
             if (token.IsCancellationRequested)
             {
                 // 已经被取消，直接返回即可。
-                return (-1, UniTask.FromCanceled<T>(token));
+                return (-1, UniTask.FromCanceled<Response>(token));
             }
 
             int requestId;
-            var source = AutoResetUniTaskCompletionSource<UniTask<Response>>.Create();
+            var source = AutoResetUniTaskCompletionSource<Response>.Create();
 
             lock (m_TaskDict)
             {
@@ -43,8 +56,7 @@ namespace UnityGameFramework.Runtime
                 token.Register(OnTokenCancelled, requestId);
             }
 
-            // 这里会根据响应包类型做进一步检测。
-            return (requestId, source.Task.ContinueWith(task => task.As<T>()));
+            return (requestId, source.Task);
         }
 
         /// <summary>
@@ -65,7 +77,7 @@ namespace UnityGameFramework.Runtime
         /// <param name="response">响应包实例。</param>
         public void SetResponse(int requestId, Response response)
         {
-            AutoResetUniTaskCompletionSource<UniTask<Response>> source;
+            AutoResetUniTaskCompletionSource<Response> source;
 
             lock (m_TaskDict)
             {
@@ -77,7 +89,7 @@ namespace UnityGameFramework.Runtime
                 }
             }
 
-            source.TrySetResult(UniTask.FromResult(response));
+            source.TrySetResult(response);
         }
 
         /// <summary>
