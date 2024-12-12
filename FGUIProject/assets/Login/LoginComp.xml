@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="400,200">
+  <displayList>
+    <component id="n0_hjkq" name="serverButton" src="hjkq2" fileName="LoginServerButton.xml" xy="0,0"/>
+    <component id="n1_hjkq" name="loginButton" src="hjkq3" fileName="LoginButton.xml" xy="0,100"/>
+  </displayList>
+</component>

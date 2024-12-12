@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="6apezyp2">
+  <resources>
+    <component id="hjkq0" name="LoginForm.xml" path="/" exported="true"/>
+    <component id="hjkq1" name="LoginComp.xml" path="/"/>
+    <component id="hjkq2" name="LoginServerButton.xml" path="/"/>
+    <component id="hjkq3" name="LoginButton.xml" path="/"/>
+  </resources>
+  <publish name=""/>
+</packageDescription>
