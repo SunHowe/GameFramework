@@ -108,27 +108,66 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// 界面初始化。
         /// </summary>
         /// <param name="userData">用户自定义数据。</param>
-        protected internal virtual void OnInit(object userData)
+        internal void Init(object userData)
         {
             m_UIForm = m_ContentPane.data as FGUIForm;
             m_FeatureContainerOnInit?.Awake();
+            OnInit(userData);
         }
 
         /// <summary>
         /// 界面回收。
         /// </summary>
-        protected internal virtual void OnRecycle()
+        internal void Recycle()
         {
+            OnRecycle();
             m_FeatureContainerOnInit?.Shutdown();
+        }
+        
+        /// <summary>
+        /// 界面打开。
+        /// </summary>
+        /// <param name="userData">用户自定义数据。</param>
+        internal void Open(object userData)
+        {
+            m_FeatureContainerOnOpen?.Awake();
+            
+            OnOpen(userData);
+        }
+
+        /// <summary>
+        /// 界面关闭。
+        /// </summary>
+        /// <param name="isShutdown">是否是关闭界面管理器时触发。</param>
+        /// <param name="userData">用户自定义数据。</param>
+        internal void Close(bool isShutdown, object userData)
+        {
+            OnClose(isShutdown, userData);
+            
+            m_FeatureContainerOnOpen?.Shutdown();
+        }
+
+        /// <summary>
+        /// 界面初始化。
+        /// </summary>
+        /// <param name="userData">用户自定义数据。</param>
+        protected virtual void OnInit(object userData)
+        {
+        }
+
+        /// <summary>
+        /// 界面回收。
+        /// </summary>
+        protected virtual void OnRecycle()
+        {
         }
 
         /// <summary>
         /// 界面打开。
         /// </summary>
         /// <param name="userData">用户自定义数据。</param>
-        protected internal virtual void OnOpen(object userData)
+        protected virtual void OnOpen(object userData)
         {
-            m_FeatureContainerOnOpen?.Awake();
             m_Available = true;
             Visible = true;
         }
@@ -138,11 +177,10 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// </summary>
         /// <param name="isShutdown">是否是关闭界面管理器时触发。</param>
         /// <param name="userData">用户自定义数据。</param>
-        protected internal virtual void OnClose(bool isShutdown, object userData)
+        protected virtual void OnClose(bool isShutdown, object userData)
         {
             Visible = false;
             m_Available = false;
-            m_FeatureContainerOnOpen?.Shutdown();
         }
 
         /// <summary>

@@ -165,7 +165,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
 
             try
             {
-                m_UIFormLogic.OnInit(userData);
+                m_UIFormLogic.Init(userData);
             }
             catch (Exception exception)
             {
@@ -180,7 +180,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         {
             try
             {
-                m_UIFormLogic.OnRecycle();
+                m_UIFormLogic.Recycle();
             }
             catch (Exception exception)
             {
@@ -202,7 +202,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
             
             try
             {
-                m_UIFormLogic.OnOpen(userData);
+                m_UIFormLogic.Open(userData);
             }
             catch (Exception exception)
             {
@@ -219,7 +219,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         {
             try
             {
-                m_UIFormLogic.OnClose(isShutdown, userData);
+                m_UIFormLogic.Close(isShutdown, userData);
             }
             catch (Exception exception)
             {
