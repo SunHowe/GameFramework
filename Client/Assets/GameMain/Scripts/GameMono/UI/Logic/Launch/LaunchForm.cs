@@ -1,4 +1,5 @@
-﻿using UnityGameFramework.Runtime;
+﻿using GameFramework.Event;
+using UnityGameFramework.Runtime;
 using UnityGameFramework.Runtime.FairyGUI;
 using GameMono.UI;
 
@@ -19,6 +20,7 @@ namespace GameMono.UI.Launch
         {
             base.OnOpen(userData);
             
+            this.SubscribeOnOpen(LaunchFinishEventArgs.EventId, OnLaunchFinish);
             Log.Info("LaunchForm OnOpen");
         }
 
@@ -36,6 +38,14 @@ namespace GameMono.UI.Launch
         {
             this.AddFrameFeature(); // 添加通用窗体框架
             this.AddScreenAdaptor(FGUIFormScreenAdaptorType.FullScreen); // 设置屏幕适配器
+        }
+
+        /// <summary>
+        /// 启动流程完成。关闭启动界面。
+        /// </summary>
+        private void OnLaunchFinish(object sender, GameEventArgs e)
+        {
+            this.CloseForm();
         }
     }
 }
