@@ -13,6 +13,9 @@ namespace GameLogic
         {
             base.OnEnter(procedureOwner);
             
+            // TODO FGUI界面与组件的绑定与注册。
+            FGUIComponent.Instance.RegisterCustomComponent(GetType().Assembly);
+            
             // 配置模块
             GameLogicComponent.Instance.AddGameLogic<DataTableModule>();
         }

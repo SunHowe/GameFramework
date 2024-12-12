@@ -302,6 +302,12 @@ namespace UnityGameFramework.Runtime.FairyGUI
             }
         }
 
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            UIObjectFactory.Clear();
+        }
+
         /// <summary>
         /// 是否存在界面组。
         /// </summary>
@@ -981,6 +987,25 @@ namespace UnityGameFramework.Runtime.FairyGUI
         public string GetUIFormAssetName<T>() where T : FGUIFormLogic
         {
             return GetUIFormBindingInfo(typeof(T))?.UIFormAssetName ?? string.Empty;
+        }
+        
+        /// <summary>
+        /// 根据程序集注册自定义组件。
+        /// </summary>
+        public void RegisterCustomComponent(Assembly assembly)
+        {
+            var types = assembly.GetTypes();
+            foreach (var type in types)
+            {
+                var attrs = type.GetCustomAttributes(typeof(FGUICustomComponentAttribute), false);
+                if (attrs.Length == 0)
+                {
+                    continue;
+                }
+                
+                var uiCustomComponentAttribute = (FGUICustomComponentAttribute)attrs[0];
+                UIObjectFactory.SetPackageItemExtension(uiCustomComponentAttribute.URL, type);
+            }
         }
         
         private void OnOpenUIFormSuccess(object sender, GameFramework.UI.OpenUIFormSuccessEventArgs e)
