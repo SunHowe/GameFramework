@@ -10,7 +10,7 @@
         /// </summary>
         public static void CloseForm(this FGUIFormLogic fguiFormLogic)
         {
-            // TODO
+            FGUIComponent.Instance.CloseUIForm(fguiFormLogic.UIForm);
         }
     }
 }
