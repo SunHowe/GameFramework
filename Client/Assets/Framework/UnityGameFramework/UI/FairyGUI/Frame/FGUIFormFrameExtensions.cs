@@ -1,5 +1,10 @@
-﻿namespace UnityGameFramework.Runtime.FairyGUI
+﻿using FairyGUI;
+
+namespace UnityGameFramework.Runtime.FairyGUI
 {
+    /// <summary>
+    /// FGUI界面 通用窗体框架的功能拓展。
+    /// </summary>
     public static class FGUIFormFrameExtensions
     {
         /// <summary>
@@ -10,5 +15,36 @@
             fguiFormLogic.AddFeature<FGUIFormFrameFeature>();
         }
 
+        /// <summary>
+        /// 为界面设置通用窗体框架的关闭按钮。
+        /// </summary>
+        public static void SetCloseButton(this FGUIFormLogic fguiFormLogic, GObject closeButton)
+        {
+            fguiFormLogic.AddFeature<FGUIFormFrameFeature>().CloseButton = closeButton;
+        }
+
+        /// <summary>
+        /// 为界面设置通用窗体框架的返回按钮。
+        /// </summary>
+        public static void SetBackButton(this FGUIFormLogic fguiFormLogic, GObject backButton)
+        {
+            fguiFormLogic.AddFeature<FGUIFormFrameFeature>().BackButton = backButton;
+        }
+
+        /// <summary>
+        /// 为界面设置通用窗体框架设置关闭按钮点击回调函数。
+        /// </summary>
+        public static void SetCloseButtonClickCallback(this FGUIFormLogic fguiFormLogic, EventCallback1 callback1)
+        {
+            fguiFormLogic.AddFeature<FGUIFormFrameFeature>().CloseButtonClickCallback = callback1;
+        }
+
+        /// <summary>
+        /// 为界面设置通用窗体框架设置返回按钮点击回调函数。
+        /// </summary>
+        public static void SetBackButtonClickCallback(this FGUIFormLogic fguiFormLogic, EventCallback1 callback1)
+        {
+            fguiFormLogic.AddFeature<FGUIFormFrameFeature>().BackButtonClickCallback = callback1;
+        }
     }
 }
