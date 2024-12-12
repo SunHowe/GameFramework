@@ -15,19 +15,19 @@ namespace UnityGameFramework.Runtime.FairyGUI
                     // 不用处理
                     break;
                 case FGUIFormScreenAdaptorType.ConstantHorizontalCenter:
-                    fguiFormLogic.AddFeature<FGUIFormConstantFeature>().Configure(isHorizontalCenter: true);
+                    fguiFormLogic.FeatureContainerOnInit.AddFeature<FGUIFormConstantFeature>().Configure(isHorizontalCenter: true);
                     break;
                 case FGUIFormScreenAdaptorType.ConstantVerticalCenter:
-                    fguiFormLogic.AddFeature<FGUIFormConstantFeature>().Configure(isVerticalCenter: true);
+                    fguiFormLogic.FeatureContainerOnInit.AddFeature<FGUIFormConstantFeature>().Configure(isVerticalCenter: true);
                     break;
                 case FGUIFormScreenAdaptorType.ConstantCenter:
-                    fguiFormLogic.AddFeature<FGUIFormConstantFeature>().Configure(true, true);
+                    fguiFormLogic.FeatureContainerOnInit.AddFeature<FGUIFormConstantFeature>().Configure(true, true);
                     break;
                 case FGUIFormScreenAdaptorType.FullScreen:
-                    fguiFormLogic.AddFeature<FGUIFormFullScreenFeature>();
+                    fguiFormLogic.FeatureContainerOnInit.AddFeature<FGUIFormFullScreenFeature>();
                     break;
                 case FGUIFormScreenAdaptorType.SafeAreaFullScreen:
-                    fguiFormLogic.AddFeature<FGUIFormSafeAreaFeature>();
+                    fguiFormLogic.FeatureContainerOnInit.AddFeature<FGUIFormSafeAreaFeature>();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(adaptorType), adaptorType, null);

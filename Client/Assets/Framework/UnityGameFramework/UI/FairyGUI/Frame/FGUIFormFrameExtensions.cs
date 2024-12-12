@@ -12,7 +12,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// </summary>
         public static void AddFrameFeature(this FGUIFormLogic fguiFormLogic)
         {
-            fguiFormLogic.AddFeature<FGUIFormFrameFeature>();
+            fguiFormLogic.FeatureContainerOnInit.AddFeature<FGUIFormFrameFeature>();
         }
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// </summary>
         public static void SetCloseButton(this FGUIFormLogic fguiFormLogic, GObject closeButton)
         {
-            fguiFormLogic.AddFeature<FGUIFormFrameFeature>().CloseButton = closeButton;
+            fguiFormLogic.FeatureContainerOnInit.AddFeature<FGUIFormFrameFeature>().CloseButton = closeButton;
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// </summary>
         public static void SetBackButton(this FGUIFormLogic fguiFormLogic, GObject backButton)
         {
-            fguiFormLogic.AddFeature<FGUIFormFrameFeature>().BackButton = backButton;
+            fguiFormLogic.FeatureContainerOnInit.AddFeature<FGUIFormFrameFeature>().BackButton = backButton;
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// </summary>
         public static void SetCloseButtonClickCallback(this FGUIFormLogic fguiFormLogic, EventCallback1 callback1)
         {
-            fguiFormLogic.AddFeature<FGUIFormFrameFeature>().CloseButtonClickCallback = callback1;
+            fguiFormLogic.FeatureContainerOnInit.AddFeature<FGUIFormFrameFeature>().CloseButtonClickCallback = callback1;
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// </summary>
         public static void SetBackButtonClickCallback(this FGUIFormLogic fguiFormLogic, EventCallback1 callback1)
         {
-            fguiFormLogic.AddFeature<FGUIFormFrameFeature>().BackButtonClickCallback = callback1;
+            fguiFormLogic.FeatureContainerOnInit.AddFeature<FGUIFormFrameFeature>().BackButtonClickCallback = callback1;
         }
     }
 }

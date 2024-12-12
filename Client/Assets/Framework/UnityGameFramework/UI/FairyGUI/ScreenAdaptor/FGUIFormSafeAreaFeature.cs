@@ -8,7 +8,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
     /// </summary>
     internal class FGUIFormSafeAreaFeature : Feature<FGUIFormLogic>
     {
-        public override void Awake(IFeatureOwner featureOwner)
+        public override void Awake(object featureOwner)
         {
             base.Awake(featureOwner);
             

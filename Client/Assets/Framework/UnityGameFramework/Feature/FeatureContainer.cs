@@ -11,12 +11,12 @@ namespace UnityGameFramework.Runtime
         /// <summary>
         /// 功能持有者。
         /// </summary>
-        public IFeatureOwner Owner { get; }
+        public object Owner { get; }
 
         private readonly Dictionary<Type, IFeature> m_FeatureDict = new Dictionary<Type, IFeature>();
         private readonly List<IFeature> m_FeatureList = new List<IFeature>();
 
-        public FeatureContainer(IFeatureOwner owner)
+        public FeatureContainer(object owner)
         {
             Owner = owner;
         }

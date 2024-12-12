@@ -10,7 +10,7 @@ namespace UnityGameFramework.Runtime
         /// <summary>
         /// 初始化子功能，由框架调度进行。
         /// </summary>
-        void Awake(IFeatureOwner featureOwner);
+        void Awake(object featureOwner);
 
         /// <summary>
         /// 销毁子功能，由框架调度进行。
@@ -26,12 +26,12 @@ namespace UnityGameFramework.Runtime
         /// <summary>
         /// 功能持有者。
         /// </summary>
-        public IFeatureOwner Owner { get; private set; }
+        public object Owner { get; private set; }
         
         /// <summary>
         /// 初始化子功能，由框架调度进行。
         /// </summary>
-        public virtual void Awake(IFeatureOwner featureOwner)
+        public virtual void Awake(object featureOwner)
         {
             Owner = featureOwner;
         }
@@ -45,7 +45,7 @@ namespace UnityGameFramework.Runtime
     /// <summary>
     /// 子功能基类，对持有者有类型约束，若类型不匹配会直接触发异常。
     /// </summary>
-    public abstract class Feature<T> : IFeature where T : IFeatureOwner
+    public abstract class Feature<T> : IFeature
     {
         /// <summary>
         /// 功能持有者。
@@ -55,7 +55,7 @@ namespace UnityGameFramework.Runtime
         /// <summary>
         /// 初始化子功能，由框架调度进行。
         /// </summary>
-        public virtual void Awake(IFeatureOwner featureOwner)
+        public virtual void Awake(object featureOwner)
         {
             if (!(featureOwner is T distFeatureOwner))
             {

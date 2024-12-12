@@ -11,12 +11,34 @@ namespace UnityGameFramework.Runtime
         /// <summary>
         /// 注册事件。会在Owner销毁时自动取消注册。
         /// </summary>
+        /// <param name="container"></param>
+        /// <param name="id">事件类型编号。</param>
+        /// <param name="handler">要订阅的事件处理回调函数。</param>
+        public static void Subscribe(this FeatureContainer container, int id, EventHandler<GameEventArgs> handler)
+        {
+            container.AddFeature<EventBinderFeature>().Subscribe(id, handler);
+        }
+        
+        /// <summary>
+        /// 取消订阅事件处理回调函数。
+        /// </summary>
+        /// <param name="container"></param>
+        /// <param name="id">事件类型编号。</param>
+        /// <param name="handler">要取消订阅的事件处理回调函数。</param>
+        public static void Unsubscribe(this FeatureContainer container, int id, EventHandler<GameEventArgs> handler)
+        {
+            container.AddFeature<EventBinderFeature>().Unsubscribe(id, handler);
+        }
+        
+        /// <summary>
+        /// 注册事件。会在Owner销毁时自动取消注册。
+        /// </summary>
         /// <param name="owner"></param>
         /// <param name="id">事件类型编号。</param>
         /// <param name="handler">要订阅的事件处理回调函数。</param>
-        public static void Subscribe(this IFeatureOwner owner, int id, EventHandler<GameEventArgs> handler)
+        public static void Subscribe(this IFeatureContainerOwner owner, int id, EventHandler<GameEventArgs> handler)
         {
-            owner.AddFeature<EventBinderFeature>().Subscribe(id, handler);
+            owner.FeatureContainer.Subscribe(id, handler);
         }
         
         /// <summary>
@@ -25,9 +47,9 @@ namespace UnityGameFramework.Runtime
         /// <param name="owner"></param>
         /// <param name="id">事件类型编号。</param>
         /// <param name="handler">要取消订阅的事件处理回调函数。</param>
-        public static void Unsubscribe(this IFeatureOwner owner, int id, EventHandler<GameEventArgs> handler)
+        public static void Unsubscribe(this IFeatureContainerOwner owner, int id, EventHandler<GameEventArgs> handler)
         {
-            owner.AddFeature<EventBinderFeature>().Unsubscribe(id, handler);
+            owner.FeatureContainer.Unsubscribe(id, handler);
         }
     }
 }

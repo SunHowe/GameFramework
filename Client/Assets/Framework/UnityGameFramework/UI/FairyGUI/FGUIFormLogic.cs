@@ -5,13 +5,15 @@ namespace UnityGameFramework.Runtime.FairyGUI
     /// <summary>
     /// FairyGUI界面逻辑基类。
     /// </summary>
-    public abstract class FGUIFormLogic : IFeatureOwner
+    public abstract class FGUIFormLogic
     {
         private bool m_Available = false;
         private bool m_Visible = false;
         private FGUIForm m_UIForm = null;
         
         private GComponent m_ContentPane = null;
+        private FeatureContainer m_FeatureContainerOnInit = null;
+        private FeatureContainer m_FeatureContainerOnOpen = null;
 
         /// <summary>
         /// 获取界面。
@@ -92,11 +94,15 @@ namespace UnityGameFramework.Runtime.FairyGUI
             }
         }
 
-        public FeatureContainer FeatureContainer
-        {
-            get;
-            set;
-        }
+        /// <summary>
+        /// 功能容器。在OnRecycle阶段销毁。
+        /// </summary>
+        public FeatureContainer FeatureContainerOnInit => m_FeatureContainerOnInit ??= new FeatureContainer(this);
+        
+        /// <summary>
+        /// 界面打开期间才生效的功能容器。在OnClose阶段销毁。
+        /// </summary>
+        public FeatureContainer FeatureContainerOnOpen => m_FeatureContainerOnOpen ??= new FeatureContainer(this);
 
         /// <summary>
         /// 界面初始化。
@@ -112,7 +118,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// </summary>
         protected internal virtual void OnRecycle()
         {
-            FeatureContainer?.Shutdown();
+            m_FeatureContainerOnInit?.Shutdown();
         }
 
         /// <summary>
@@ -134,6 +140,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         {
             Visible = false;
             m_Available = false;
+            m_FeatureContainerOnOpen?.Shutdown();
         }
 
         /// <summary>
