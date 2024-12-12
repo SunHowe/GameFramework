@@ -8,11 +8,13 @@
 
 using System;
 using System.Threading;
+using UnityGameFramework.Runtime;
+using UnityGameFramework.Runtime.FairyGUI;
 
 namespace GameMono.UI.{{ package_name }}
 {
-    [UnityGameFramework.Runtime.FairyGUI.FGUICustomComponent(URL)]
-    public partial class {{ name }} : {{ extension_type.full_name }}
+    [FGUICustomComponent(URL)]
+    public partial class {{ name }} : {{ extension_type.full_name }}, IFGUICustomComponent
     {
         public const string URL = "{{ url }}";
 
@@ -45,20 +47,20 @@ namespace GameMono.UI.{{ package_name }}
 {{ end }} {{ end }}
         #endregion
 
-        #region [CancellationTokenSource]
+        #region [FeatureContainer]
         
         /// <summary>
-        /// 在组件RemoveFromStage时会被取消的令牌
+        /// 功能容器。在组件销毁时会跟着被销毁。
         /// </summary>
-        private CancellationToken CancellationTokenOnRemoveFromStage => (m_CancellationTokenSourceOnRemoveFromStage ??= new CancellationTokenSource()).Token;
+        public FeatureContainer FeatureContainerOnInit => m_FeatureContainerOnInit ??= new FeatureContainer(this);
         
         /// <summary>
-        /// 在组件Dispose时会被取消的令牌
+        /// 功能容器。在组件从舞台移除时会跟着被销毁。
         /// </summary>
-        private CancellationToken CancellationTokenOnDispose => (m_CancellationTokenSourceOnDispose ??= new CancellationTokenSource()).Token;
+        public FeatureContainer FeatureContainerOnAddedToStage => m_FeatureContainerOnAddedToStage ??= new FeatureContainer(this);
         
-        private CancellationTokenSource m_CancellationTokenSourceOnRemoveFromStage;
-        private CancellationTokenSource m_CancellationTokenSourceOnDispose;
+        private FeatureContainer m_FeatureContainerOnInit;
+        private FeatureContainer m_FeatureContainerOnAddedToStage;
 
         #endregion
         
@@ -98,13 +100,7 @@ namespace GameMono.UI.{{ package_name }}
         {
             OnDispose();
             
-            if (m_CancellationTokenSourceOnDispose != null)
-            {
-                m_CancellationTokenSourceOnDispose.Cancel();
-                m_CancellationTokenSourceOnDispose.Dispose();
-                m_CancellationTokenSourceOnDispose = null;
-            }
-            
+            m_FeatureContainerOnInit?.Shutdown();
             base.Dispose();
         }
         
@@ -118,13 +114,7 @@ namespace GameMono.UI.{{ package_name }}
         private void _OnRemoveFromStage()
         {
             OnRemoveFromStage();
-            
-            if (m_CancellationTokenSourceOnRemoveFromStage != null)
-            {
-                m_CancellationTokenSourceOnRemoveFromStage.Cancel();
-                m_CancellationTokenSourceOnRemoveFromStage.Dispose();
-                m_CancellationTokenSourceOnRemoveFromStage = null;
-            }
+            m_FeatureContainerOnAddedToStage?.Shutdown();
         }
         
         partial void OnAddedToStage();
