@@ -28,7 +28,7 @@ namespace GameMono.UI.{{ package_name }}
         private void RegisterFeatures()
         {
             this.AddFrameFeature(); // 添加通用窗体框架
-            this.AddScreenAdaptor(UIFormScreenAdaptorType.Constant); // 设置屏幕适配器
+            this.AddScreenAdaptor(FGUIFormScreenAdaptorType.Constant); // 设置屏幕适配器
         }
     }
 }
