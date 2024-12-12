@@ -14,14 +14,21 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         public object Owner { get; }
 
+        private readonly bool m_ShutdownRemoveFeatures;
         private readonly Dictionary<Type, IFeature> m_FeatureDict = new Dictionary<Type, IFeature>();
         private readonly List<IFeature> m_FeatureList = new List<IFeature>();
         private bool m_IsAwake;
 
-        public FeatureContainer(object owner)
+        /// <summary>
+        /// 构造功能容器。
+        /// </summary>
+        /// <param name="owner">功能持有者实例。</param>
+        /// <param name="shutdownRemoveFeatures">在shutdown时是否移除所有功能。</param>
+        public FeatureContainer(object owner, bool shutdownRemoveFeatures = false)
         {
             Owner = owner;
-            Awake();
+            m_ShutdownRemoveFeatures = shutdownRemoveFeatures;
+            m_IsAwake = true;
         }
 
         /// <summary>
@@ -54,7 +61,7 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 销毁容器，并销毁所有子功能。
+        /// 销毁容器。
         /// </summary>
         public void Shutdown()
         {
@@ -77,6 +84,14 @@ namespace UnityGameFramework.Runtime
                     Log.Fatal(e.ToString());
                 }
             }
+
+            if (!m_ShutdownRemoveFeatures)
+            {
+                return;
+            }
+            
+            m_FeatureList.Clear();
+            m_FeatureDict.Clear();
         }
 
         /// <summary>
