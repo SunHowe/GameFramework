@@ -51,5 +51,49 @@ namespace UnityGameFramework.Runtime.FairyGUI
         {
             fguiFormLogic.FeatureContainerOnOpen.Unsubscribe(id, handler);
         }
+        
+        /// <summary>
+        /// 注册事件。会在组件销毁时自动取消注册。
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="id">事件类型编号。</param>
+        /// <param name="handler">要订阅的事件处理回调函数。</param>
+        public static void SubscribeOnInit(this IFGUICustomComponent owner, int id, EventHandler<GameEventArgs> handler)
+        {
+            owner.FeatureContainerOnInit.Subscribe(id, handler);
+        }
+        
+        /// <summary>
+        /// 取消订阅事件处理回调函数。
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="id">事件类型编号。</param>
+        /// <param name="handler">要取消订阅的事件处理回调函数。</param>
+        public static void UnsubscribeOnInit(this IFGUICustomComponent owner, int id, EventHandler<GameEventArgs> handler)
+        {
+            owner.FeatureContainerOnInit.Unsubscribe(id, handler);
+        }
+        
+        /// <summary>
+        /// 注册事件。会在组件从舞台移除时自动取消注册。
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="id">事件类型编号。</param>
+        /// <param name="handler">要订阅的事件处理回调函数。</param>
+        public static void SubscribeOnOpen(this IFGUICustomComponent owner, int id, EventHandler<GameEventArgs> handler)
+        {
+            owner.FeatureContainerOnAddedToStage.Subscribe(id, handler);
+        }
+        
+        /// <summary>
+        /// 取消订阅事件处理回调函数。
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="id">事件类型编号。</param>
+        /// <param name="handler">要取消订阅的事件处理回调函数。</param>
+        public static void UnsubscribeOnOpen(this IFGUICustomComponent owner, int id, EventHandler<GameEventArgs> handler)
+        {
+            owner.FeatureContainerOnAddedToStage.Unsubscribe(id, handler);
+        }
     }
 }

@@ -22,5 +22,21 @@ namespace UnityGameFramework.Runtime.FairyGUI.Async
         {
             return owner.FeatureContainerOnOpen.AddFeature<AsyncFeature>().CancellationToken;
         }
+        
+        /// <summary>
+        /// 获取异步取消令牌。其会在组件销毁时标记为取消。
+        /// </summary>
+        public static CancellationToken GetCancellationTokenOnRecycle(this IFGUICustomComponent owner)
+        {
+            return owner.FeatureContainerOnInit.AddFeature<AsyncFeature>().CancellationToken;
+        }
+
+        /// <summary>
+        /// 获取异步取消令牌。其会在组件从舞台移除时标记为取消。
+        /// </summary>
+        public static CancellationToken GetCancellationTokenOnRemoveFromStage(this IFGUICustomComponent owner)
+        {
+            return owner.FeatureContainerOnAddedToStage.AddFeature<AsyncFeature>().CancellationToken;
+        }
     }
 }
