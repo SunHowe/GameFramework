@@ -93,6 +93,7 @@ namespace GameMono.UI.{{ package_name }}
 
             #endregion
 
+            m_FeatureContainerOnInit?.Awake();
             OnInitialize();
         }
 
@@ -108,6 +109,7 @@ namespace GameMono.UI.{{ package_name }}
         
         private void _OnAddedToStage()
         {
+            m_FeatureContainerOnAddedToStage?.Awake();
             OnAddedToStage();
         }
         

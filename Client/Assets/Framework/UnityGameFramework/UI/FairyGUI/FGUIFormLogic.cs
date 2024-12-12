@@ -111,6 +111,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         protected internal virtual void OnInit(object userData)
         {
             m_UIForm = m_ContentPane.data as FGUIForm;
+            m_FeatureContainerOnInit?.Awake();
         }
 
         /// <summary>
@@ -127,6 +128,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// <param name="userData">用户自定义数据。</param>
         protected internal virtual void OnOpen(object userData)
         {
+            m_FeatureContainerOnOpen?.Awake();
             m_Available = true;
             Visible = true;
         }

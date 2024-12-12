@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GameFramework;
 
 namespace UnityGameFramework.Runtime
 {
@@ -15,10 +16,41 @@ namespace UnityGameFramework.Runtime
 
         private readonly Dictionary<Type, IFeature> m_FeatureDict = new Dictionary<Type, IFeature>();
         private readonly List<IFeature> m_FeatureList = new List<IFeature>();
+        private bool m_IsAwake;
 
         public FeatureContainer(object owner)
         {
             Owner = owner;
+            Awake();
+        }
+
+        /// <summary>
+        /// 唤起已注册的功能。
+        /// </summary>
+        public void Awake()
+        {
+            if (m_IsAwake)
+            {
+                return;
+            }
+
+            m_IsAwake = true;
+            
+            for (var index = 0; index < m_FeatureList.Count; index++)
+            {
+                var feature = m_FeatureList[index];
+                try
+                {
+                    feature.Awake(Owner);
+                }
+                catch (Exception e)
+                {
+                    Log.Fatal(e.ToString());
+                    // 触发异常时移除该功能。
+                    m_FeatureList.RemoveAt(index--);
+                    m_FeatureDict.Remove(feature.GetType());
+                }
+            }
         }
 
         /// <summary>
@@ -26,6 +58,13 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         public void Shutdown()
         {
+            if (!m_IsAwake)
+            {
+                return;
+            }
+
+            m_IsAwake = false;
+            
             for (var index = m_FeatureList.Count - 1; index >= 0; index--)
             {
                 var feature = m_FeatureList[index];
@@ -38,9 +77,6 @@ namespace UnityGameFramework.Runtime
                     Log.Fatal(e.ToString());
                 }
             }
-
-            m_FeatureDict.Clear();
-            m_FeatureList.Clear();
         }
 
         /// <summary>
@@ -48,6 +84,12 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         public T AddFeature<T>() where T : class, IFeature, new()
         {
+            if (!m_IsAwake)
+            {
+                // 目前添加子功能只允许在容器Awake后进行。
+                throw new GameFrameworkException("Feature container is not awake.");
+            }
+            
             var featureType = typeof(T);
             if (m_FeatureDict.TryGetValue(featureType, out var existingFeature))
             {
@@ -89,15 +131,18 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
-            try
+            if (m_IsAwake)
             {
-                feature.Shutdown();
+                try
+                {
+                    feature.Shutdown();
+                }
+                catch (Exception e)
+                {
+                    Log.Fatal(e.ToString());
+                }
             }
-            catch (Exception e)
-            {
-                Log.Fatal(e.ToString());
-            }
-            
+
             m_FeatureDict.Remove(typeof(T));
             m_FeatureList.Remove(feature);
         }
