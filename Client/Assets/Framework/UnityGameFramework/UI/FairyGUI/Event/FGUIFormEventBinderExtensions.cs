@@ -80,7 +80,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// <param name="owner"></param>
         /// <param name="id">事件类型编号。</param>
         /// <param name="handler">要订阅的事件处理回调函数。</param>
-        public static void SubscribeOnOpen(this IFGUICustomComponent owner, int id, EventHandler<GameEventArgs> handler)
+        public static void SubscribeOnAddedToStage(this IFGUICustomComponent owner, int id, EventHandler<GameEventArgs> handler)
         {
             owner.FeatureContainerOnAddedToStage.Subscribe(id, handler);
         }
@@ -91,7 +91,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// <param name="owner"></param>
         /// <param name="id">事件类型编号。</param>
         /// <param name="handler">要取消订阅的事件处理回调函数。</param>
-        public static void UnsubscribeOnOpen(this IFGUICustomComponent owner, int id, EventHandler<GameEventArgs> handler)
+        public static void UnsubscribeOnAddedToStage(this IFGUICustomComponent owner, int id, EventHandler<GameEventArgs> handler)
         {
             owner.FeatureContainerOnAddedToStage.Unsubscribe(id, handler);
         }

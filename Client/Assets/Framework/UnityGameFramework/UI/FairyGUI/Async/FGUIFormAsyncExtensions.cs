@@ -26,7 +26,7 @@ namespace UnityGameFramework.Runtime.FairyGUI.Async
         /// <summary>
         /// 获取异步取消令牌。其会在组件销毁时标记为取消。
         /// </summary>
-        public static CancellationToken GetCancellationTokenOnRecycle(this IFGUICustomComponent owner)
+        public static CancellationToken GetCancellationTokenOnDispose(this IFGUICustomComponent owner)
         {
             return owner.FeatureContainerOnInit.AddFeature<AsyncFeature>().CancellationToken;
         }
