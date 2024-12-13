@@ -1,6 +1,8 @@
 ﻿using GameFramework.Fsm;
 using GameFramework.Procedure;
+using GameLogic.UI.Login;
 using UnityGameFramework.Runtime;
+using UnityGameFramework.Runtime.FairyGUI;
 
 namespace GameLogic
 {
@@ -13,6 +15,7 @@ namespace GameLogic
         {
             base.OnEnter(procedureOwner);
             Log.Info("LoginProcedure OnEnter, Close Launch UI");
+            FGUIComponent.Instance.OpenUIForm<LoginForm>();
         }
     }
 }

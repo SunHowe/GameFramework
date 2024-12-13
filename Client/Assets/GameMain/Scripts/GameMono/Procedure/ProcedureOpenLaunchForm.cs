@@ -9,17 +9,11 @@ using UnityGameFramework.Runtime.FairyGUI;
 namespace GameMono
 {
     /// <summary>
-    /// 启动器流程。
+    /// 打开启动界面流程。
     /// </summary>
     public class ProcedureOpenLaunchForm : ProcedureBase
     {
         private bool m_IsDone;
-        
-        protected override void OnInit(IFsm<IProcedureManager> procedureOwner)
-        {
-            base.OnInit(procedureOwner);
-            FGUIComponent.Instance.RegisterUIFormBinding<LaunchForm>();
-        }
 
         protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
         {

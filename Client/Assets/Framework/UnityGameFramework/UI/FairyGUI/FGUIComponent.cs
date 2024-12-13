@@ -927,26 +927,12 @@ namespace UnityGameFramework.Runtime.FairyGUI
         /// 通过反射进行界面逻辑类型与界面信息的绑定。需要界面逻辑类型标注了UIFormAttribute特性。
         /// </summary>
         /// <param name="uiFormLogicType">界面逻辑类型。</param>
-        public void RegisterUIFormBinding(Type uiFormLogicType)
+        /// <param name="attribute">界面逻辑绑定特性。</param>
+        public void RegisterUIFormBinding(Type uiFormLogicType, UIFormAttribute attribute)
         {
-            var attribute = uiFormLogicType.GetCustomAttribute<UIFormAttribute>(false);
-            if (attribute == null)
-            {
-                Log.Error("UIFormAttribute is invalid.");
-                return;
-            }
-
             var bindingInfo = new UIFormBindingInfo(attribute, uiFormLogicType);
             m_UIFormBindingInfoDict.Add(attribute.UIFormAssetName, bindingInfo);
             m_UIFormBindingInfoByLogicTypeDict.Add(uiFormLogicType, bindingInfo);
-        }
-
-        /// <summary>
-        /// 通过反射进行界面逻辑类型与界面信息的绑定。需要界面逻辑类型标注了UIFormAttribute特性。
-        /// </summary>
-        public void RegisterUIFormBinding<T>() where T : FGUIFormLogic
-        {
-            RegisterUIFormBinding(typeof(T));
         }
 
         /// <summary>
@@ -990,21 +976,28 @@ namespace UnityGameFramework.Runtime.FairyGUI
         }
         
         /// <summary>
-        /// 根据程序集注册自定义组件。
+        /// 根据程序集注册界面逻辑类与自定义组件。
         /// </summary>
-        public void RegisterCustomComponent(Assembly assembly)
+        public void RegisterFGUIFormAndCustomComponent(Assembly assembly)
         {
             var types = assembly.GetTypes();
             foreach (var type in types)
             {
                 var attrs = type.GetCustomAttributes(typeof(FGUICustomComponentAttribute), false);
-                if (attrs.Length == 0)
+                if (attrs.Length > 0)
                 {
+                    var uiCustomComponentAttribute = (FGUICustomComponentAttribute)attrs[0];
+                    UIObjectFactory.SetPackageItemExtension(uiCustomComponentAttribute.URL, type);
                     continue;
                 }
                 
-                var uiCustomComponentAttribute = (FGUICustomComponentAttribute)attrs[0];
-                UIObjectFactory.SetPackageItemExtension(uiCustomComponentAttribute.URL, type);
+                attrs = type.GetCustomAttributes(typeof(UIFormAttribute), false);
+                if (attrs.Length > 0)
+                {
+                    var uiFormAttribute = (UIFormAttribute)attrs[0];
+                    RegisterUIFormBinding(type, uiFormAttribute);
+                    continue;
+                }
             }
         }
         

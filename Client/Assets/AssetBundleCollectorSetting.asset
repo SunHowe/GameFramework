@@ -35,6 +35,22 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
+      - CollectPath: Assets/GameMain/UI
+        CollectorGUID: 1f2eef36834c8014598edd19c2ea001b
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackRawFile
+        FilterRuleName: CollectBytes
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/GameMain/UI
+        CollectorGUID: 1f2eef36834c8014598edd19c2ea001b
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackSeparately
+        FilterRuleName: CollectTexture
+        AssetTags: 
+        UserData: 
     - GroupName: Hotfix
       GroupDesc: 
       AssetTags: 
