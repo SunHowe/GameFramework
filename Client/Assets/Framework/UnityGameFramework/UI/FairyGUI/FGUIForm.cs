@@ -48,7 +48,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
         {
             get
             {
-                return GameObject;
+                return ContentPane;
             }
         }
 
