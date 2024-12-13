@@ -29,7 +29,7 @@ namespace GameLogic.UI.Login
         private void RegisterFeatures()
         {
             this.AddFrameFeature(); // 添加通用窗体框架
-            this.AddScreenAdaptor(FGUIFormScreenAdaptorType.Constant); // 设置屏幕适配器
+            this.AddScreenAdaptor(FGUIFormScreenAdaptorType.FullScreen); // 设置屏幕适配器
         }
 
         protected override void OnOpen(object userData)
