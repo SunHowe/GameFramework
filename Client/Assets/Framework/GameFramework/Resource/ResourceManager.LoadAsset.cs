@@ -139,7 +139,7 @@ namespace GameFramework.Resource
             m_LoadAssetPacksInfoDict.Remove(assetName);
 
             var assetObject = AssetObject.Create(assetName, package, asset);
-            m_AssetPool.Register(assetObject, true);
+            m_AssetPool.Register(assetObject, false);
 
             while (packsInfo.PackInfos.Count > 0)
             {
