@@ -9,7 +9,7 @@ namespace GameLogic
     /// <summary>
     /// 登录流程
     /// </summary>
-    internal sealed class LoginProcedure : ProcedureBase
+    internal sealed class ProcedureLogin : ProcedureBase
     {
         protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
         {

@@ -6,7 +6,7 @@ namespace GameMono
     /// <summary>
     /// 检测版本流程。
     /// </summary>
-    public class ProcedureCheckVersion : ProcedureBase
+    internal class ProcedureCheckVersion : ProcedureBase
     {
         protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
         {

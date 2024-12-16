@@ -10,7 +10,7 @@ namespace GameMono
     /// <summary>
     /// 创建默认资源包流程。
     /// </summary>
-    public class ProcedureCreateDefaultPackage : ProcedureBase
+    internal class ProcedureCreateDefaultPackage : ProcedureBase
     {
         private bool m_IsCompleted = false;
         private CreatePackageCallbacks m_CreatePackageCallbacks;

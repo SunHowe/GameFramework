@@ -10,7 +10,7 @@ namespace GameLogic
     /// <summary>
     /// 加载配置表流程。
     /// </summary>
-    public sealed class LoadDataTableProcedure : ProcedureBase
+    internal sealed class ProcedureLoadDataTable : ProcedureBase
     {
         private bool m_IsComplete;
         
@@ -18,9 +18,11 @@ namespace GameLogic
         {
             base.OnEnter(procedureOwner);
             m_IsComplete = false;
-
+            
             var mode = DataTableComponent.Instance.LoadMode;
-            DataTableModule.Instance.Init(mode);
+            
+            // 添加配置模块
+            GameLogicComponent.Instance.AddGameLogic<DataTableModule>().Init(mode);
             
             switch (mode)
             {
@@ -47,9 +49,13 @@ namespace GameLogic
         protected override void OnUpdate(IFsm<IProcedureManager> procedureOwner, float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
+
+            if (!m_IsComplete) 
+            {
+                return;
+            }
             
-            if (m_IsComplete)
-                ChangeState<LoginProcedure>(procedureOwner);
+            ChangeState<ProcedureLoadMainUIMapping>(procedureOwner);
         }
     }
 }

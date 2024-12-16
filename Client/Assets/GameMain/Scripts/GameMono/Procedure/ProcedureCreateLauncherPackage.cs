@@ -8,7 +8,7 @@ namespace GameMono
     /// <summary>
     /// 创建启动资源包流程。
     /// </summary>
-    public class ProcedureCreateLauncherPackage : ProcedureBase
+    internal class ProcedureCreateLauncherPackage : ProcedureBase
     {
         private bool m_CreatePackageDone;
         private CreatePackageCallbacks m_CreatePackageCallbacks;

@@ -11,7 +11,7 @@ namespace GameMono
     /// <summary>
     /// 打开启动界面流程。
     /// </summary>
-    public class ProcedureOpenLaunchForm : ProcedureBase
+    internal class ProcedureOpenLaunchForm : ProcedureBase
     {
         private bool m_IsDone;
 

@@ -10,7 +10,7 @@ namespace GameMono
     /// <summary>
     /// 加载启动器UI映射文件流程。
     /// </summary>
-    public class ProcedureLoadLauncherUIMapping : ProcedureBase
+    internal class ProcedureLoadLauncherUIMapping : ProcedureBase
     {
         private bool m_IsDone;
         private LoadAssetCallbacks m_LoadAssetCallbacks;

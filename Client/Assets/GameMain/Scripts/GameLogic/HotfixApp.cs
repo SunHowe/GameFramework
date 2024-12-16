@@ -11,13 +11,13 @@ namespace GameLogic
         protected override void OnAwake()
         {
             // 重新载入流程状态机
-            var entranceProcedure = new LaunchProcedure();
+            var entranceProcedure = new ProcedureLoadDataTable();
             var procedures = new ProcedureBase[]
             {
                 entranceProcedure,
-                new LoadDataTableProcedure(),
-                new LoginProcedure(),
-                new LobbyProcedure(),
+                new ProcedureLoadMainUIMapping(),
+                new ProcedureLogin(),
+                new ProcedureLobby(),
             };
             
             ProcedureComponent.Instance.StartProcedure(procedures, entranceProcedure);

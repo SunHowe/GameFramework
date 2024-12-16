@@ -8,28 +8,25 @@ using UnityGameFramework.Runtime.FairyGUI;
 namespace GameLogic
 {
     /// <summary>
-    /// 热更新启动流程 - 初始化热更新模块。
+    /// 加载游戏主UI包映射流程。
     /// </summary>
-    internal class LaunchProcedure : ProcedureBase
+    internal sealed class ProcedureLoadMainUIMapping : ProcedureBase
     {
         private bool m_IsDone;
         private LoadAssetCallbacks m_LoadAssetCallbacks;
-        
+
         protected override void OnInit(IFsm<IProcedureManager> procedureOwner)
         {
             base.OnInit(procedureOwner);
             m_LoadAssetCallbacks = new LoadAssetCallbacks(OnLoadAssetSuccess);
-            
-            // 注册界面绑定与自定义组件绑定。
-            FGUIComponent.Instance.RegisterFGUIFormAndCustomComponent(GetType().Assembly);
-            
-            // 配置模块
-            GameLogicComponent.Instance.AddGameLogic<DataTableModule>();
         }
 
         protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
         {
             base.OnEnter(procedureOwner);
+            
+            // 注册界面绑定与自定义组件绑定。
+            FGUIComponent.Instance.RegisterFGUIFormAndCustomComponent(GetType().Assembly);
             
             m_IsDone = false;
             
@@ -46,7 +43,7 @@ namespace GameLogic
                 return;
             }
             
-            ChangeState<LoadDataTableProcedure>(procedureOwner);
+            ChangeState<ProcedureLogin>(procedureOwner);
         }
 
         private void OnLoadAssetSuccess(string assetname, object asset, float duration, object userdata)

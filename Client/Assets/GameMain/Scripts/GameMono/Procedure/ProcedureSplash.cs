@@ -7,7 +7,7 @@ namespace GameMono
     /// <summary>
     /// 闪屏流程。
     /// </summary>
-    public class ProcedureSplash : ProcedureBase
+    internal class ProcedureSplash : ProcedureBase
     {
         protected override void OnInit(IFsm<IProcedureManager> procedureOwner)
         {
