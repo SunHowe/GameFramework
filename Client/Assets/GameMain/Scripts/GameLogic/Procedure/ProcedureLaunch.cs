@@ -17,6 +17,8 @@ namespace GameLogic
             GameLogicComponent.Instance.AddGameLogic<DataTableModule>();
             // 玩法管理模块。
             GameLogicComponent.Instance.AddGameLogic<GameModule>();
+            // 登录模块。
+            GameLogicComponent.Instance.AddGameLogic<LoginModule>();
         }
 
         protected override void OnUpdate(IFsm<IProcedureManager> procedureOwner, float elapseSeconds, float realElapseSeconds)

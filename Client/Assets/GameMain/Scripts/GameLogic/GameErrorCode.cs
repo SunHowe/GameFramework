@@ -8,6 +8,15 @@ namespace GameLogic
     public enum GameErrorCode
     {
         Min = FrameworkErrorCode.Max,
+
+        #region [登录模块 100001 - 100100]
+
+        /// <summary>
+        /// 重复的登录请求。
+        /// </summary>
+        LoginRequestDuplicate = 100001,
+        
+        #endregion
     }
 
     public static class GameErrorCodeExtensions
