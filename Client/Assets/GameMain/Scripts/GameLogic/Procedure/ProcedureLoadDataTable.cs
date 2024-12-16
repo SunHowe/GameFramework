@@ -21,8 +21,7 @@ namespace GameLogic
             
             var mode = DataTableComponent.Instance.LoadMode;
             
-            // 添加配置模块
-            GameLogicComponent.Instance.AddGameLogic<DataTableModule>().Init(mode);
+            DataTableModule.Instance.Init(mode);
             
             switch (mode)
             {
