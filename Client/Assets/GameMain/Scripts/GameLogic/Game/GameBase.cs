@@ -63,6 +63,14 @@ namespace GameLogic
         {
             m_GameLogicList.Add(gameLogic);
         }
+
+        /// <summary>
+        /// 添加受托管的游戏逻辑实例。
+        /// </summary>
+        protected void AddGameLogic<T>() where T : IGameLogic, new()
+        {
+            AddGameLogic(new T());
+        }
         
         /// <summary>
         /// 派生类重载该方法进行添加玩法的逻辑。
