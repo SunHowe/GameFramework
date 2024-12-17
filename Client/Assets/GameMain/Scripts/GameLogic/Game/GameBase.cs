@@ -7,7 +7,7 @@ namespace GameLogic
     /// <summary>
     /// 玩法抽象类。
     /// </summary>
-    public abstract class GameBase : IGameLogic
+    public abstract class GameBase
     {
         /// <summary>
         /// 玩法实例id，由GameModule赋值。
@@ -19,9 +19,9 @@ namespace GameLogic
         /// </summary>
         private readonly List<IGameLogic> m_GameLogicList = new();
         
-        public void Awake()
+        public void Awake(object userData)
         {
-            OnAwake();
+            OnAwake(userData);
             
             for (var index = 0; index < m_GameLogicList.Count; index++)
             {
@@ -75,6 +75,6 @@ namespace GameLogic
         /// <summary>
         /// 派生类重载该方法进行添加玩法的逻辑。
         /// </summary>
-        protected abstract void OnAwake();
+        protected abstract void OnAwake(object userData);
     }
 }
