@@ -117,7 +117,7 @@ namespace GameFramework.Timer
 
         public int AddFrameTimer(TimerCallback callback, object userData)
         {
-            return AddFrameTimer(1, 0, callback, null);
+            return AddFrameTimer(1, 0, callback, userData);
         }
 
         public int AddFrameTimer(int interval, TimerCallback callback)
