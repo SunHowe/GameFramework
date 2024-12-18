@@ -72,7 +72,7 @@ MonoBehaviour:
       - CollectPath: Assets/GameMain/DataTable
         CollectorGUID: 6b8b17c47d6f9a345a3d34ce296b2cf8
         CollectorType: 0
-        AddressRuleName: AddressByFileName
+        AddressRuleName: AddressDisable
         PackRuleName: PackRawFile
         FilterRuleName: CollectBytes
         AssetTags: 
