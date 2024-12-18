@@ -21,7 +21,6 @@ namespace UnityGameFramework.Runtime
             else
             {
                 FeatureContainer = new FeatureContainer(this);
-                OnAddFeatures();
             }
         }
 
@@ -30,7 +29,5 @@ namespace UnityGameFramework.Runtime
             FeatureContainer.Shutdown();
             base.OnLeave(procedureOwner, isShutdown);
         }
-
-        protected abstract void OnAddFeatures();
     }
 }

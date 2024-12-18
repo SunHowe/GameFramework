@@ -9,10 +9,6 @@ namespace GameLogic
     /// </summary>
     internal sealed class ProcedureLobby : FeatureProcedureBase
     {
-        protected override void OnAddFeatures()
-        {
-        }
-        
         protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
         {
             base.OnEnter(procedureOwner);
