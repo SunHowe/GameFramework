@@ -7,6 +7,7 @@
 
 using GameFramework;
 using GameFramework.Localization;
+using Luban;
 using UnityEngine;
 
 namespace UnityGameFramework.Runtime
@@ -618,6 +619,18 @@ namespace UnityGameFramework.Runtime
         public void RemoveAllRawStrings()
         {
             m_LocalizationManager.RemoveAllRawStrings();
+        }
+
+        /// <summary>
+        /// 通过Luban配置表的ByteBuf数据添加文本。
+        /// </summary>
+        public void AddRawString(ByteBuf byteBuf)
+        {
+            // 解析本地化文本配置。
+            for (var n = byteBuf.ReadSize(); n > 0; --n)
+            {
+                m_LocalizationManager.AddRawString(byteBuf.ReadString(), byteBuf.ReadString());
+            }
         }
     }
 }

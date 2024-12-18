@@ -88,11 +88,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 706e6317a59f61044b2805be79f6b284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EnableLoadDictionaryUpdateEvent: 0
-  m_EnableLoadDictionaryDependencyAssetEvent: 0
   m_LocalizationHelperTypeName: UnityGameFramework.Runtime.DefaultLocalizationHelper
   m_CustomLocalizationHelper: {fileID: 0}
-  m_CachedBytesSize: 0
 --- !u!1 &109548
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,6 +578,7 @@ MonoBehaviour:
   - GameMono.ProcedureCreateDefaultPackage
   - GameMono.ProcedureCreateLauncherPackage
   - GameMono.ProcedureLaunchGameLogic
+  - GameMono.ProcedureLoadLauncherLocalization
   - GameMono.ProcedureLoadLauncherUIMapping
   - GameMono.ProcedureOpenLaunchForm
   - GameMono.ProcedureSplash

@@ -15,6 +15,7 @@ namespace GameLogic
             var procedures = new ProcedureBase[]
             {
                 entranceProcedure,
+                new ProcedureLoadLocalization(),
                 new ProcedureLoadDataTable(),
                 new ProcedureLoadMainUIMapping(),
                 new ProcedureLogin(),

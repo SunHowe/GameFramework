@@ -25,7 +25,7 @@ namespace GameLogic
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
             
-            ChangeState<ProcedureLoadDataTable>(procedureOwner);
+            ChangeState<ProcedureLoadLocalization>(procedureOwner);
         }
     }
 }

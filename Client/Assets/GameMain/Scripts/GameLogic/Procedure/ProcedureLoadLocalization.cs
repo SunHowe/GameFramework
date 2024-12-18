@@ -5,17 +5,17 @@ using GameFramework.Procedure;
 using Luban;
 using UnityGameFramework.Runtime;
 
-namespace GameMono
+namespace GameLogic
 {
     /// <summary>
-    /// 加载启动器本地化文本的流程。
+    /// 加载本地化配置流程。
     /// </summary>
-    public sealed class ProcedureLoadLauncherLocalization : ProcedureBase
+    internal sealed class ProcedureLoadLocalization : ProcedureBase
     {
         /// <summary>
         /// 本地化文本加载路径。
         /// </summary>
-        private const string LOCALIZATION_ASSET_PATH = "Assets/GameLauncher/Localization/{0}.bytes";
+        private const string LOCALIZATION_ASSET_PATH = "Assets/GameMain/Localization/{0}.bytes";
 
         private bool m_IsComplete;
         
@@ -40,9 +40,9 @@ namespace GameMono
                 return;
             }
             
-            ChangeState<ProcedureCreateDefaultPackage>(procedureOwner);
+            ChangeState<ProcedureLoadDataTable>(procedureOwner);
             
-            Log.Info(LocalizationComponent.Instance.GetString("launch_demo_text_1"));
+            Log.Info(LocalizationComponent.Instance.GetString("demo_text_1"));
         }
 
         private void OnLoadFinished(byte[] bytes)

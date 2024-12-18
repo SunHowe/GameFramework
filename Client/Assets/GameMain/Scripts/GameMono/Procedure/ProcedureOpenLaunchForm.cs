@@ -40,7 +40,7 @@ namespace GameMono
                 return;
             }
             
-            ChangeState<ProcedureCreateDefaultPackage>(procedureOwner);
+            ChangeState<ProcedureLoadLauncherLocalization>(procedureOwner);
         }
 
         private void OnOpenUIFormSuccess(object sender, GameEventArgs e)
