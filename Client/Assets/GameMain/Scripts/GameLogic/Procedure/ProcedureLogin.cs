@@ -9,7 +9,7 @@ namespace GameLogic
     /// <summary>
     /// 登录流程
     /// </summary>
-    internal sealed class ProcedureLogin : ProcedureBase
+    internal sealed class ProcedureLogin : FeatureProcedureBase
     {
         private int m_FormId;
         
@@ -26,8 +26,8 @@ namespace GameLogic
 
         protected override void OnLeave(IFsm<IProcedureManager> procedureOwner, bool isShutdown)
         {
-            base.OnLeave(procedureOwner, isShutdown);
             FGUIComponent.Instance.CloseUIForm(m_FormId);
+            base.OnLeave(procedureOwner, isShutdown);
         }
 
         protected override void OnUpdate(IFsm<IProcedureManager> procedureOwner, float elapseSeconds, float realElapseSeconds)

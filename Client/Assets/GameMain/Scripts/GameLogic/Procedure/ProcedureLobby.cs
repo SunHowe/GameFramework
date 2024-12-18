@@ -7,7 +7,7 @@ namespace GameLogic
     /// <summary>
     /// 平台流程
     /// </summary>
-    internal sealed class ProcedureLobby : ProcedureBase
+    internal sealed class ProcedureLobby : FeatureProcedureBase
     {
         protected override void OnAddFeatures()
         {
