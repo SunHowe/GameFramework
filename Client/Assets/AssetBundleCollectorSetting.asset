@@ -77,6 +77,19 @@ MonoBehaviour:
         FilterRuleName: CollectBytes
         AssetTags: 
         UserData: 
+    - GroupName: Localization
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/GameMain/Localization
+        CollectorGUID: 748286304244ebc4ab0b9f30226daa3b
+        CollectorType: 0
+        AddressRuleName: AddressDisable
+        PackRuleName: PackRawFile
+        FilterRuleName: CollectBytes
+        AssetTags: 
+        UserData: 
   - PackageName: GameLauncher
     PackageDesc: 
     Groups:
@@ -97,6 +110,19 @@ MonoBehaviour:
         CollectorGUID: b51c43c1222d4424c80a67a5d7d698ec
         CollectorType: 0
         AddressRuleName: AddressByFileName
+        PackRuleName: PackRawFile
+        FilterRuleName: CollectBytes
+        AssetTags: 
+        UserData: 
+    - GroupName: Localization
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/GameLauncher/Localization
+        CollectorGUID: 6b55c76351e4a9446b90beae8620fdb5
+        CollectorType: 0
+        AddressRuleName: AddressDisable
         PackRuleName: PackRawFile
         FilterRuleName: CollectBytes
         AssetTags: 
