@@ -17,7 +17,6 @@ namespace GameFramework.Localization
     internal sealed partial class LocalizationManager : GameFrameworkModule, ILocalizationManager
     {
         private readonly Dictionary<string, string> m_Dictionary;
-        private readonly DataProvider<ILocalizationManager> m_DataProvider;
         private ILocalizationHelper m_LocalizationHelper;
         private Language m_Language;
 
@@ -27,7 +26,6 @@ namespace GameFramework.Localization
         public LocalizationManager()
         {
             m_Dictionary = new Dictionary<string, string>(StringComparer.Ordinal);
-            m_DataProvider = new DataProvider<ILocalizationManager>(this);
             m_LocalizationHelper = null;
             m_Language = Language.Unspecified;
         }
@@ -80,77 +78,6 @@ namespace GameFramework.Localization
         }
 
         /// <summary>
-        /// 获取缓冲二进制流的大小。
-        /// </summary>
-        public int CachedBytesSize
-        {
-            get
-            {
-                return DataProvider<ILocalizationManager>.CachedBytesSize;
-            }
-        }
-
-        /// <summary>
-        /// 读取字典成功事件。
-        /// </summary>
-        public event EventHandler<ReadDataSuccessEventArgs> ReadDataSuccess
-        {
-            add
-            {
-                m_DataProvider.ReadDataSuccess += value;
-            }
-            remove
-            {
-                m_DataProvider.ReadDataSuccess -= value;
-            }
-        }
-
-        /// <summary>
-        /// 读取字典失败事件。
-        /// </summary>
-        public event EventHandler<ReadDataFailureEventArgs> ReadDataFailure
-        {
-            add
-            {
-                m_DataProvider.ReadDataFailure += value;
-            }
-            remove
-            {
-                m_DataProvider.ReadDataFailure -= value;
-            }
-        }
-
-        /// <summary>
-        /// 读取字典更新事件。
-        /// </summary>
-        public event EventHandler<ReadDataUpdateEventArgs> ReadDataUpdate
-        {
-            add
-            {
-                m_DataProvider.ReadDataUpdate += value;
-            }
-            remove
-            {
-                m_DataProvider.ReadDataUpdate -= value;
-            }
-        }
-
-        /// <summary>
-        /// 读取字典时加载依赖资源事件。
-        /// </summary>
-        public event EventHandler<ReadDataDependencyAssetEventArgs> ReadDataDependencyAsset
-        {
-            add
-            {
-                m_DataProvider.ReadDataDependencyAsset += value;
-            }
-            remove
-            {
-                m_DataProvider.ReadDataDependencyAsset -= value;
-            }
-        }
-
-        /// <summary>
         /// 本地化管理器轮询。
         /// </summary>
         /// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
@@ -167,24 +94,6 @@ namespace GameFramework.Localization
         }
 
         /// <summary>
-        /// 设置资源管理器。
-        /// </summary>
-        /// <param name="resourceManager">资源管理器。</param>
-        public void SetResourceManager(IResourceManager resourceManager)
-        {
-            m_DataProvider.SetResourceManager(resourceManager);
-        }
-
-        /// <summary>
-        /// 设置本地化数据提供者辅助器。
-        /// </summary>
-        /// <param name="dataProviderHelper">本地化数据提供者辅助器。</param>
-        public void SetDataProviderHelper(IDataProviderHelper<ILocalizationManager> dataProviderHelper)
-        {
-            m_DataProvider.SetDataProviderHelper(dataProviderHelper);
-        }
-
-        /// <summary>
         /// 设置本地化辅助器。
         /// </summary>
         /// <param name="localizationHelper">本地化辅助器。</param>
@@ -196,130 +105,6 @@ namespace GameFramework.Localization
             }
 
             m_LocalizationHelper = localizationHelper;
-        }
-
-        /// <summary>
-        /// 确保二进制流缓存分配足够大小的内存并缓存。
-        /// </summary>
-        /// <param name="ensureSize">要确保二进制流缓存分配内存的大小。</param>
-        public void EnsureCachedBytesSize(int ensureSize)
-        {
-            DataProvider<ILocalizationManager>.EnsureCachedBytesSize(ensureSize);
-        }
-
-        /// <summary>
-        /// 释放缓存的二进制流。
-        /// </summary>
-        public void FreeCachedBytes()
-        {
-            DataProvider<ILocalizationManager>.FreeCachedBytes();
-        }
-
-        /// <summary>
-        /// 读取字典。
-        /// </summary>
-        /// <param name="dictionaryAssetName">字典资源名称。</param>
-        public void ReadData(string dictionaryAssetName)
-        {
-            m_DataProvider.ReadData(dictionaryAssetName);
-        }
-
-        /// <summary>
-        /// 读取字典。
-        /// </summary>
-        /// <param name="dictionaryAssetName">字典资源名称。</param>
-        /// <param name="priority">加载字典资源的优先级。</param>
-        public void ReadData(string dictionaryAssetName, int priority)
-        {
-            m_DataProvider.ReadData(dictionaryAssetName, priority);
-        }
-
-        /// <summary>
-        /// 读取字典。
-        /// </summary>
-        /// <param name="dictionaryAssetName">字典资源名称。</param>
-        /// <param name="userData">用户自定义数据。</param>
-        public void ReadData(string dictionaryAssetName, object userData)
-        {
-            m_DataProvider.ReadData(dictionaryAssetName, userData);
-        }
-
-        /// <summary>
-        /// 读取字典。
-        /// </summary>
-        /// <param name="dictionaryAssetName">字典资源名称。</param>
-        /// <param name="priority">加载字典资源的优先级。</param>
-        /// <param name="userData">用户自定义数据。</param>
-        public void ReadData(string dictionaryAssetName, int priority, object userData)
-        {
-            m_DataProvider.ReadData(dictionaryAssetName, priority, userData);
-        }
-
-        /// <summary>
-        /// 解析字典。
-        /// </summary>
-        /// <param name="dictionaryString">要解析的字典字符串。</param>
-        /// <returns>是否解析字典成功。</returns>
-        public bool ParseData(string dictionaryString)
-        {
-            return m_DataProvider.ParseData(dictionaryString);
-        }
-
-        /// <summary>
-        /// 解析字典。
-        /// </summary>
-        /// <param name="dictionaryString">要解析的字典字符串。</param>
-        /// <param name="userData">用户自定义数据。</param>
-        /// <returns>是否解析字典成功。</returns>
-        public bool ParseData(string dictionaryString, object userData)
-        {
-            return m_DataProvider.ParseData(dictionaryString, userData);
-        }
-
-        /// <summary>
-        /// 解析字典。
-        /// </summary>
-        /// <param name="dictionaryBytes">要解析的字典二进制流。</param>
-        /// <returns>是否解析字典成功。</returns>
-        public bool ParseData(byte[] dictionaryBytes)
-        {
-            return m_DataProvider.ParseData(dictionaryBytes);
-        }
-
-        /// <summary>
-        /// 解析字典。
-        /// </summary>
-        /// <param name="dictionaryBytes">要解析的字典二进制流。</param>
-        /// <param name="userData">用户自定义数据。</param>
-        /// <returns>是否解析字典成功。</returns>
-        public bool ParseData(byte[] dictionaryBytes, object userData)
-        {
-            return m_DataProvider.ParseData(dictionaryBytes, userData);
-        }
-
-        /// <summary>
-        /// 解析字典。
-        /// </summary>
-        /// <param name="dictionaryBytes">要解析的字典二进制流。</param>
-        /// <param name="startIndex">字典二进制流的起始位置。</param>
-        /// <param name="length">字典二进制流的长度。</param>
-        /// <returns>是否解析字典成功。</returns>
-        public bool ParseData(byte[] dictionaryBytes, int startIndex, int length)
-        {
-            return m_DataProvider.ParseData(dictionaryBytes, startIndex, length);
-        }
-
-        /// <summary>
-        /// 解析字典。
-        /// </summary>
-        /// <param name="dictionaryBytes">要解析的字典二进制流。</param>
-        /// <param name="startIndex">字典二进制流的起始位置。</param>
-        /// <param name="length">字典二进制流的长度。</param>
-        /// <param name="userData">用户自定义数据。</param>
-        /// <returns>是否解析字典成功。</returns>
-        public bool ParseData(byte[] dictionaryBytes, int startIndex, int length, object userData)
-        {
-            return m_DataProvider.ParseData(dictionaryBytes, startIndex, length, userData);
         }
 
         /// <summary>
