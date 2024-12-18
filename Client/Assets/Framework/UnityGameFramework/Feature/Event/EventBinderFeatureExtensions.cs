@@ -27,7 +27,13 @@ namespace UnityGameFramework.Runtime
         /// <param name="handler">要取消订阅的事件处理回调函数。</param>
         public static void Unsubscribe(this FeatureContainer container, int id, EventHandler<GameEventArgs> handler)
         {
-            container.AddFeature<EventBinderFeature>().Unsubscribe(id, handler);
+            var feature = container.GetFeature<EventBinderFeature>();
+            if (feature == null)
+            {
+                return;
+            }
+            
+            feature.Unsubscribe(id, handler);
         }
         
         /// <summary>

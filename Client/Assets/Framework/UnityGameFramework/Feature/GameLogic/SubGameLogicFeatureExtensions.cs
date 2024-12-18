@@ -28,7 +28,13 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         public static void RemoveGameLogic(this FeatureContainer container, IGameLogic gameLogic)
         {
-            container.GetFeature<SubGameLogicFeature>().RemoveGameLogic(gameLogic);
+            var feature = container.GetFeature<SubGameLogicFeature>();
+            if (feature == null)
+            {
+                return;
+            }
+            
+            feature.RemoveGameLogic(gameLogic);
         }
 
         /// <summary>
