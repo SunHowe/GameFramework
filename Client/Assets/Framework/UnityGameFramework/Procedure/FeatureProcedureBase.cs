@@ -10,16 +10,19 @@ namespace UnityGameFramework.Runtime
     {
         public FeatureContainer FeatureContainer { get; private set; }
 
-        protected override void OnInit(IFsm<IProcedureManager> procedureOwner)
-        {
-            base.OnInit(procedureOwner);
-            FeatureContainer = new FeatureContainer(this);
-        }
-
         protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
         {
             base.OnEnter(procedureOwner);
-            FeatureContainer.Awake();
+            
+            if (FeatureContainer != null)
+            {
+                FeatureContainer.Awake();
+            }
+            else
+            {
+                FeatureContainer = new FeatureContainer(this);
+                OnAddFeatures();
+            }
         }
 
         protected override void OnLeave(IFsm<IProcedureManager> procedureOwner, bool isShutdown)
@@ -27,5 +30,7 @@ namespace UnityGameFramework.Runtime
             FeatureContainer.Shutdown();
             base.OnLeave(procedureOwner, isShutdown);
         }
+
+        protected abstract void OnAddFeatures();
     }
 }
