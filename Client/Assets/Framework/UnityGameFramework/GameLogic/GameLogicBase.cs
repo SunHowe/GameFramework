@@ -1,6 +1,7 @@
 ﻿using System;
+using GameFramework;
 
-namespace GameFramework
+namespace UnityGameFramework.Runtime
 {
     /// <summary>
     /// 游戏逻辑抽象类。游戏逻辑将提供受托管的单例模式供业务层使用。
@@ -8,6 +9,9 @@ namespace GameFramework
     public abstract class GameLogicBase<T> : IGameLogic where T : GameLogicBase<T>
     {
         public static T Instance { get; private set; }
+        
+        public FeatureContainer FeatureContainer => m_FeatureContainer ??= new FeatureContainer(this);
+        private FeatureContainer m_FeatureContainer;
         
         public void Awake()
         {
@@ -17,6 +21,7 @@ namespace GameFramework
             }
 
             Instance = (T)this;
+            m_FeatureContainer?.Awake();
             OnAwake();
         }
 
@@ -28,6 +33,7 @@ namespace GameFramework
             }
             
             OnShutdown();
+            m_FeatureContainer?.Shutdown();
             Instance = null;
         }
 
