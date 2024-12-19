@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using GameFramework;
 using GameFramework.Resource;
@@ -84,6 +85,142 @@ namespace UnityGameFramework.Runtime
             var task = AutoResetUniTaskCompletionSource<byte[]>.Create();
             LoadBinary(assetName, m_LoadBinaryCallbacks, task);
             return task.Task;
+        }
+
+        /// <summary>
+        /// 异步加载资源。
+        /// </summary>
+        public UniTask<T> LoadAssetAsync<T>(string assetName, CancellationToken cancellationToken) where T : Object
+        {
+            return LoadAssetAsync(assetName, typeof(T), cancellationToken).ContinueWith(o => o as T);
+        }
+
+        /// <summary>
+        /// 异步加载资源。
+        /// </summary>
+        public UniTask<T> LoadAssetAsync<T>(string assetName, int priority, CancellationToken cancellationToken) where T : Object
+        {
+            return LoadAssetAsync(assetName, typeof(T), priority, cancellationToken).ContinueWith(o => o as T);
+        }
+
+        /// <summary>
+        /// 异步加载资源。
+        /// </summary>
+        public async UniTask<object> LoadAssetAsync(string assetName, CancellationToken cancellationToken)
+        {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return null;
+            }
+            
+            var task = AutoResetUniTaskCompletionSource<object>.Create();
+            LoadAsset(assetName, m_LoadAssetCallbacks, task);
+            
+            var asset = await task.Task;
+            if (asset == null)
+            {
+                // 加载失败。
+                return null;
+            }
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                // 取消加载。
+                UnloadAsset(asset);
+                return null;
+            }
+            
+            return asset;
+        }
+
+        /// <summary>
+        /// 异步加载资源。
+        /// </summary>
+        public async UniTask<object> LoadAssetAsync(string assetName, int priority, CancellationToken cancellationToken)
+        {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return null;
+            }
+            
+            var task = AutoResetUniTaskCompletionSource<object>.Create();
+            LoadAsset(assetName, priority, m_LoadAssetCallbacks, task);
+            
+            var asset = await task.Task;
+            if (asset == null)
+            {
+                // 加载失败。
+                return null;
+            }
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                // 取消加载。
+                UnloadAsset(asset);
+                return null;
+            }
+
+            return asset;
+        }
+
+        /// <summary>
+        /// 异步加载资源。
+        /// </summary>
+        public async UniTask<object> LoadAssetAsync(string assetName, Type assetType, CancellationToken cancellationToken)
+        {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return null;
+            }
+            
+            var task = AutoResetUniTaskCompletionSource<object>.Create();
+            LoadAsset(assetName, assetType, m_LoadAssetCallbacks, task);
+            
+            var asset = await task.Task;
+            if (asset == null)
+            {
+                // 加载失败。
+                return null;
+            }
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                // 取消加载。
+                UnloadAsset(asset);
+                return null;
+            }
+
+            return asset;
+        }
+
+        /// <summary>
+        /// 异步加载资源。
+        /// </summary>
+        public async UniTask<object> LoadAssetAsync(string assetName, Type assetType, int priority, CancellationToken cancellationToken)
+        {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return null;
+            }
+            
+            var task = AutoResetUniTaskCompletionSource<object>.Create();
+            LoadAsset(assetName, assetType, priority, m_LoadAssetCallbacks, task);
+            
+            var asset = await task.Task;
+            if (asset == null)
+            {
+                // 加载失败。
+                return null;
+            }
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                // 取消加载。
+                UnloadAsset(asset);
+                return null;
+            }
+
+            return asset;
         }
 
         /// <summary>
