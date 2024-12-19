@@ -20,7 +20,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Scene")]
-    public sealed class SceneComponent : GameFrameworkComponent<SceneComponent>
+    public sealed partial class SceneComponent : GameFrameworkComponent<SceneComponent>
     {
         private const int DefaultPriority = 0;
 
@@ -410,6 +410,7 @@ namespace UnityGameFramework.Runtime
                 m_SceneOrder.Add(e.SceneAssetName, 0);
             }
 
+            CheckAwaitUserData(e);
             m_EventComponent.Fire(this, LoadSceneSuccessEventArgs.Create(e));
             RefreshSceneOrder();
         }
@@ -417,6 +418,7 @@ namespace UnityGameFramework.Runtime
         private void OnLoadSceneFailure(object sender, GameFramework.Scene.LoadSceneFailureEventArgs e)
         {
             Log.Warning("Load scene failure, scene asset name '{0}', error message '{1}'.", e.SceneAssetName, e.ErrorMessage);
+            CheckAwaitUserData(e);
             m_EventComponent.Fire(this, LoadSceneFailureEventArgs.Create(e));
         }
 
@@ -432,6 +434,7 @@ namespace UnityGameFramework.Runtime
 
         private void OnUnloadSceneSuccess(object sender, GameFramework.Scene.UnloadSceneSuccessEventArgs e)
         {
+            CheckAwaitUserData(e);
             m_EventComponent.Fire(this, UnloadSceneSuccessEventArgs.Create(e));
             m_SceneOrder.Remove(e.SceneAssetName);
             RefreshSceneOrder();
@@ -440,6 +443,7 @@ namespace UnityGameFramework.Runtime
         private void OnUnloadSceneFailure(object sender, GameFramework.Scene.UnloadSceneFailureEventArgs e)
         {
             Log.Warning("Unload scene failure, scene asset name '{0}'.", e.SceneAssetName);
+            CheckAwaitUserData(e);
             m_EventComponent.Fire(this, UnloadSceneFailureEventArgs.Create(e));
         }
     }
