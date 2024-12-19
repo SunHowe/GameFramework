@@ -6,7 +6,7 @@ namespace UnityGameFramework.Runtime
     /// <summary>
     /// 游戏逻辑抽象类。游戏逻辑将提供受托管的单例模式供业务层使用。
     /// </summary>
-    public abstract class GameLogicBase<T> : IGameLogic where T : GameLogicBase<T>
+    public abstract class GameLogicBase<T> : IGameLogic, IFeatureContainerOwner where T : GameLogicBase<T>
     {
         public static T Instance { get; private set; }
         
