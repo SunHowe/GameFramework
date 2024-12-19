@@ -2,6 +2,7 @@
 using Cysharp.Threading.Tasks;
 using GameFramework;
 using GameFramework.Resource;
+using Object = UnityEngine.Object;
 
 namespace UnityGameFramework.Runtime
 {
@@ -20,7 +21,23 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 异步加载资源
+        /// 异步加载资源。
+        /// </summary>
+        public UniTask<T> LoadAssetAsync<T>(string assetName) where T : Object
+        {
+            return LoadAssetAsync(assetName, typeof(T)).ContinueWith(o => o as T);
+        }
+
+        /// <summary>
+        /// 异步加载资源。
+        /// </summary>
+        public UniTask<T> LoadAssetAsync<T>(string assetName, int priority) where T : Object
+        {
+            return LoadAssetAsync(assetName, typeof(T), priority).ContinueWith(o => o as T);
+        }
+
+        /// <summary>
+        /// 异步加载资源。
         /// </summary>
         public UniTask<object> LoadAssetAsync(string assetName)
         {
@@ -30,7 +47,7 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 异步加载资源
+        /// 异步加载资源。
         /// </summary>
         public UniTask<object> LoadAssetAsync(string assetName, int priority)
         {
@@ -40,7 +57,7 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 异步加载资源
+        /// 异步加载资源。
         /// </summary>
         public UniTask<object> LoadAssetAsync(string assetName, Type assetType)
         {
@@ -50,7 +67,7 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 异步加载资源
+        /// 异步加载资源。
         /// </summary>
         public UniTask<object> LoadAssetAsync(string assetName, Type assetType, int priority)
         {
@@ -60,7 +77,7 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 异步加载二进制文件
+        /// 异步加载二进制文件。
         /// </summary>
         public UniTask<byte[]> LoadBinaryAsync(string assetName)
         {
@@ -70,7 +87,7 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 加载成功回调
+        /// 加载成功回调。
         /// </summary>
         private void OnLoadAssetSuccess(string assetName, object asset, float duration, object userdata)
         {
@@ -79,7 +96,7 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 加载失败回调
+        /// 加载失败回调。
         /// </summary>
         private void OnLoadAssetFailure(string assetName, LoadResourceStatus status, string errorMessage, object userdata)
         {
@@ -88,7 +105,7 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 加载二进制文件成功回调
+        /// 加载二进制文件成功回调。
         /// </summary>
         private void OnLoadBinarySuccess(string binaryAssetName, byte[] binaryBytes, float duration, object userdata)
         {
@@ -97,7 +114,7 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 加载二进制文件失败回调
+        /// 加载二进制文件失败回调。
         /// </summary>
         private void OnLoadBinaryFailure(string binaryAssetName, LoadResourceStatus status, string errorMessage, object userdata)
         {
