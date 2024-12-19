@@ -40,4 +40,28 @@ namespace UnityGameFramework.Runtime
         protected abstract void OnAwake();
         protected abstract void OnShutdown();
     }
+
+    /// <summary>
+    /// 游戏逻辑抽象类。非单例。提供IFeatureContainerOwner的支持。
+    /// </summary>
+    public abstract class GameLogicBase : IGameLogic, IFeatureContainerOwner
+    {
+        public FeatureContainer FeatureContainer => m_FeatureContainer ??= new FeatureContainer(this);
+        private FeatureContainer m_FeatureContainer;
+        
+        public void Awake()
+        {
+            m_FeatureContainer?.Awake();
+            OnAwake();
+        }
+
+        public void Shutdown()
+        {
+            OnShutdown();
+            m_FeatureContainer?.Shutdown();
+        }
+
+        protected abstract void OnAwake();
+        protected abstract void OnShutdown();
+    }
 }
