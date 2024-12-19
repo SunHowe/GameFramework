@@ -7,6 +7,7 @@
 
 using GameFramework;
 using System;
+using Cysharp.Threading.Tasks;
 
 namespace UnityGameFramework.Runtime
 {
@@ -14,6 +15,7 @@ namespace UnityGameFramework.Runtime
     {
         private Type m_EntityLogicType;
         private object m_UserData;
+        private AutoResetUniTaskCompletionSource<Entity> m_Task;
 
         public ShowEntityInfo()
         {
@@ -37,11 +39,20 @@ namespace UnityGameFramework.Runtime
             }
         }
 
-        public static ShowEntityInfo Create(Type entityLogicType, object userData)
+        public AutoResetUniTaskCompletionSource<Entity> Task
+        {
+            get
+            {
+                return m_Task;
+            }
+        }
+
+        public static ShowEntityInfo Create(Type entityLogicType, object userData, AutoResetUniTaskCompletionSource<Entity> task = null)
         {
             ShowEntityInfo showEntityInfo = ReferencePool.Acquire<ShowEntityInfo>();
             showEntityInfo.m_EntityLogicType = entityLogicType;
             showEntityInfo.m_UserData = userData;
+            showEntityInfo.m_Task = task;
             return showEntityInfo;
         }
 
@@ -49,6 +60,7 @@ namespace UnityGameFramework.Runtime
         {
             m_EntityLogicType = null;
             m_UserData = null;
+            m_Task = null;
         }
     }
 }
