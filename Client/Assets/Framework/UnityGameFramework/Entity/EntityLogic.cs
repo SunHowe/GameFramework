@@ -12,11 +12,12 @@ namespace UnityGameFramework.Runtime
     /// <summary>
     /// 实体逻辑基类。
     /// </summary>
-    public abstract class EntityLogic : MonoBehaviour
+    public abstract class EntityLogic
     {
         private bool m_Available = false;
         private bool m_Visible = false;
         private Entity m_Entity = null;
+        private GameObject m_GameObject = null;
         private Transform m_CachedTransform = null;
         private int m_OriginalLayer = 0;
         private Transform m_OriginalTransform = null;
@@ -39,11 +40,11 @@ namespace UnityGameFramework.Runtime
         {
             get
             {
-                return gameObject.name;
+                return m_GameObject.name;
             }
             set
             {
-                gameObject.name = value;
+                m_GameObject.name = value;
             }
         }
 
@@ -99,16 +100,14 @@ namespace UnityGameFramework.Runtime
         /// <summary>
         /// 实体初始化。
         /// </summary>
+        /// <param name="entity">实体对象。</param>
         /// <param name="userData">用户自定义数据。</param>
-        protected internal virtual void OnInit(object userData)
+        protected internal virtual void OnInit(Entity entity, object userData)
         {
-            if (m_CachedTransform == null)
-            {
-                m_CachedTransform = transform;
-            }
-
-            m_Entity = GetComponent<Entity>();
-            m_OriginalLayer = gameObject.layer;
+            m_Entity = entity;
+            m_GameObject = (GameObject)entity.Handle;
+            m_CachedTransform = m_GameObject.transform;
+            m_OriginalLayer = m_GameObject.layer;
             m_OriginalTransform = CachedTransform.parent;
         }
 
@@ -136,7 +135,7 @@ namespace UnityGameFramework.Runtime
         /// <param name="userData">用户自定义数据。</param>
         protected internal virtual void OnHide(bool isShutdown, object userData)
         {
-            gameObject.SetLayerRecursively(m_OriginalLayer);
+            m_GameObject.SetLayerRecursively(m_OriginalLayer);
             Visible = false;
             m_Available = false;
         }
@@ -196,7 +195,7 @@ namespace UnityGameFramework.Runtime
         /// <param name="visible">实体的可见性。</param>
         protected virtual void InternalSetVisible(bool visible)
         {
-            gameObject.SetActive(visible);
+            m_GameObject.SetActive(visible);
         }
     }
 }

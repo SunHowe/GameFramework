@@ -107,28 +107,19 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
-            if (m_EntityLogic != null)
+            if (m_EntityLogic == null || m_EntityLogic.GetType() != entityLogicType)
             {
-                if (m_EntityLogic.GetType() == entityLogicType)
+                m_EntityLogic = Activator.CreateInstance(entityLogicType) as EntityLogic;
+                if (m_EntityLogic == null)
                 {
-                    m_EntityLogic.enabled = true;
+                    Log.Error("Entity '{0}' can not add entity logic.", entityAssetName);
                     return;
                 }
-
-                Destroy(m_EntityLogic);
-                m_EntityLogic = null;
-            }
-
-            m_EntityLogic = gameObject.AddComponent(entityLogicType) as EntityLogic;
-            if (m_EntityLogic == null)
-            {
-                Log.Error("Entity '{0}' can not add entity logic.", entityAssetName);
-                return;
             }
 
             try
             {
-                m_EntityLogic.OnInit(showEntityInfo.UserData);
+                m_EntityLogic.OnInit(this, showEntityInfo.UserData);
             }
             catch (Exception exception)
             {
@@ -144,7 +135,6 @@ namespace UnityGameFramework.Runtime
             try
             {
                 m_EntityLogic.OnRecycle();
-                m_EntityLogic.enabled = false;
             }
             catch (Exception exception)
             {
