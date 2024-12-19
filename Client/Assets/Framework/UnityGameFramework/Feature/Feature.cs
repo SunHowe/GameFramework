@@ -10,7 +10,7 @@ namespace UnityGameFramework.Runtime
         /// <summary>
         /// 初始化子功能，由框架调度进行。
         /// </summary>
-        void Awake(object featureOwner);
+        void Awake(object featureOwner, FeatureContainer featureContainer);
 
         /// <summary>
         /// 销毁子功能，由框架调度进行。
@@ -29,11 +29,17 @@ namespace UnityGameFramework.Runtime
         public object Owner { get; private set; }
         
         /// <summary>
+        /// 所属的功能容器。
+        /// </summary>
+        public FeatureContainer FeatureContainer { get; private set; }
+        
+        /// <summary>
         /// 初始化子功能，由框架调度进行。
         /// </summary>
-        public virtual void Awake(object featureOwner)
+        public virtual void Awake(object featureOwner, FeatureContainer featureContainer)
         {
             Owner = featureOwner;
+            FeatureContainer = featureContainer;
         }
 
         /// <summary>
@@ -53,9 +59,14 @@ namespace UnityGameFramework.Runtime
         public T Owner { get; private set; }
         
         /// <summary>
+        /// 所属的功能容器。
+        /// </summary>
+        public FeatureContainer FeatureContainer { get; private set; }
+        
+        /// <summary>
         /// 初始化子功能，由框架调度进行。
         /// </summary>
-        public virtual void Awake(object featureOwner)
+        public virtual void Awake(object featureOwner, FeatureContainer featureContainer)
         {
             if (!(featureOwner is T distFeatureOwner))
             {
@@ -63,6 +74,7 @@ namespace UnityGameFramework.Runtime
             }
             
             Owner = distFeatureOwner;
+            FeatureContainer = featureContainer;
         }
 
         /// <summary>

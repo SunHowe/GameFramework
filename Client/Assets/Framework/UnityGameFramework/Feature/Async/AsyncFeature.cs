@@ -14,9 +14,9 @@ namespace UnityGameFramework.Runtime
 
         private CancellationTokenSource m_CancellationTokenSource;
 
-        public override void Awake(object featureOwner)
+        public override void Awake(object featureOwner, FeatureContainer featureContainer)
         {
-            base.Awake(featureOwner);
+            base.Awake(featureOwner, featureContainer);
             m_CancellationTokenSource = null;
         }
 

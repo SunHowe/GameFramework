@@ -59,7 +59,7 @@ namespace UnityGameFramework.Runtime
             m_GameLogicList.Remove(gameLogic);
         }
         
-        public void Awake(object featureOwner)
+        public void Awake(object featureOwner, FeatureContainer featureContainer)
         {
         }
 

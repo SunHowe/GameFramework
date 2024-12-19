@@ -57,9 +57,9 @@ namespace UnityGameFramework.Runtime.FairyGUI
         private GObject m_CloseButton;
         private GObject m_BackButton;
 
-        public override void Awake(object featureOwner)
+        public override void Awake(object featureOwner, FeatureContainer featureContainer)
         {
-            base.Awake(featureOwner);
+            base.Awake(featureOwner, featureContainer);
             
             Frame = Owner.ContentPane.GetChild("frame") as GComponent;
             if (Frame == null)

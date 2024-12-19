@@ -14,9 +14,9 @@ namespace UnityGameFramework.Runtime
 
         private readonly List<EventBindInfo> m_BindInfoList = new List<EventBindInfo>();
         
-        public override void Awake(object featureOwner)
+        public override void Awake(object featureOwner, FeatureContainer featureContainer)
         {
-            base.Awake(featureOwner);
+            base.Awake(featureOwner, featureContainer);
             m_EventComponent = EventComponent.Instance;
         }
 

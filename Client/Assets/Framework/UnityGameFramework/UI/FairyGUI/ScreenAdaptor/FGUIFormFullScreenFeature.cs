@@ -11,9 +11,9 @@ namespace UnityGameFramework.Runtime.FairyGUI
     {
         private GObject m_SafeAreaObject;
         
-        public override void Awake(object featureOwner)
+        public override void Awake(object featureOwner, FeatureContainer featureContainer)
         {
-            base.Awake(featureOwner);
+            base.Awake(featureOwner, featureContainer);
 
             var uiRoot = GRoot.inst;
             m_SafeAreaObject = Owner.ContentPane.GetChild("safeArea");

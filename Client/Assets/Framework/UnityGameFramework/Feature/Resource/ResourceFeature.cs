@@ -86,9 +86,9 @@ namespace UnityGameFramework.Runtime
             m_Parent = parent;
         }
 
-        public override void Awake(object featureOwner)
+        public override void Awake(object featureOwner, FeatureContainer featureContainer)
         {
-            base.Awake(featureOwner);
+            base.Awake(featureOwner, featureContainer);
             m_ResourceComponent = ResourceComponent.Instance;
         }
 

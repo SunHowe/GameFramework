@@ -161,7 +161,7 @@ namespace UnityGameFramework.Runtime
             TimerComponent.Instance.RemoveTimer(timerId);
         }
 
-        public void Awake(object featureOwner)
+        public void Awake(object featureOwner, FeatureContainer featureContainer)
         {
         }
 

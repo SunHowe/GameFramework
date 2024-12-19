@@ -48,7 +48,7 @@ namespace UnityGameFramework.Runtime
                 var feature = m_FeatureList[index];
                 try
                 {
-                    feature.Awake(Owner);
+                    feature.Awake(Owner, this);
                 }
                 catch (Exception e)
                 {
@@ -112,7 +112,7 @@ namespace UnityGameFramework.Runtime
             }
 
             var feature = new T();
-            feature.Awake(Owner);
+            feature.Awake(Owner, this);
 
             m_FeatureDict.Add(featureType, feature);
             m_FeatureList.Add(feature);
