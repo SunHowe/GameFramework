@@ -119,7 +119,7 @@ namespace UnityGameFramework.Runtime
 
             try
             {
-                m_EntityLogic.OnInit(this, showEntityInfo.UserData);
+                m_EntityLogic.Init(this, showEntityInfo.UserData);
             }
             catch (Exception exception)
             {
@@ -134,7 +134,7 @@ namespace UnityGameFramework.Runtime
         {
             try
             {
-                m_EntityLogic.OnRecycle();
+                m_EntityLogic.Recycle();
             }
             catch (Exception exception)
             {
@@ -153,7 +153,7 @@ namespace UnityGameFramework.Runtime
             ShowEntityInfo showEntityInfo = (ShowEntityInfo)userData;
             try
             {
-                m_EntityLogic.OnShow(showEntityInfo.UserData);
+                m_EntityLogic.Show(showEntityInfo.UserData);
             }
             catch (Exception exception)
             {
@@ -170,7 +170,7 @@ namespace UnityGameFramework.Runtime
         {
             try
             {
-                m_EntityLogic.OnHide(isShutdown, userData);
+                m_EntityLogic.Hide(isShutdown, userData);
             }
             catch (Exception exception)
             {

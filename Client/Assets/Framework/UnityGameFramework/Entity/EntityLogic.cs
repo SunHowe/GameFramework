@@ -105,7 +105,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="entity">实体对象。</param>
         /// <param name="userData">用户自定义数据。</param>
-        protected internal virtual void OnInit(Entity entity, object userData)
+        internal void Init(Entity entity, object userData)
         {
             m_Entity = entity;
             m_GameObject = (GameObject)entity.Handle;
@@ -113,13 +113,16 @@ namespace UnityGameFramework.Runtime
             m_OriginalLayer = m_GameObject.layer;
             m_OriginalTransform = CachedTransform.parent;
             m_FeatureContainer?.Awake();
+            
+            OnInit(userData);
         }
 
         /// <summary>
         /// 实体回收。
         /// </summary>
-        protected internal virtual void OnRecycle()
+        internal void Recycle()
         {
+            OnRecycle();
             m_FeatureContainer?.Shutdown();
         }
 
@@ -127,10 +130,12 @@ namespace UnityGameFramework.Runtime
         /// 实体显示。
         /// </summary>
         /// <param name="userData">用户自定义数据。</param>
-        protected internal virtual void OnShow(object userData)
+        internal void Show(object userData)
         {
             m_Available = true;
             Visible = true;
+            
+            OnShow(userData);
         }
 
         /// <summary>
@@ -138,11 +143,45 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="isShutdown">是否是关闭实体管理器时触发。</param>
         /// <param name="userData">用户自定义数据。</param>
-        protected internal virtual void OnHide(bool isShutdown, object userData)
+        internal void Hide(bool isShutdown, object userData)
         {
+            OnHide(isShutdown, userData);
+            
             m_GameObject.SetLayerRecursively(m_OriginalLayer);
             Visible = false;
             m_Available = false;
+        }
+        
+        /// <summary>
+        /// 实体初始化回调。
+        /// </summary>
+        /// <param name="userData">用户自定义数据。</param>
+        protected virtual void OnInit(object userData)
+        {
+        }
+
+        /// <summary>
+        /// 实体回收回调。
+        /// </summary>
+        protected virtual void OnRecycle()
+        {
+        }
+
+        /// <summary>
+        /// 实体显示回调。
+        /// </summary>
+        /// <param name="userData">用户自定义数据。</param>
+        protected virtual void OnShow(object userData)
+        {
+        }
+
+        /// <summary>
+        /// 实体隐藏回调。
+        /// </summary>
+        /// <param name="isShutdown">是否是关闭实体管理器时触发。</param>
+        /// <param name="userData">用户自定义数据。</param>
+        protected virtual void OnHide(bool isShutdown, object userData)
+        {
         }
 
         /// <summary>
