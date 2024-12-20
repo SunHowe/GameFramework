@@ -35,9 +35,17 @@ namespace UnityGameFramework.Runtime
         /// <summary>
         /// 设置父级资源模块。
         /// </summary>
-        public static void SetParent(this FeatureContainer container, ResourceFeature parent)
+        public static void SetResourceParent(this FeatureContainer container, ResourceFeature parent)
         {
             container.AddFeature<ResourceFeature>().SetParent(parent);
+        }
+
+        /// <summary>
+        /// 设置父级资源模块。
+        /// </summary>
+        public static void SetResourceParent(this FeatureContainer container, FeatureContainer parent)
+        {
+            container.AddFeature<ResourceFeature>().SetParent(parent.AddFeature<ResourceFeature>());
         }
         
         /// <summary>
@@ -67,9 +75,17 @@ namespace UnityGameFramework.Runtime
         /// <summary>
         /// 设置父级资源模块。
         /// </summary>
-        public static void SetParent(IFeatureContainerOwner owner, ResourceFeature parent)
+        public static void SetResourceParent(IFeatureContainerOwner owner, ResourceFeature parent)
         {
-            owner.FeatureContainer.SetParent(parent);
+            owner.FeatureContainer.SetResourceParent(parent);
+        }
+
+        /// <summary>
+        /// 设置父级资源模块。
+        /// </summary>
+        public static void SetResourceParent(this IFeatureContainerOwner owner, IFeatureContainerOwner parent)
+        {
+            owner.FeatureContainer.SetResourceParent(parent.FeatureContainer);
         }
     }
 }
