@@ -12,7 +12,7 @@ namespace UnityGameFramework.Runtime
     /// <summary>
     /// 实体逻辑基类。
     /// </summary>
-    public abstract class EntityLogic
+    public abstract class EntityLogic : IFeatureContainerOwner
     {
         private bool m_Available = false;
         private bool m_Visible = false;
@@ -21,6 +21,7 @@ namespace UnityGameFramework.Runtime
         private Transform m_CachedTransform = null;
         private int m_OriginalLayer = 0;
         private Transform m_OriginalTransform = null;
+        private FeatureContainer m_FeatureContainer;
 
         /// <summary>
         /// 获取实体。
@@ -97,6 +98,8 @@ namespace UnityGameFramework.Runtime
             }
         }
 
+        public FeatureContainer FeatureContainer => m_FeatureContainer ??= new FeatureContainer(this);
+
         /// <summary>
         /// 实体初始化。
         /// </summary>
@@ -109,6 +112,7 @@ namespace UnityGameFramework.Runtime
             m_CachedTransform = m_GameObject.transform;
             m_OriginalLayer = m_GameObject.layer;
             m_OriginalTransform = CachedTransform.parent;
+            m_FeatureContainer?.Awake();
         }
 
         /// <summary>
@@ -116,6 +120,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         protected internal virtual void OnRecycle()
         {
+            m_FeatureContainer?.Shutdown();
         }
 
         /// <summary>
