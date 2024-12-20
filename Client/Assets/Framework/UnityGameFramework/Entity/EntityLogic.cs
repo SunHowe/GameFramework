@@ -112,7 +112,6 @@ namespace UnityGameFramework.Runtime
             m_CachedTransform = m_GameObject.transform;
             m_OriginalLayer = m_GameObject.layer;
             m_OriginalTransform = CachedTransform.parent;
-            m_FeatureContainer?.Awake();
             
             OnInit(userData);
         }
@@ -123,7 +122,6 @@ namespace UnityGameFramework.Runtime
         internal void Recycle()
         {
             OnRecycle();
-            m_FeatureContainer?.Shutdown();
         }
 
         /// <summary>
@@ -134,6 +132,7 @@ namespace UnityGameFramework.Runtime
         {
             m_Available = true;
             Visible = true;
+            m_FeatureContainer?.Awake();
             
             OnShow(userData);
         }
@@ -147,6 +146,7 @@ namespace UnityGameFramework.Runtime
         {
             OnHide(isShutdown, userData);
             
+            m_FeatureContainer?.Shutdown();
             m_GameObject.SetLayerRecursively(m_OriginalLayer);
             Visible = false;
             m_Available = false;
