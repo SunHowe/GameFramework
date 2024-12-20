@@ -54,6 +54,11 @@ namespace UnityGameFramework.Runtime
         private EntityGroup[] m_EntityGroups = null;
 
         /// <summary>
+        /// 自增长的实体ID。
+        /// </summary>
+        private int m_EntityIdIncrease;
+
+        /// <summary>
         /// 获取实体数量。
         /// </summary>
         public int EntityCount
@@ -154,6 +159,19 @@ namespace UnityGameFramework.Runtime
                     continue;
                 }
             }
+        }
+
+        /// <summary>
+        /// 获取一个自增长的实体id。
+        /// </summary>
+        public int SpawnEntityId()
+        {
+            if (m_EntityIdIncrease >= int.MaxValue)
+            {
+                m_EntityIdIncrease = 0;
+            }
+            
+            return ++m_EntityIdIncrease;
         }
 
         /// <summary>
