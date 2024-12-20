@@ -130,6 +130,19 @@ namespace UnityGameFramework.Runtime
         private static int s_IdIncrease = 0;
 
         /// <summary>
+        /// 设置父级实例化对象池模块。
+        /// </summary>
+        public void SetParent(GameObjectPoolFeature parent)
+        {
+            if (m_CancellationTokenSource != null || m_InstantiateFromParent.Count != 0)
+            {
+                throw new Exception("It's not allow to set parent when object pool is running.");
+            }
+            
+            m_Parent = parent;
+        }
+
+        /// <summary>
         /// 同步实例化资源。仅支持在对象池已有缓存时使用。
         /// </summary>
         public GameObject Instantiate(string assetName)

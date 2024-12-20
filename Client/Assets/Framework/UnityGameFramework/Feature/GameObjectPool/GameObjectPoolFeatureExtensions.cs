@@ -9,6 +9,30 @@ namespace UnityGameFramework.Runtime
     public static class GameObjectPoolFeatureExtensions
     {
         /// <summary>
+        /// 设置父级GameObject对象池模块
+        /// </summary>
+        public static void SetGameObjectPoolParent(this FeatureContainer container, GameObjectPoolFeature parent)
+        {
+            container.AddFeature<GameObjectPoolFeature>().SetParent(parent);
+        }
+        
+        /// <summary>
+        /// 设置父级GameObject对象池模块
+        /// </summary>
+        public static void SetGameObjectPoolParent(this FeatureContainer container, FeatureContainer parent)
+        {
+            container.AddFeature<GameObjectPoolFeature>().SetParent(parent.AddFeature<GameObjectPoolFeature>());
+        }
+        
+        /// <summary>
+        /// 设置父级GameObject对象池模块
+        /// </summary>
+        public static void SetGameObjectPoolParent(this IFeatureContainerOwner owner, IFeatureContainerOwner parent)
+        {
+            owner.FeatureContainer.SetGameObjectPoolParent(parent.FeatureContainer);
+        }
+        
+        /// <summary>
         /// 获取实例对象池容量。
         /// </summary>
         public static int GetGameObjectPoolCapacity(this FeatureContainer container)
