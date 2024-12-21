@@ -51,7 +51,7 @@ namespace UnityGameFramework.Runtime
         /// <param name="token">取消令牌。</param>
         public static UniTask<Entity> ShowEntityAsync<T>(this FeatureContainer container, string entityAssetName, string entityGroupName, CancellationToken token) where T : EntityLogic
         {
-            return container.AddFeature<EntityFeature>().ShowEntityAsync<T>(entityGroupName, entityGroupName, token);
+            return container.AddFeature<EntityFeature>().ShowEntityAsync<T>(entityAssetName, entityGroupName, token);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace UnityGameFramework.Runtime
         /// <param name="token">取消令牌。</param>
         public static UniTask<Entity> ShowEntityAsync<T>(this FeatureContainer container, string entityAssetName, string entityGroupName, object userData, CancellationToken token) where T : EntityLogic
         {
-            return container.AddFeature<EntityFeature>().ShowEntityAsync<T>(entityGroupName, entityGroupName, userData, token);
+            return container.AddFeature<EntityFeature>().ShowEntityAsync<T>(entityAssetName, entityGroupName, userData, token);
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace UnityGameFramework.Runtime
         /// <param name="token">取消令牌。</param>
         public static UniTask<Entity> ShowEntityAsync<T>(this IFeatureContainerOwner owner, string entityAssetName, string entityGroupName, CancellationToken token) where T : EntityLogic
         {
-            return owner.FeatureContainer.ShowEntityAsync<T>(entityGroupName, entityGroupName, token);
+            return owner.FeatureContainer.ShowEntityAsync<T>(entityAssetName, entityGroupName, token);
         }
 
         /// <summary>
@@ -288,7 +288,7 @@ namespace UnityGameFramework.Runtime
         /// <param name="token">取消令牌。</param>
         public static UniTask<Entity> ShowEntityAsync<T>(this IFeatureContainerOwner owner, string entityAssetName, string entityGroupName, object userData, CancellationToken token) where T : EntityLogic
         {
-            return owner.FeatureContainer.ShowEntityAsync<T>(entityGroupName, entityGroupName, userData, token);
+            return owner.FeatureContainer.ShowEntityAsync<T>(entityAssetName, entityGroupName, userData, token);
         }
 
         /// <summary>
