@@ -273,6 +273,8 @@ namespace UnityGameFramework.Runtime
                     m_EntityComponent.HideEntity(id);
                 }
             }
+            
+            m_EntityIdSet.Clear();
         }
 
         /// <summary>
@@ -300,6 +302,8 @@ namespace UnityGameFramework.Runtime
                     m_EntityComponent.HideEntity(id, userData);
                 }
             }
+            
+            m_EntityIdSet.Clear();
         }
 
         /// <summary>
@@ -339,8 +343,20 @@ namespace UnityGameFramework.Runtime
             return CancellationTokenSource.CreateLinkedTokenSource(basicToken, token).Token;
         }
 
+        public override void Awake(object featureOwner, FeatureContainer featureContainer)
+        {
+            base.Awake(featureOwner, featureContainer);
+
+            m_EntityComponent = EntityComponent.Instance;
+        }
+
         public override void Shutdown()
         {
+            HideAllLoadedEntities();
+            HideAllLoadingEntities();
+
+            m_Parent = null;
+            m_EntityComponent = null;
         }
     }
 }
