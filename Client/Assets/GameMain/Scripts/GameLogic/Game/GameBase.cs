@@ -15,13 +15,19 @@ namespace GameLogic
         public int Id { get; internal set; }
         
         /// <summary>
+        /// 构造玩法时传递的参数。
+        /// </summary>
+        public GameCreateArgsBase CreateArgs { get; private set; }
+        
+        /// <summary>
         /// 属于该玩法的游戏逻辑列表。
         /// </summary>
         private readonly List<IGameLogic> m_GameLogicList = new();
         
         public void Awake(GameCreateArgsBase createArgs)
         {
-            OnAwake(createArgs);
+            CreateArgs = createArgs;
+            OnAwake();
             
             for (var index = 0; index < m_GameLogicList.Count; index++)
             {
@@ -53,6 +59,8 @@ namespace GameLogic
             }
 
             m_GameLogicList.Clear();
+            CreateArgs?.Dispose();
+            CreateArgs = null;
         }
 
         /// <summary>
@@ -75,6 +83,17 @@ namespace GameLogic
         /// <summary>
         /// 派生类重载该方法进行添加玩法的逻辑。
         /// </summary>
-        protected abstract void OnAwake(GameCreateArgsBase createArgs);
+        protected abstract void OnAwake();
+    }
+
+    /// <summary>
+    /// 支持通过泛型指定参数类型的抽象类。
+    /// </summary>
+    public abstract class GameBase<T> : GameBase where T : GameCreateArgsBase
+    {
+        /// <summary>
+        /// 指定类型的参数实例。
+        /// </summary>
+        public new T CreateArgs => (T)base.CreateArgs;
     }
 }

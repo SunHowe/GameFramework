@@ -5,7 +5,7 @@
     /// </summary>
     public sealed class LobbyGame : GameBase
     {
-        protected override void OnAwake(GameCreateArgsBase userdata)
+        protected override void OnAwake()
         {
         }
     }
