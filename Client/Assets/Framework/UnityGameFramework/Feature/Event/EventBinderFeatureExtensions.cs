@@ -57,5 +57,37 @@ namespace UnityGameFramework.Runtime
         {
             owner.FeatureContainer.Unsubscribe(id, handler);
         }
+
+        /// <summary>
+        /// 派发事件(线程安全)
+        /// </summary>
+        public static void Fire(this IFeatureContainerOwner owner, GameEventArgs eventArgs)
+        {
+            EventComponent.Instance.Fire(owner, eventArgs);
+        }
+
+        /// <summary>
+        /// 派发事件(线程安全)
+        /// </summary>
+        public static void Fire(this FeatureContainer container, GameEventArgs eventArgs)
+        {
+            EventComponent.Instance.Fire(container, eventArgs);
+        }
+
+        /// <summary>
+        /// 立即派发事件(非线程安全)
+        /// </summary>
+        public static void FireNow(this IFeatureContainerOwner owner, GameEventArgs eventArgs)
+        {
+            EventComponent.Instance.FireNow(owner, eventArgs);
+        }
+
+        /// <summary>
+        /// 立即派发事件(非线程安全)
+        /// </summary>
+        public static void FireNow(this FeatureContainer container, GameEventArgs eventArgs)
+        {
+            EventComponent.Instance.FireNow(container, eventArgs);
+        }
     }
 }
