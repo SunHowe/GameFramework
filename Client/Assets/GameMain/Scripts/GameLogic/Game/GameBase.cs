@@ -19,9 +19,9 @@ namespace GameLogic
         /// </summary>
         private readonly List<IGameLogic> m_GameLogicList = new();
         
-        public void Awake(object userData)
+        public void Awake(GameCreateArgsBase createArgs)
         {
-            OnAwake(userData);
+            OnAwake(createArgs);
             
             for (var index = 0; index < m_GameLogicList.Count; index++)
             {
@@ -75,6 +75,6 @@ namespace GameLogic
         /// <summary>
         /// 派生类重载该方法进行添加玩法的逻辑。
         /// </summary>
-        protected abstract void OnAwake(object userData);
+        protected abstract void OnAwake(GameCreateArgsBase createArgs);
     }
 }

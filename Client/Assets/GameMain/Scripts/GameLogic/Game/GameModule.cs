@@ -33,24 +33,25 @@ namespace GameLogic
         /// 开始新的玩法。
         /// </summary>
         /// <param name="game">玩法实例。</param>
-        /// <param name="userdata">透传参数，用于初始化玩法实例。</param>
+        /// <param name="createArgs">玩法创建参数，用于初始化玩法实例。</param>
         /// <returns>玩法实例id</returns>
-        public int StartGame(GameBase game, object userdata = null)
+        public int StartGame(GameBase game, GameCreateArgsBase createArgs = null)
         {
             game.Id = ++m_IdIncrease;
             m_GameList.Add(game);
             
             // 初始化玩法。
-            game.Awake(userdata);
+            game.Awake(createArgs);
             return game.Id;
         }
 
         /// <summary>
         /// 开始新的玩法。
         /// </summary>
-        public int StartGame<T>(object userdata = null) where T : GameBase, new()
+        /// <param name="createArgs">玩法创建参数，用于初始化玩法实例。</param>
+        public int StartGame<T>(GameCreateArgsBase createArgs = null) where T : GameBase, new()
         {
-            return StartGame(new T(), userdata);
+            return StartGame(new T(), createArgs);
         }
 
         /// <summary>
