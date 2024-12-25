@@ -3,9 +3,9 @@
 namespace UnityGameFramework.Runtime
 {
     /// <summary>
-    /// Linq拓展方法。
+    /// 容器拓展方法。
     /// </summary>
-    public static class LinqExtensions
+    public static class CollectionExtensions
     {
         /// <summary>
         /// 将自己添加到指定的List容器。
@@ -32,6 +32,32 @@ namespace UnityGameFramework.Runtime
         {
             buffer.Add(item);
             return item;
+        }
+
+        /// <summary>
+        /// 安全的访问容器的接口。若下标越界则返回默认值。
+        /// </summary>
+        public static T SafeGet<T>(this List<T> list, int index)
+        {
+            if (index < 0 || index >= list.Count)
+            {
+                return default(T);
+            }
+            
+            return list[index];
+        }
+
+        /// <summary>
+        /// 安全的访问容器的接口。若下标越界则返回默认值。
+        /// </summary>
+        public static T SafeGet<T>(this IList<T> list, int index)
+        {
+            if (index < 0 || index >= list.Count)
+            {
+                return default(T);
+            }
+            
+            return list[index];
         }
     }
 }
