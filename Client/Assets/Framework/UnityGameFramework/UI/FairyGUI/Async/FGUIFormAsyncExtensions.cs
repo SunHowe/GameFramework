@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace UnityGameFramework.Runtime.FairyGUI.Async
+namespace UnityGameFramework.Runtime.FairyGUI
 {
     /// <summary>
     /// FGUI界面 异步功能拓展函数。
