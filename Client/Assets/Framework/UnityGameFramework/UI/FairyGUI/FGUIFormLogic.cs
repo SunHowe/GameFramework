@@ -5,7 +5,7 @@ namespace UnityGameFramework.Runtime.FairyGUI
     /// <summary>
     /// FairyGUI界面逻辑基类。
     /// </summary>
-    public abstract class FGUIFormLogic
+    public abstract class FGUIFormLogic : IFeatureContainerOwner
     {
         private bool m_Available = false;
         private bool m_Visible = false;
@@ -14,6 +14,8 @@ namespace UnityGameFramework.Runtime.FairyGUI
         private GComponent m_ContentPane = null;
         private FeatureContainer m_FeatureContainerOnInit = null;
         private FeatureContainer m_FeatureContainerOnOpen = null;
+
+        public FeatureContainer FeatureContainer => FeatureContainerOnOpen;
 
         /// <summary>
         /// 获取界面。

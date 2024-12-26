@@ -14,7 +14,7 @@ using UnityGameFramework.Runtime.FairyGUI;
 namespace GameLogic.UI.Login
 {
     [FGUICustomComponent(URL)]
-    public partial class LoginComp : FairyGUI.GComponent, IFGUICustomComponent
+    public partial class LoginComp : FairyGUI.GComponent, IFGUICustomComponent, IFeatureContainerOwner
     {
         public const string URL = "ui://6apezyp2hjkq1";
 
@@ -35,6 +35,11 @@ namespace GameLogic.UI.Login
         #endregion
 
         #region [FeatureContainer]
+        
+        /// <summary>
+        /// 默认功能容器。指向FeatureContainerOnAddedToStage。
+        /// </summary>
+        public FeatureContainer FeatureContainer => FeatureContainerOnAddedToStage;
         
         /// <summary>
         /// 功能容器。在组件销毁时会跟着被销毁。

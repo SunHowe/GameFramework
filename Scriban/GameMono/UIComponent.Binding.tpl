@@ -14,7 +14,7 @@ using UnityGameFramework.Runtime.FairyGUI;
 namespace GameMono.UI.{{ package_name }}
 {
     [FGUICustomComponent(URL)]
-    public partial class {{ name }} : {{ extension_type.full_name }}, IFGUICustomComponent
+    public partial class {{ name }} : {{ extension_type.full_name }}, IFGUICustomComponent, IFeatureContainerOwner
     {
         public const string URL = "{{ url }}";
 
@@ -48,6 +48,11 @@ namespace GameMono.UI.{{ package_name }}
         #endregion
 
         #region [FeatureContainer]
+        
+        /// <summary>
+        /// 默认功能容器。指向FeatureContainerOnAddedToStage。
+        /// </summary>
+        public FeatureContainer FeatureContainer => FeatureContainerOnAddedToStage;
         
         /// <summary>
         /// 功能容器。在组件销毁时会跟着被销毁。
