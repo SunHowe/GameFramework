@@ -6,9 +6,9 @@ using GameFramework.Event;
 namespace UnityGameFramework.Runtime
 {
     /// <summary>
-    /// 事件绑定器功能。在功能被销毁时会自动解除通过绑定器绑定的事件。
+    /// 事件功能。在功能被销毁时会自动解除通过绑定器绑定的事件。
     /// </summary>
-    public sealed class EventBinderFeature : Feature
+    public sealed class EventFeature : Feature
     {
         private EventComponent m_EventComponent;
 

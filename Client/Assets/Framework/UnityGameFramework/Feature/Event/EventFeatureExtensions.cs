@@ -4,9 +4,9 @@ using GameFramework.Event;
 namespace UnityGameFramework.Runtime
 {
     /// <summary>
-    /// 事件绑定器功能拓展函数。
+    ///绑定器功能拓展函数。
     /// </summary>
-    public static class EventBinderFeatureExtensions
+    public static class EventFeatureExtensions
     {
         /// <summary>
         /// 注册事件。会在Owner销毁时自动取消注册。
@@ -16,7 +16,7 @@ namespace UnityGameFramework.Runtime
         /// <param name="handler">要订阅的事件处理回调函数。</param>
         public static void Subscribe(this FeatureContainer container, int id, EventHandler<GameEventArgs> handler)
         {
-            container.AddFeature<EventBinderFeature>().Subscribe(id, handler);
+            container.AddFeature<EventFeature>().Subscribe(id, handler);
         }
         
         /// <summary>
@@ -27,7 +27,7 @@ namespace UnityGameFramework.Runtime
         /// <param name="handler">要取消订阅的事件处理回调函数。</param>
         public static void Unsubscribe(this FeatureContainer container, int id, EventHandler<GameEventArgs> handler)
         {
-            var feature = container.GetFeature<EventBinderFeature>();
+            var feature = container.GetFeature<EventFeature>();
             if (feature == null)
             {
                 return;
