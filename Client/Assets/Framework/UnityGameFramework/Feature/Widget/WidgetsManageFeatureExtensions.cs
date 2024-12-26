@@ -18,7 +18,7 @@ namespace UnityGameFramework.Runtime
         /// <summary>
         /// 设置挂件源属性。
         /// </summary>
-        public static void SetWidgetGather(this FeatureContainer container, GameObject gameObject)
+        public static void SetWidgetsGather(this FeatureContainer container, GameObject gameObject)
         {
             var widgets = gameObject.GetComponent<WidgetsGather>();
             if (widgets == null)
@@ -57,9 +57,9 @@ namespace UnityGameFramework.Runtime
         /// <summary>
         /// 设置挂件源属性。
         /// </summary>
-        public static void SetWidgetGather(this IFeatureContainerOwner owner, GameObject gameObject)
+        public static void SetWidgetsGather(this IFeatureContainerOwner owner, GameObject gameObject)
         {
-            owner.FeatureContainer.SetWidgetGather(gameObject);
+            owner.FeatureContainer.SetWidgetsGather(gameObject);
         }
 
         /// <summary>
