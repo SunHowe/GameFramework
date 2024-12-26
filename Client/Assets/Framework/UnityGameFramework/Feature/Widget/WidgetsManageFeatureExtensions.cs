@@ -26,7 +26,7 @@ namespace UnityGameFramework.Runtime
         /// <summary>
         /// 获取指定名字的挂件。
         /// </summary>
-        public static Object GetWidget<T>(this FeatureContainer container, string widgetName) where T : Object
+        public static T GetWidget<T>(this FeatureContainer container, string widgetName) where T : Object
         {
             return container.AddFeature<WidgetsManageFeature>().GetWidget<T>(widgetName);
         }
@@ -50,7 +50,7 @@ namespace UnityGameFramework.Runtime
         /// <summary>
         /// 获取指定名字的挂件。
         /// </summary>
-        public static Object GetWidget<T>(this IFeatureContainerOwner owner, string widgetName) where T : Object
+        public static T GetWidget<T>(this IFeatureContainerOwner owner, string widgetName) where T : Object
         {
             return owner.FeatureContainer.GetWidget<T>(widgetName);
         }

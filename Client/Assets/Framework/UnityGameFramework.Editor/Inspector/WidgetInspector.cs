@@ -94,7 +94,7 @@ namespace UnityGameFramework.Editor
             foreach (var type in m_Types)
             {
                 m_TypeNames.Add(type.Name);
-                m_FullTypeNames.Add(type.FullName);
+                m_FullTypeNames.Add(type.AssemblyQualifiedName);
             }
             
             serializedObject.ApplyModifiedProperties();

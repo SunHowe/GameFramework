@@ -34,6 +34,8 @@ namespace UnityGameFramework.Editor
             var pageCount = Mathf.CeilToInt((float)count / PAGE_ITEM_LIMIT);
             m_PageIndex = pageCount > 0 ? Mathf.Clamp(m_PageIndex, 0, pageCount - 1) : 0;
 
+            var isModify = false;
+
             using (GameFrameworkEditorGUIUtility.MakeDisabledGroupScope(EditorApplication.isPlayingOrWillChangePlaymode))
             {
                 using (GameFrameworkEditorGUIUtility.MakeVerticalScope("box"))
@@ -67,6 +69,8 @@ namespace UnityGameFramework.Editor
                                 m_AddValue = null;
 
                                 ++count;
+
+                                isModify = true;
                             }
                         }
                     }
@@ -100,6 +104,8 @@ namespace UnityGameFramework.Editor
                                     t.Widgets.RemoveAt(index);
 
                                     --count;
+
+                                    isModify = true;
                                 }
                             }
                         }
@@ -140,6 +146,8 @@ namespace UnityGameFramework.Editor
 
                             count = 0;
                             m_PageIndex = 0;
+
+                            isModify = true;
                         }
 
                         if (GUILayout.Button("收集所有Widget组件(自己和子节点)"))
@@ -148,7 +156,14 @@ namespace UnityGameFramework.Editor
                             foreach (var widget in widgets)
                             {
                                 var widgetName = !string.IsNullOrEmpty(widget.WidgetName) ? widget.WidgetName : widget.name;
-                                var widgetObject = widget.GetComponent(widget.WidgetTypeName); // TODO
+                                var widgetType = System.Type.GetType(widget.WidgetTypeName);
+                                if (widgetType == null)
+                                {
+                                    Debug.LogError($"无效的组件类型在节点{widget.name}上: {widget.WidgetTypeName}");
+                                    continue;
+                                }
+                                
+                                var widgetObject = widget.GetComponent(widgetType);
 
                                 if (widgetObject == null)
                                 {
@@ -171,10 +186,17 @@ namespace UnityGameFramework.Editor
                                 t.Widgets.Add(widgetObject);
 
                                 ++count;
+
+                                isModify = true;
                             }
                         }
                     }
                 }
+            }
+
+            if (isModify)
+            {
+                EditorUtility.SetDirty(t);
             }
 
             serializedObject.ApplyModifiedProperties();
