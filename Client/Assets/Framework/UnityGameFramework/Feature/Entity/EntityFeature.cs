@@ -16,11 +16,6 @@ namespace UnityGameFramework.Runtime
         private EntityComponent m_EntityComponent;
 
         /// <summary>
-        /// 父级模块。
-        /// </summary>
-        private EntityFeature m_Parent;
-
-        /// <summary>
         /// 记录由该模块创建的实体id。
         /// </summary>
         private readonly HashSet<int> m_EntityIdSet = new HashSet<int>();
@@ -29,19 +24,6 @@ namespace UnityGameFramework.Runtime
         /// 取消令牌源。
         /// </summary>
         private CancellationTokenSource m_CancellationTokenSource;
-
-        /// <summary>
-        /// 设置父级模块。若存在父级模块则从父模块上进行实际的实体管理。
-        /// </summary>
-        public void SetParent(EntityFeature parent)
-        {
-            if (m_CancellationTokenSource != null || m_EntityIdSet.Count != 0)
-            {
-                throw new Exception("It's not allow to set parent when entity feature is running.");
-            }
-
-            m_Parent = parent;
-        }
 
         /// <summary>
         /// 使用自增长的实体id显示实体。
@@ -53,7 +35,7 @@ namespace UnityGameFramework.Runtime
         public UniTask<Entity> ShowEntityAsync<T>(string entityAssetName, string entityGroupName, CancellationToken token) where T : EntityLogic
         {
             token = CreateLinkedCancellationToken(token);
-            var task = m_Parent?.ShowEntityAsync<T>(entityAssetName, entityGroupName, token) ?? m_EntityComponent.ShowEntityAsync<T>(entityAssetName, entityGroupName, token);
+            var task = m_EntityComponent.ShowEntityAsync<T>(entityAssetName, entityGroupName, token);
             return task.ContinueWith(AfterShowEntity);
         }
 
@@ -67,7 +49,7 @@ namespace UnityGameFramework.Runtime
         public UniTask<Entity> ShowEntityAsync(Type entityLogicType, string entityAssetName, string entityGroupName, CancellationToken token)
         {
             token = CreateLinkedCancellationToken(token);
-            var task = m_Parent?.ShowEntityAsync(entityLogicType, entityAssetName, entityGroupName, token) ?? m_EntityComponent.ShowEntityAsync(entityLogicType, entityAssetName, entityGroupName, token);
+            var task = m_EntityComponent.ShowEntityAsync(entityLogicType, entityAssetName, entityGroupName, token);
             return task.ContinueWith(AfterShowEntity);
         }
 
@@ -82,7 +64,7 @@ namespace UnityGameFramework.Runtime
         public UniTask<Entity> ShowEntityAsync<T>(string entityAssetName, string entityGroupName, int priority, CancellationToken token) where T : EntityLogic
         {
             token = CreateLinkedCancellationToken(token);
-            var task = m_Parent?.ShowEntityAsync<T>(entityAssetName, entityGroupName, priority, token) ?? m_EntityComponent.ShowEntityAsync<T>(entityAssetName, entityGroupName, priority, token);
+            var task = m_EntityComponent.ShowEntityAsync<T>(entityAssetName, entityGroupName, priority, token);
             return task.ContinueWith(AfterShowEntity);
         }
 
@@ -97,7 +79,7 @@ namespace UnityGameFramework.Runtime
         public UniTask<Entity> ShowEntityAsync(Type entityLogicType, string entityAssetName, string entityGroupName, int priority, CancellationToken token)
         {
             token = CreateLinkedCancellationToken(token);
-            var task = m_Parent?.ShowEntityAsync(entityLogicType, entityAssetName, entityGroupName, priority, token) ?? m_EntityComponent.ShowEntityAsync(entityLogicType, entityAssetName, entityGroupName, priority, token);
+            var task = m_EntityComponent.ShowEntityAsync(entityLogicType, entityAssetName, entityGroupName, priority, token);
             return task.ContinueWith(AfterShowEntity);
         }
 
@@ -112,7 +94,7 @@ namespace UnityGameFramework.Runtime
         public UniTask<Entity> ShowEntityAsync<T>(string entityAssetName, string entityGroupName, object userData, CancellationToken token) where T : EntityLogic
         {
             token = CreateLinkedCancellationToken(token);
-            var task = m_Parent?.ShowEntityAsync<T>(entityAssetName, entityGroupName, userData, token) ?? m_EntityComponent.ShowEntityAsync<T>(entityAssetName, entityGroupName, userData, token);
+            var task = m_EntityComponent.ShowEntityAsync<T>(entityAssetName, entityGroupName, userData, token);
             return task.ContinueWith(AfterShowEntity);
         }
 
@@ -127,7 +109,7 @@ namespace UnityGameFramework.Runtime
         public UniTask<Entity> ShowEntityAsync(Type entityLogicType, string entityAssetName, string entityGroupName, object userData, CancellationToken token)
         {
             token = CreateLinkedCancellationToken(token);
-            var task = m_Parent?.ShowEntityAsync(entityLogicType, entityAssetName, entityGroupName, userData, token) ?? m_EntityComponent.ShowEntityAsync(entityLogicType, entityAssetName, entityGroupName, userData, token);
+            var task = m_EntityComponent.ShowEntityAsync(entityLogicType, entityAssetName, entityGroupName, userData, token);
             return task.ContinueWith(AfterShowEntity);
         }
 
@@ -143,7 +125,7 @@ namespace UnityGameFramework.Runtime
         public UniTask<Entity> ShowEntityAsync<T>(string entityAssetName, string entityGroupName, int priority, object userData, CancellationToken token) where T : EntityLogic
         {
             token = CreateLinkedCancellationToken(token);
-            var task = m_Parent?.ShowEntityAsync<T>(entityAssetName, entityGroupName, priority, userData, token) ?? m_EntityComponent.ShowEntityAsync<T>(entityAssetName, entityGroupName, priority, userData, token);
+            var task = m_EntityComponent.ShowEntityAsync<T>(entityAssetName, entityGroupName, priority, userData, token);
             return task.ContinueWith(AfterShowEntity);
         }
 
@@ -159,7 +141,7 @@ namespace UnityGameFramework.Runtime
         public UniTask<Entity> ShowEntityAsync(Type entityLogicType, string entityAssetName, string entityGroupName, int priority, object userData, CancellationToken token)
         {
             token = CreateLinkedCancellationToken(token);
-            var task = m_Parent?.ShowEntityAsync(entityLogicType, entityAssetName, entityGroupName, priority, userData, token) ?? m_EntityComponent.ShowEntityAsync(entityLogicType, entityAssetName, entityGroupName, priority, userData, token);
+            var task = m_EntityComponent.ShowEntityAsync(entityLogicType, entityAssetName, entityGroupName, priority, userData, token);
             return task.ContinueWith(AfterShowEntity);
         }
 
@@ -174,14 +156,7 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
-            if (m_Parent != null)
-            {
-                m_Parent.HideEntity(entityId);
-            }
-            else
-            {
-                m_EntityComponent.HideEntity(entityId);
-            }
+            m_EntityComponent.HideEntity(entityId);
         }
 
         /// <summary>
@@ -196,14 +171,7 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
-            if (m_Parent != null)
-            {
-                m_Parent.HideEntity(entityId, userData);
-            }
-            else
-            {
-                m_EntityComponent.HideEntity(entityId, userData);
-            }
+            m_EntityComponent.HideEntity(entityId, userData);
         }
 
         /// <summary>
@@ -217,14 +185,7 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
-            if (m_Parent != null)
-            {
-                m_Parent.HideEntity(entity);
-            }
-            else
-            {
-                m_EntityComponent.HideEntity(entity);
-            }
+            m_EntityComponent.HideEntity(entity);
         }
 
         /// <summary>
@@ -239,14 +200,7 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
-            if (m_Parent != null)
-            {
-                m_Parent.HideEntity(entity, userData);
-            }
-            else
-            {
-                m_EntityComponent.HideEntity(entity, userData);
-            }
+            m_EntityComponent.HideEntity(entity, userData);
         }
 
         /// <summary>
@@ -259,19 +213,9 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
-            if (m_Parent != null)
+            foreach (var id in m_EntityIdSet)
             {
-                foreach (var id in m_EntityIdSet)
-                {
-                    m_Parent.HideEntity(id);
-                }
-            }
-            else
-            {
-                foreach (var id in m_EntityIdSet)
-                {
-                    m_EntityComponent.HideEntity(id);
-                }
+                m_EntityComponent.HideEntity(id);
             }
             
             m_EntityIdSet.Clear();
@@ -288,19 +232,9 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
-            if (m_Parent != null)
+            foreach (var id in m_EntityIdSet)
             {
-                foreach (var id in m_EntityIdSet)
-                {
-                    m_Parent.HideEntity(id, userData);
-                }
-            }
-            else
-            {
-                foreach (var id in m_EntityIdSet)
-                {
-                    m_EntityComponent.HideEntity(id, userData);
-                }
+                m_EntityComponent.HideEntity(id, userData);
             }
             
             m_EntityIdSet.Clear();
@@ -355,7 +289,6 @@ namespace UnityGameFramework.Runtime
             HideAllLoadedEntities();
             HideAllLoadingEntities();
 
-            m_Parent = null;
             m_EntityComponent = null;
         }
     }

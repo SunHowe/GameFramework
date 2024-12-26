@@ -10,38 +10,6 @@ namespace UnityGameFramework.Runtime
     public static class EntityFeatureExtensions
     {
         /// <summary>
-        /// 设置父级模块。若存在父级模块则从父模块上进行实际的实体管理。
-        /// </summary>
-        public static void SetEntityFeatureParent(this FeatureContainer container, EntityFeature parent)
-        {
-            container.AddFeature<EntityFeature>().SetParent(parent);
-        }
-        
-        /// <summary>
-        /// 设置父级模块。若存在父级模块则从父模块上进行实际的实体管理。
-        /// </summary>
-        public static void SetEntityFeatureParent(this IFeatureContainerOwner owner, EntityFeature parent)
-        {
-            owner.FeatureContainer.SetEntityFeatureParent(parent);
-        }
-        
-        /// <summary>
-        /// 设置父级模块。若存在父级模块则从父模块上进行实际的实体管理。
-        /// </summary>
-        public static void SetEntityFeatureParent(this FeatureContainer container, FeatureContainer parent)
-        {
-            container.AddFeature<EntityFeature>().SetParent(parent.AddFeature<EntityFeature>());
-        }
-        
-        /// <summary>
-        /// 设置父级模块。若存在父级模块则从父模块上进行实际的实体管理。
-        /// </summary>
-        public static void SetEntityFeatureParent(this IFeatureContainerOwner owner, IFeatureContainerOwner parent)
-        {
-            owner.FeatureContainer.SetEntityFeatureParent(parent.FeatureContainer);
-        }
-        
-        /// <summary>
         /// 使用自增长的实体id显示实体。
         /// </summary>
         /// <typeparam name="T">实体逻辑类型。</typeparam>
