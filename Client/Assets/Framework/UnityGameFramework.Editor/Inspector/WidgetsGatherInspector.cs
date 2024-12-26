@@ -16,7 +16,7 @@ namespace UnityGameFramework.Editor
         private const int PAGE_ITEM_LIMIT = 10;
 
         private int m_PageIndex = 0;
-        
+
         private string m_AddKey = string.Empty;
         private Object m_AddValue = null;
 
@@ -43,7 +43,7 @@ namespace UnityGameFramework.Editor
                     {
                         // key框, value框, +
                         m_AddKey = EditorGUILayout.TextField(m_AddKey);
-                        
+
                         var value = EditorGUILayout.ObjectField(m_AddValue, typeof(Object), true);
                         if (value != m_AddValue)
                         {
@@ -54,7 +54,7 @@ namespace UnityGameFramework.Editor
                                 m_AddKey = value.name;
                             }
                         }
-                        
+
                         // key value有一个为空时禁用+按钮
                         using (GameFrameworkEditorGUIUtility.MakeDisabledGroupScope(string.IsNullOrEmpty(m_AddKey) || m_AddValue == null))
                         {
@@ -62,7 +62,7 @@ namespace UnityGameFramework.Editor
                             {
                                 t.WidgetNames.Add(m_AddKey);
                                 t.Widgets.Add(m_AddValue);
-                                
+
                                 m_AddKey = string.Empty;
                                 m_AddValue = null;
 
@@ -70,7 +70,7 @@ namespace UnityGameFramework.Editor
                             }
                         }
                     }
-                    
+
                     // 绘制组件字典对。
                     using (GameFrameworkEditorGUIUtility.MakeVerticalScope("box"))
                     {
@@ -126,6 +126,51 @@ namespace UnityGameFramework.Editor
                             if (GUILayout.Button(">>", GUILayout.ExpandWidth(true)))
                             {
                                 ++m_PageIndex;
+                            }
+                        }
+                    }
+
+                    // 绘制功能按钮区
+                    using (GameFrameworkEditorGUIUtility.MakeVerticalScope("box"))
+                    {
+                        if (GUILayout.Button("清空收集器"))
+                        {
+                            t.WidgetNames.Clear();
+                            t.Widgets.Clear();
+
+                            count = 0;
+                            m_PageIndex = 0;
+                        }
+
+                        if (GUILayout.Button("收集所有Widget组件(自己和子节点)"))
+                        {
+                            var widgets = t.GetComponentsInChildren<Widget>();
+                            foreach (var widget in widgets)
+                            {
+                                var widgetName = !string.IsNullOrEmpty(widget.WidgetName) ? widget.WidgetName : widget.name;
+                                var widgetObject = widget.GetComponent(widget.WidgetTypeName); // TODO
+
+                                if (widgetObject == null)
+                                {
+                                    Debug.LogError($"无效的组件类型在节点{widget.name}上: {widget.WidgetTypeName}");
+                                    continue;
+                                }
+
+                                var index = t.WidgetNames.IndexOf(widgetName);
+                                if (index >= 0)
+                                {
+                                    if (t.Widgets[index] != widgetObject)
+                                    {
+                                        Debug.LogError($"重复的挂件名称: {widgetName}");
+                                    }
+                                    
+                                    continue;
+                                }
+                                
+                                t.WidgetNames.Add(widgetName);
+                                t.Widgets.Add(widgetObject);
+
+                                ++count;
                             }
                         }
                     }
