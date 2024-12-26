@@ -5,14 +5,14 @@ namespace UnityGameFramework.Runtime
     /// <summary>
     /// 挂件管理功能拓展方法。
     /// </summary>
-    public static class WidgetsManageFeatureExtensions
+    public static class WidgetsFeatureExtensions
     {
         /// <summary>
         /// 设置挂件源属性。
         /// </summary>
         public static void SetWidgetsGather(this FeatureContainer container, WidgetsGather widgets)
         {
-            container.AddFeature<WidgetsManageFeature>().SetWidgetsGather(widgets);
+            container.AddFeature<WidgetsFeature>().SetWidgetsGather(widgets);
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         public static Object GetWidget(this FeatureContainer container, string widgetName)
         {
-            return container.AddFeature<WidgetsManageFeature>().GetWidget(widgetName);
+            return container.AddFeature<WidgetsFeature>().GetWidget(widgetName);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         public static T GetWidget<T>(this FeatureContainer container, string widgetName) where T : Object
         {
-            return container.AddFeature<WidgetsManageFeature>().GetWidget<T>(widgetName);
+            return container.AddFeature<WidgetsFeature>().GetWidget<T>(widgetName);
         }
 
         /// <summary>

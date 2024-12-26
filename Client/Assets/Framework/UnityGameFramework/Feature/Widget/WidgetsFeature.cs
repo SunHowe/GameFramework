@@ -5,7 +5,7 @@ namespace UnityGameFramework.Runtime
     /// <summary>
     /// 挂件管理功能。
     /// </summary>
-    public sealed class WidgetsManageFeature : Feature
+    public sealed class WidgetsFeature : Feature
     {
         /// <summary>
         /// 挂件数据源。
