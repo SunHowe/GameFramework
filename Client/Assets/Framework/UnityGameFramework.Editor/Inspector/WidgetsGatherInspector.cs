@@ -114,26 +114,35 @@ namespace UnityGameFramework.Editor
                     // 绘制分页按钮。
                     using (GameFrameworkEditorGUIUtility.MakeHorizontalScope("box"))
                     {
+                        GUILayout.FlexibleSpace();
+                        // EditorGUILayout.Space();
+                        
                         // 绘制上一页按钮。在index已经为0时禁用。
                         using (GameFrameworkEditorGUIUtility.MakeDisabledGroupScope(m_PageIndex <= 0))
                         {
-                            if (GUILayout.Button("<<", GUILayout.ExpandWidth(true)))
+                            if (GUILayout.Button("<<", GUILayout.Width(50)))
                             {
                                 --m_PageIndex;
                             }
                         }
-
+                        
+                        GUILayout.FlexibleSpace();
+                        
                         // 绘制 当前页数/总页数 的Label
-                        EditorGUILayout.LabelField($"{m_PageIndex + 1}/{pageCount}");
+                        EditorGUILayout.LabelField($"{m_PageIndex + 1}/{pageCount}", GUILayout.MaxWidth(60));
+                        
+                        GUILayout.FlexibleSpace();
 
                         // 绘制下一页按钮。在index已经为最后一页时禁用。
                         using (GameFrameworkEditorGUIUtility.MakeDisabledGroupScope(m_PageIndex >= pageCount - 1))
                         {
-                            if (GUILayout.Button(">>", GUILayout.ExpandWidth(true)))
+                            if (GUILayout.Button(">>", GUILayout.Width(50)))
                             {
                                 ++m_PageIndex;
                             }
                         }
+                        
+                        GUILayout.FlexibleSpace();
                     }
 
                     // 绘制功能按钮区
