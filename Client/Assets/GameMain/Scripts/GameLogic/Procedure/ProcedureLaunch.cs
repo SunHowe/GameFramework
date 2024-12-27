@@ -15,8 +15,6 @@ namespace GameLogic
 
             // 配置表模块。
             GameLogicComponent.Instance.AddGameLogic<DataTableModule>();
-            // 玩法管理模块。
-            GameLogicComponent.Instance.AddGameLogic<GameModule>();
             // 登录模块。
             GameLogicComponent.Instance.AddGameLogic<LoginModule>();
         }

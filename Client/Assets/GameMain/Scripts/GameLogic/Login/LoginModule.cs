@@ -28,9 +28,9 @@ namespace GameLogic
             
             // TODO 登录流程实现。
             State = LoginState.OnGame;
-
-            // 创建大厅玩法。
-            GameModule.Instance.StartGame<LobbyGame>();
+            
+            // 初始化平台模块。
+            GameLogicComponent.Instance.AddGameLogic<LobbyModule>();
             
             return 0;
         }
@@ -48,8 +48,8 @@ namespace GameLogic
 
             State = LoginState.None;
             
-            // 销毁所有玩法。
-            GameModule.Instance.StopAllGame();
+            // 销毁平台模块。
+            GameLogicComponent.Instance.RemoveGameLogic(LobbyModule.Instance);
             
             // TODO 断开链接
             return 0;
@@ -58,6 +58,8 @@ namespace GameLogic
         protected override void OnAwake()
         {
             State = LoginState.None;
+            
+            // 添加登录子模块。
         }
 
         protected override void OnShutdown()
