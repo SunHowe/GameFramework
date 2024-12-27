@@ -17,17 +17,39 @@ namespace UnityGameFramework.Editor
     /// </summary>
     internal static class Type
     {
-        private static readonly string[] RuntimeAssemblyNames =
+        public enum AssemblyType
         {
-            "UnityGameFramework.Runtime",
-            "GameMono",
-        };
+            /// <summary>
+            /// 不可热更的运行时程序集。
+            /// </summary>
+            Runtime,
 
-        private static readonly string[] RuntimeOrEditorAssemblyNames =
+            /// <summary>
+            /// 可热更的运行时程序集。
+            /// </summary>
+            Hotfix,
+
+            /// <summary>
+            /// 编辑器程序集。
+            /// </summary>
+            Editor,
+        }
+
+        private static readonly Dictionary<AssemblyType, string[]> AssemblyNames = new Dictionary<AssemblyType, string[]>()
         {
-            "UnityGameFramework.Runtime",
-            "GameMono",
-            "UnityGameFramework.Editor",
+            [AssemblyType.Runtime] = new string[]
+            {
+                "UnityGameFramework.Runtime",
+                "GameMono",
+            },
+            [AssemblyType.Hotfix] = new string[]
+            {
+                "GameLogic",
+            },
+            [AssemblyType.Editor] = new string[]
+            {
+                "UnityGameFramework.Editor",
+            },
         };
 
         /// <summary>
@@ -71,7 +93,7 @@ namespace UnityGameFramework.Editor
         /// <returns>指定基类的所有子类的名称。</returns>
         internal static string[] GetRuntimeTypeNames(System.Type typeBase)
         {
-            return GetTypeNames(typeBase, RuntimeAssemblyNames);
+            return GetTypeNames(typeBase, AssemblyType.Runtime);
         }
 
         /// <summary>
@@ -81,45 +103,45 @@ namespace UnityGameFramework.Editor
         /// <returns>指定基类的所有子类的名称。</returns>
         internal static string[] GetRuntimeOrEditorTypeNames(System.Type typeBase)
         {
-            return GetTypeNames(typeBase, RuntimeOrEditorAssemblyNames);
+            return GetTypeNames(typeBase, AssemblyType.Runtime, AssemblyType.Editor);
         }
 
         /// <summary>
         /// 在运行时程序集中获取指定基类的所有子类。
         /// </summary>
         /// <param name="typeBase">基类类型。</param>
+        /// <param name="assemblyTypes">程序集类型。</param>
         /// <returns>指定基类的所有子类。</returns>
-        internal static System.Type[] GetRuntimeTypes(System.Type typeBase)
-        {
-            return GetTypeDict(typeBase, RuntimeAssemblyNames);
-        }
-
-        private static System.Type[] GetTypeDict(System.Type typeBase, string[] assemblyNames)
+        public static System.Type[] GetTypes(System.Type typeBase, params AssemblyType[] assemblyTypes)
         {
             List<System.Type> matchTypes = new List<System.Type>();
-            foreach (string assemblyName in assemblyNames)
+
+            foreach (var assemblyType in assemblyTypes)
             {
-                Assembly assembly = null;
-                try
+                foreach (var assemblyName in AssemblyNames[assemblyType])
                 {
-                    assembly = Assembly.Load(assemblyName);
-                }
-                catch
-                {
-                    continue;
-                }
-
-                if (assembly == null)
-                {
-                    continue;
-                }
-
-                System.Type[] types = assembly.GetTypes();
-                foreach (System.Type type in types)
-                {
-                    if (type.IsClass && !type.IsAbstract && typeBase.IsAssignableFrom(type))
+                    Assembly assembly = null;
+                    try
                     {
-                        matchTypes.Add(type);
+                        assembly = Assembly.Load(assemblyName);
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+
+                    if (assembly == null)
+                    {
+                        continue;
+                    }
+
+                    System.Type[] types = assembly.GetTypes();
+                    foreach (System.Type type in types)
+                    {
+                        if (type.IsClass && !type.IsAbstract && typeBase.IsAssignableFrom(type))
+                        {
+                            matchTypes.Add(type);
+                        }
                     }
                 }
             }
@@ -128,32 +150,36 @@ namespace UnityGameFramework.Editor
             return matchTypes.ToArray();
         }
 
-        private static string[] GetTypeNames(System.Type typeBase, string[] assemblyNames)
+        private static string[] GetTypeNames(System.Type typeBase, params AssemblyType[] assemblyTypes)
         {
             List<string> typeNames = new List<string>();
-            foreach (string assemblyName in assemblyNames)
+            
+            foreach (var assemblyType in assemblyTypes)
             {
-                Assembly assembly = null;
-                try
+                foreach (var assemblyName in AssemblyNames[assemblyType])
                 {
-                    assembly = Assembly.Load(assemblyName);
-                }
-                catch
-                {
-                    continue;
-                }
-
-                if (assembly == null)
-                {
-                    continue;
-                }
-
-                System.Type[] types = assembly.GetTypes();
-                foreach (System.Type type in types)
-                {
-                    if (type.IsClass && !type.IsAbstract && typeBase.IsAssignableFrom(type))
+                    Assembly assembly = null;
+                    try
                     {
-                        typeNames.Add(type.FullName);
+                        assembly = Assembly.Load(assemblyName);
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+
+                    if (assembly == null)
+                    {
+                        continue;
+                    }
+
+                    System.Type[] types = assembly.GetTypes();
+                    foreach (System.Type type in types)
+                    {
+                        if (type.IsClass && !type.IsAbstract && typeBase.IsAssignableFrom(type))
+                        {
+                            typeNames.Add(type.FullName);
+                        }
                     }
                 }
             }

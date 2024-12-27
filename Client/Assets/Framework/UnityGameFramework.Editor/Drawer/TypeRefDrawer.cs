@@ -36,7 +36,7 @@ namespace UnityGameFramework.Editor
                 m_BaseType = baseType;
                 m_TypeFullName2AssemblyNameDict.Clear();
 
-                var types = Type.GetRuntimeTypes(m_BaseType);
+                var types = Type.GetTypes(m_BaseType, Type.AssemblyType.Runtime, Type.AssemblyType.Hotfix);
                 m_TypeFullNames = new string[types.Length];
                 for (var index = 0; index < types.Length; index++)
                 {
