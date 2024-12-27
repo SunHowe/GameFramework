@@ -27,18 +27,45 @@ namespace UnityGameFramework.Editor
             serializedObject.Update();
             
             var t = (ObjectExport)target;
+            var isModify = false;
 
             using (GameFrameworkEditorGUIUtility.MakeDisabledGroupScope(EditorApplication.isPlayingOrWillChangePlaymode))
             {
                 using var _ = GameFrameworkEditorGUIUtility.MakeVerticalScope("box");
-                
-                t.ExportName = EditorGUILayout.TextField("导出键值", t.ExportName);
+
+                if (t.ExportWithTypeNameSuffix)
+                {
+                    EditorGUILayout.LabelField("导出键值", t.ExportName);
+                }
+                else
+                {
+                    var exportName = EditorGUILayout.TextField("导出键值", t.ExportName);
+                    if (exportName != t.ExportName)
+                    {
+                        t.ExportName = exportName;
+                        isModify = true;
+                    }
+                }
 
                 var index = m_FullTypeNames.IndexOf(t.ExportTypeName);
                 var newIndex = EditorGUILayout.Popup("导出组件类型", index >= 0 ? index : 0, m_TypeNames.ToArray());
                 if (newIndex != index)
                 {
                     t.ExportTypeName = m_FullTypeNames[newIndex];
+                    isModify = true;
+                }
+                
+                var exportSuffix = EditorGUILayout.Toggle("使用导出类型名作为后缀", t.ExportWithTypeNameSuffix);
+                if (exportSuffix != t.ExportWithTypeNameSuffix)
+                {
+                    t.ExportWithTypeNameSuffix = exportSuffix;
+                    isModify = true;
+                }
+
+                if (exportSuffix && string.IsNullOrEmpty(t.ExportName))
+                {
+                    t.ExportName = t.gameObject.name + m_TypeNames[newIndex];
+                    isModify = true;
                 }
 
                 var gather = t.gameObject.GetComponentInSelfOrParent<ObjectCollector>();
@@ -70,6 +97,11 @@ namespace UnityGameFramework.Editor
                         }
                     }
                 }
+            }
+
+            if (isModify)
+            {
+                EditorUtility.SetDirty(t);
             }
             
             serializedObject.ApplyModifiedProperties();
