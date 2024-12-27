@@ -14,7 +14,7 @@ namespace Scriban.Runtime
     /// <summary>
     /// Allows to create a custom function object.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -45,7 +45,7 @@ namespace Scriban.Runtime
     }
 
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -57,7 +57,7 @@ namespace Scriban.Runtime
         LastParameter
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -76,7 +76,7 @@ namespace Scriban.Runtime
     }
 
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -92,7 +92,7 @@ namespace Scriban.Runtime
 
 
     [DebuggerDisplay("{ParameterType} {Name}")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

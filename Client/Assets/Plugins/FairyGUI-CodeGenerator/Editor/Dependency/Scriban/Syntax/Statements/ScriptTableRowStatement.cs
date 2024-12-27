@@ -13,7 +13,7 @@ namespace Scriban.Syntax
     /// <summary>
     /// Statement handling the `tablerow`
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

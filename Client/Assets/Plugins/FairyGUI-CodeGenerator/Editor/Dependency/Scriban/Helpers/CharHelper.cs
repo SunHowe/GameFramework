@@ -2,7 +2,7 @@ using System;
 
 namespace Scriban.Helpers
 {
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

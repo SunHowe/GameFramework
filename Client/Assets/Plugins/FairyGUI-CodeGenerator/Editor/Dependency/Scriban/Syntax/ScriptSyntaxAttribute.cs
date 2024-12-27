@@ -10,7 +10,7 @@ using System.Reflection;
 namespace Scriban.Syntax
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct)]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -26,7 +26,7 @@ namespace Scriban.Syntax
     }
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct)]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

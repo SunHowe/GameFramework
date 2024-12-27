@@ -10,7 +10,7 @@ namespace Scriban
     /// <summary>
     /// Defines the options used for rendering back an AST/<see cref="ScriptNode"/> to a text.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

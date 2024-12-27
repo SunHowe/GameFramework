@@ -13,7 +13,7 @@ namespace Scriban.Syntax
     /// Slice of a string
     /// </summary>
     [DebuggerDisplay("{ToString()}")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -207,7 +207,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

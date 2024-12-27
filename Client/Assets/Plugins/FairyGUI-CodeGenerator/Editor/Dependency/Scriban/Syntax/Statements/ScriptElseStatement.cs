@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace Scriban.Syntax
 {
     [ScriptSyntax("else statement", "else | else if <expression> ... end|else|else if")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

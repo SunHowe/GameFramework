@@ -6,7 +6,7 @@ namespace Scriban.Parsing
     /// <summary>
     /// Defines how the parser should parse a script text.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

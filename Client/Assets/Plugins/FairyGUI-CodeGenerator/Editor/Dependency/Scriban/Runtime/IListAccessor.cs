@@ -9,7 +9,7 @@ namespace Scriban.Runtime
     /// <summary>
     /// Generic interface used to access a list/array, used by <see cref="TemplateContext"/> via <see cref="TemplateContext.GetListAccessor"/>
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

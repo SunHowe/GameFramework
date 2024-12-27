@@ -12,7 +12,7 @@ namespace Scriban.Syntax
     /// A binary operation argument used with <see cref="ScriptFunctionCall"/>
     /// when parsing with scientific mode.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

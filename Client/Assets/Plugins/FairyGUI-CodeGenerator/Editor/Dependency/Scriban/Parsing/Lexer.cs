@@ -17,7 +17,7 @@ namespace Scriban.Parsing
     /// <summary>
     /// Lexer enumerator that generates <see cref="Token"/>, to use in a foreach.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

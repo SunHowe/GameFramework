@@ -7,7 +7,7 @@ namespace Scriban.Syntax
     /// <summary>
     /// A verbatim node (use for custom parsing).
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

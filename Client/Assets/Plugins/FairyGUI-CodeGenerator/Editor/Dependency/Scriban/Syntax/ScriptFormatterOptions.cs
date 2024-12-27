@@ -14,7 +14,7 @@ namespace Scriban.Syntax
     /// Options used by <see cref="ScriptFormatter"/>
     /// </summary>
     [DebuggerDisplay("Lang: {Language} Flags: {Flags}")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

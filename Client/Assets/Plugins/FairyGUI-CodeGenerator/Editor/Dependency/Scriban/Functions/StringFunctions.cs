@@ -19,7 +19,7 @@ namespace Scriban.Functions
     /// <summary>
     /// String functions available through the builtin object 'string`.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

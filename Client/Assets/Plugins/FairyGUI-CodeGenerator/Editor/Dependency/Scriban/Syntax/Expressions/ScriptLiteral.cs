@@ -13,7 +13,7 @@ using System.Text;
 namespace Scriban.Syntax
 {
     [ScriptSyntax("literal", "<value>")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -239,7 +239,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

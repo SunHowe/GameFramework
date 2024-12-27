@@ -20,7 +20,7 @@ namespace Scriban.Runtime
     /// Base runtime object used to store properties.
     /// </summary>
     /// <seealso cref="System.Collections.IEnumerable" />
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

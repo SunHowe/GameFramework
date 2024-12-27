@@ -11,7 +11,7 @@ namespace Scriban.Runtime
     /// <summary>
     /// Interface used for loading a template.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

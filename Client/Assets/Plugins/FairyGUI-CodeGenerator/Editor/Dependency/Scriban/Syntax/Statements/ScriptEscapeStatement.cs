@@ -9,7 +9,7 @@ using System;
 namespace Scriban.Syntax
 {
     [ScriptSyntax("{{ or }}", "{{ or }}")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

@@ -12,7 +12,7 @@ namespace Scriban.Runtime
     /// <summary>
     /// Interface used to text output when evaluating a template used by <see cref="TemplateContext.Output"/> and <see cref="TemplateContext.PushOutput()"/>
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -29,7 +29,7 @@ namespace Scriban.Runtime
     /// <summary>
     /// Extensions for <see cref="IScriptOutput"/>
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

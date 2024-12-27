@@ -10,7 +10,7 @@ namespace Scriban.Syntax
     /// Base class for all statements.
     /// </summary>
     /// <seealso cref="ScriptNode" />
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

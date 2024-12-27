@@ -15,7 +15,7 @@ namespace Scriban.Functions
     /// <summary>
     /// Builtins functions for a Liquid TemplateContext
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

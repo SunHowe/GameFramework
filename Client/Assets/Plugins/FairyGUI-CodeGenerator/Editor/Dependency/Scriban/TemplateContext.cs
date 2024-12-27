@@ -30,7 +30,7 @@ namespace Scriban
     /// <summary>
     /// The template context contains the state of the page, the model.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -1199,7 +1199,7 @@ namespace Scriban
     /// <summary>
     /// A Liquid based <see cref="TemplateContext"/> providing the builtin functions usually available for a liquid template.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

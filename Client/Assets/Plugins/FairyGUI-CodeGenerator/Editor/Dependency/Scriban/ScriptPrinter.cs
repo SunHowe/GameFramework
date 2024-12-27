@@ -14,7 +14,7 @@ namespace Scriban
     /// <summary>
     /// Rewriter context used to write an AST/<see cref="ScriptNode"/> tree back to a text.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

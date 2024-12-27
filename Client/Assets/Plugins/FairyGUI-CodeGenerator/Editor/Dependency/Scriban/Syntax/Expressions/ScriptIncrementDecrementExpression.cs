@@ -6,7 +6,7 @@ namespace Scriban.Syntax
 {
 
     [ScriptSyntax("increment/decrement expression", "<operator> <expression> or <expression> <operator>")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

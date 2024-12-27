@@ -11,7 +11,7 @@ using Scriban.Functions;
 namespace Scriban.Syntax
 {
     [ScriptSyntax("when statement", "when <expression> ... end|when|else")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

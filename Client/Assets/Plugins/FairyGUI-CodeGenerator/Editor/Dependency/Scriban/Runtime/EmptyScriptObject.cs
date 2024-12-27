@@ -15,7 +15,7 @@ namespace Scriban.Runtime
     /// The empty object (unique singleton, cannot be modified, does not contain any properties)
     /// </summary>
     [DebuggerDisplay("<empty object>")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

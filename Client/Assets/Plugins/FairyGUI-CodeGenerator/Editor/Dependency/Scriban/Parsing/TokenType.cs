@@ -6,7 +6,7 @@ namespace Scriban.Parsing
     /// <summary>
     /// An enumeration to categorize tokens.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

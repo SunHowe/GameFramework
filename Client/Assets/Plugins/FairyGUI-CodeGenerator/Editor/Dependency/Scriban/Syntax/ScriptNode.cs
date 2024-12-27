@@ -17,7 +17,7 @@ namespace Scriban.Syntax
     /// <summary>
     /// Base class for the abstract syntax tree of a scriban program.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

@@ -10,7 +10,7 @@ namespace Scriban.Runtime
     /// </summary>
     /// <param name="member">A member info</param>
     /// <returns><c>true</c> to keep the member; otherwise <c>false</c> to remove the member</returns>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

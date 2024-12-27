@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Scriban.Syntax
 {
     [ScriptSyntax("capture statement", "capture <variable> ... end")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

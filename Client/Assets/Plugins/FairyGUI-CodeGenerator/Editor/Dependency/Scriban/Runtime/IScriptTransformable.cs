@@ -10,7 +10,7 @@ namespace Scriban.Runtime
     /// <summary>
     /// Can apply a transform to each element (e.g ScriptArray.Transform(...))
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

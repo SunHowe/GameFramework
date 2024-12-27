@@ -7,7 +7,7 @@ using Scriban.Parsing;
 
 namespace Scriban.Syntax
 {
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -77,7 +77,7 @@ namespace Scriban.Syntax
 
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

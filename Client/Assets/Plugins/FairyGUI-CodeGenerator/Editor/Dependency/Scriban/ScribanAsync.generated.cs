@@ -26,7 +26,7 @@ namespace Scriban
     /// <summary>
     /// Basic entry point class to parse templates and render them. For more advanced scenario, you should use <see cref="TemplateContext"/> directly.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -199,7 +199,7 @@ namespace Scriban
     /// <summary>
     /// The template context contains the state of the page, the model.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -458,7 +458,7 @@ namespace Scriban.Functions
     /// <summary>
     /// The include function available through the function 'include' in scriban.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -584,7 +584,7 @@ namespace Scriban.Functions
 
 namespace Scriban.Runtime
 {
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -611,7 +611,7 @@ namespace Scriban.Runtime
     /// <summary>
     /// Extensions for <see cref="IScriptOutput"/>
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -722,7 +722,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -742,7 +742,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -774,7 +774,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -825,7 +825,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -892,7 +892,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -917,7 +917,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -939,7 +939,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -954,7 +954,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -967,7 +967,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -988,7 +988,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -1124,7 +1124,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -1137,7 +1137,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -1197,7 +1197,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -1574,7 +1574,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -1588,7 +1588,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -1608,7 +1608,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -1625,7 +1625,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -1754,7 +1754,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -1791,7 +1791,7 @@ namespace Scriban.Syntax
         /// Base class for a loop statement
         /// </summary>
     
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -1822,7 +1822,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -1889,7 +1889,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -1904,7 +1904,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -1939,7 +1939,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -1966,7 +1966,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -1983,7 +1983,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -2004,7 +2004,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -2054,7 +2054,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -2082,7 +2082,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -2100,7 +2100,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -2156,7 +2156,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -2169,7 +2169,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -2188,7 +2188,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -2206,7 +2206,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -2220,7 +2220,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -2244,7 +2244,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -2285,7 +2285,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -2314,7 +2314,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

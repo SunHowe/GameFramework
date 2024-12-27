@@ -14,7 +14,7 @@ namespace Scriban.Parsing
     /// <seealso>
     ///     <cref>System.IEquatable{Scriban.Parsing.Token}</cref>
     /// </seealso>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

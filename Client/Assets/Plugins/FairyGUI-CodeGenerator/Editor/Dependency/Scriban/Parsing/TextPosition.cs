@@ -8,7 +8,7 @@ using System;
 
 namespace Scriban.Parsing
 {
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

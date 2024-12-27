@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace Scriban.Syntax
 {
     [ScriptSyntax("case statement", "case <expression> ... end|when|else")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

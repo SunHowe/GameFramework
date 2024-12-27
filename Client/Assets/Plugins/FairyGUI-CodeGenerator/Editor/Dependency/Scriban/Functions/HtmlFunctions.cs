@@ -11,7 +11,7 @@ namespace Scriban.Functions
     /// <summary>
     /// Html functions available through the builtin object 'html'.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

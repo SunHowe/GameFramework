@@ -17,7 +17,7 @@ namespace Scriban.Functions
     /// >- Use [verbatim strings](language.md#31-strings).  For example: `"\d+\.\d+"` becomes `` `\d+\.\d+` ``
     /// </summary>
     /// <seealso cref="Scriban.Runtime.ScriptObject" />
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

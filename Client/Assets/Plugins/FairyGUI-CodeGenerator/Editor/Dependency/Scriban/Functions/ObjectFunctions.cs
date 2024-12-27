@@ -20,7 +20,7 @@ namespace Scriban.Functions
     /// <summary>
     /// Object functions available through the builtin object 'object'.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

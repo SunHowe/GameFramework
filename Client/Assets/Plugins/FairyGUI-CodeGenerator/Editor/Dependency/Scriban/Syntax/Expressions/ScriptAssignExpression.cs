@@ -12,7 +12,7 @@ using Scriban.Parsing;
 namespace Scriban.Syntax
 {
     [ScriptSyntax("assign expression", "<target_expression> = <value_expression>")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

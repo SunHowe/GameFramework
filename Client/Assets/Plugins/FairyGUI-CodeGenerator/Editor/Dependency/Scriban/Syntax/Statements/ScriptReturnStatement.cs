@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Scriban.Syntax
 {
     [ScriptSyntax("return statement", "return <expression>?")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

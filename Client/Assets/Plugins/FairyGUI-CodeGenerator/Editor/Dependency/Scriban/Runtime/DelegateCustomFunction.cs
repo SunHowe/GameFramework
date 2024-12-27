@@ -15,7 +15,7 @@ namespace Scriban.Runtime
     /// <summary>
     /// Generic function wrapper handling any kind of function parameters.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -488,7 +488,7 @@ namespace Scriban.Runtime
     /// <summary>
     /// A custom action taking 1 argument.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

@@ -18,7 +18,7 @@ namespace Scriban.Functions
     /// <summary>
     /// Math functions available through the object 'math' in scriban.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

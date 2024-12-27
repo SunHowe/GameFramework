@@ -10,7 +10,7 @@ namespace Scriban.Runtime
     /// </summary>
     /// <param name="member">A member info</param>
     /// <returns>The new name name of member</returns>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

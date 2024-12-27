@@ -12,7 +12,7 @@ using Scriban.Syntax;
 
 namespace Scriban.Runtime
 {
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

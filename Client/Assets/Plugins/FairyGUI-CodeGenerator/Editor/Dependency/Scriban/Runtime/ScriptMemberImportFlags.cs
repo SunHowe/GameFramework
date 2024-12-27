@@ -6,7 +6,7 @@ using System;
 namespace Scriban.Runtime
 {
     [Flags]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

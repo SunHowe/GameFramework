@@ -12,7 +12,7 @@ namespace Scriban.Syntax
     /// <summary>
     /// Empty instruction for an empty code block
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

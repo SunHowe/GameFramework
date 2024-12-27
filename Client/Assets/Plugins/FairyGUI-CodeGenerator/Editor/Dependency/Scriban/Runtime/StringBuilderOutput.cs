@@ -14,7 +14,7 @@ namespace Scriban.Runtime
     /// <summary>
     /// Output to a <see cref="StringBuilder"/>
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

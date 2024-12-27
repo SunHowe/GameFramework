@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Scriban.Parsing
 {
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -41,7 +41,7 @@ namespace Scriban.Parsing
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

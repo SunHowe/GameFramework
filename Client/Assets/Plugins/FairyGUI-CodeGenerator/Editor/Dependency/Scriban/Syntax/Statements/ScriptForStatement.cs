@@ -14,7 +14,7 @@ namespace Scriban.Syntax
     /// A for in loop statement.
     /// </summary>
     [ScriptSyntax("for statement", "for <variable> in <expression> ... end")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

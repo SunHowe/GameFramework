@@ -22,7 +22,7 @@ using System.Numerics;
 
 namespace Scriban.Syntax
 {
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -36,7 +36,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -50,7 +50,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -74,7 +74,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -98,7 +98,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -122,7 +122,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -136,7 +136,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -150,7 +150,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -174,7 +174,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -198,7 +198,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -224,7 +224,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -238,7 +238,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -261,7 +261,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -275,7 +275,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -289,7 +289,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -303,7 +303,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -331,7 +331,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -355,7 +355,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -383,7 +383,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -408,7 +408,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -422,7 +422,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -448,7 +448,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -471,7 +471,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -494,7 +494,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -519,7 +519,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -544,7 +544,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -558,7 +558,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -572,7 +572,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -596,7 +596,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -620,7 +620,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -644,7 +644,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -658,7 +658,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -682,7 +682,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -706,7 +706,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -729,7 +729,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -753,7 +753,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -777,7 +777,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -791,7 +791,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -814,7 +814,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -837,7 +837,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -865,7 +865,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -879,7 +879,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -893,7 +893,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -916,7 +916,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -930,7 +930,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -944,7 +944,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -969,7 +969,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -993,7 +993,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -1017,7 +1017,7 @@ namespace Scriban.Syntax
         public override TResult Accept<TResult>(ScriptVisitor<TResult> visitor) => visitor.Visit(this);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -1042,7 +1042,7 @@ namespace Scriban.Syntax
     }
 
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -1403,7 +1403,7 @@ namespace Scriban.Syntax
 
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -1461,7 +1461,7 @@ namespace Scriban.Syntax
         public virtual void Visit(ScriptWrapStatement node) => DefaultVisit(node);
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

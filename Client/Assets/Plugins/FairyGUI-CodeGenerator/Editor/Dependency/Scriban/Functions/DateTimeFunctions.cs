@@ -39,7 +39,7 @@ namespace Scriban.Functions
     /// A `timespan` and also the added to a `datetime` object.
     /// </summary>
     /// <seealso cref="Scriban.Runtime.ScriptObject" />
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

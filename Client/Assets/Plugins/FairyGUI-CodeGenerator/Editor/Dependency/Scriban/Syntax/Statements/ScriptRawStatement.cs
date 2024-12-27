@@ -7,7 +7,7 @@
 namespace Scriban.Syntax
 {
     [ScriptSyntax("raw statement", "<raw_text>")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

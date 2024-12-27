@@ -18,7 +18,7 @@ namespace Scriban.Runtime
     /// <summary>
     /// Extensions attached to an <see cref="IScriptObject"/>.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

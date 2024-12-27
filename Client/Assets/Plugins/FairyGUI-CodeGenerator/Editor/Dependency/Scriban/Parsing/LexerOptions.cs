@@ -6,7 +6,7 @@ namespace Scriban.Parsing
     /// <summary>
     /// Defines the options for the lexer.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -69,7 +69,7 @@ namespace Scriban.Parsing
     /// <param name="length">Output the number of character successfully matched at <paramref name="position"/>.</param>
     /// <param name="tokenType">The custom token type within the range (<see cref="TokenType.Custom"/> to <see cref="TokenType.Custom9"/></param>
     /// <returns><c>true</c> if the text at position <paramref name="position"/> is a custom token.</returns>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

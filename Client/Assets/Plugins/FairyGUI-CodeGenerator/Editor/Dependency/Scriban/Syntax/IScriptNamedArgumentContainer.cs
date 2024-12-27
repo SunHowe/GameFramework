@@ -8,7 +8,7 @@ namespace Scriban.Syntax
     /// <summary>
     /// Interfaces used by statements/expressions that have special trailing parameters (for, tablerow, include...)
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

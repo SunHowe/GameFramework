@@ -15,7 +15,7 @@ namespace Scriban
     /// Contains log messages.
     /// </summary>
     [DebuggerDisplay("Count: {Count}")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

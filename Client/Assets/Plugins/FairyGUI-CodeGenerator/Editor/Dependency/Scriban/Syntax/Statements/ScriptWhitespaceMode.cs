@@ -7,7 +7,7 @@ namespace Scriban.Syntax
     /// <summary>
     /// Whitespace mode handling for code/escape enter/exit.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

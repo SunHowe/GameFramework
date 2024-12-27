@@ -14,7 +14,7 @@ namespace Scriban.Syntax
     /// this expression returns the current <see cref="TemplateContext.CurrentGlobal"/> script object.
     /// </summary>
     [ScriptSyntax("this expression", "this")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

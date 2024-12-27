@@ -15,7 +15,7 @@ namespace Scriban.Functions
     /// <summary>
     /// The include function available through the function 'include' in scriban.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

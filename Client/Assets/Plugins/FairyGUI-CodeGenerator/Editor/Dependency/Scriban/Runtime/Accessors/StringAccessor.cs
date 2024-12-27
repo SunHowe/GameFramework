@@ -11,7 +11,7 @@ using Scriban.Syntax;
 
 namespace Scriban.Runtime.Accessors
 {
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

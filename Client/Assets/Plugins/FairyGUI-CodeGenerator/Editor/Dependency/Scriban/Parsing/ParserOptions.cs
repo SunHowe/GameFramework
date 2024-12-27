@@ -7,7 +7,7 @@ namespace Scriban.Parsing
     /// <summary>
     /// Defines the options used when parsing a template.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

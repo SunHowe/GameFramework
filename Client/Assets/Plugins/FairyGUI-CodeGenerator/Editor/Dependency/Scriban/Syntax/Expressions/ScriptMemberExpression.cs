@@ -13,7 +13,7 @@ using Scriban.Parsing;
 namespace Scriban.Syntax
 {
     [ScriptSyntax("member expression", "<expression>.<variable_name>")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

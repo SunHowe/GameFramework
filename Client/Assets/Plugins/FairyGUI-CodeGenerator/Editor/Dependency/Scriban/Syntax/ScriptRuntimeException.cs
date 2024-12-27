@@ -12,7 +12,7 @@ using Scriban.Parsing;
 
 namespace Scriban.Syntax
 {
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -65,7 +65,7 @@ namespace Scriban.Syntax
             return Message;
         }
     }
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -85,7 +85,7 @@ namespace Scriban.Syntax
         public CancellationToken CancellationToken { get; }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

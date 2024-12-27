@@ -11,7 +11,7 @@ using System.IO;
 namespace Scriban.Syntax
 {
     [ScriptSyntax("nested expression", "(<expression>)")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

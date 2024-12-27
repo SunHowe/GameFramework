@@ -9,7 +9,7 @@ namespace Scriban.Runtime
     /// <summary>
     /// Base interface for a scriptable object.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

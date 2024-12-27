@@ -15,7 +15,7 @@ namespace Scriban.Syntax
     /// </summary>
     [DebuggerDisplay("Count = {Count}")]
     [DebuggerTypeProxy(typeof(ScriptListDebug))]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -59,7 +59,7 @@ namespace Scriban.Syntax
     /// </summary>
     /// <typeparam name="TScriptNode">Type of the node</typeparam>
     [DebuggerTypeProxy(typeof(ScriptList<>.DebugListView)), DebuggerDisplay("Count = {Count}")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

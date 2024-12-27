@@ -7,7 +7,7 @@ namespace Scriban.Parsing
     /// <summary>
     /// Defines the language the parser should use.
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

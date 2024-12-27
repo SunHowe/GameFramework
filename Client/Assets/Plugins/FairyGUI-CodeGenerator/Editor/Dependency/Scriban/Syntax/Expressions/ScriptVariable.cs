@@ -17,7 +17,7 @@ namespace Scriban.Syntax
     /// </summary>
     /// <remarks>This class is immutable as all variable object are being shared across all templates</remarks>
     [ScriptSyntax("variable", "<variable_name>")]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -147,7 +147,7 @@ namespace Scriban.Syntax
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -166,7 +166,7 @@ namespace Scriban.Syntax
     }
 
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

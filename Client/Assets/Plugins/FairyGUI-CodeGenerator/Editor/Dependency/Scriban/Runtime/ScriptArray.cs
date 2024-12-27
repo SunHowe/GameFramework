@@ -24,7 +24,7 @@ namespace Scriban.Runtime
     /// <seealso cref="System.Collections.IList" />
     [DebuggerDisplay("Count = {Count}")]
     [DebuggerTypeProxy(typeof(ScriptArray<>.DebugListView))]
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -663,7 +663,7 @@ namespace Scriban.Runtime
         }
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

@@ -6,7 +6,7 @@ using System;
 
 namespace Scriban.Syntax
 {
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
@@ -24,7 +24,7 @@ namespace Scriban.Syntax
         Custom,
     }
 
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

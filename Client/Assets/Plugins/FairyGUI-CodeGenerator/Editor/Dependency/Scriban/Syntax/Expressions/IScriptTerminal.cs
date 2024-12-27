@@ -9,7 +9,7 @@ namespace Scriban.Syntax
     /// <summary>
     /// Identifies a script terminal (token, identifier, variable, literal)
     /// </summary>
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal

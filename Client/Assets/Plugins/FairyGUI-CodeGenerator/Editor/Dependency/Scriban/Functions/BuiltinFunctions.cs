@@ -5,7 +5,7 @@ using Scriban.Runtime;
 
 namespace Scriban.Functions
 {
-#if SCRIBAN_PUBLIC
+#if SCRIBAN_PUBLIC || UNITY_EDITOR
     public
 #else
     internal
