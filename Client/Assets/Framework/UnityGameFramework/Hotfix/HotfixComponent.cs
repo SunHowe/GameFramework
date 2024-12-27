@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using GameFramework;
 using GameFramework.Resource;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -42,7 +44,7 @@ namespace UnityGameFramework.Runtime
 
         private HotfixLoadStep m_CurrentLoadStep = HotfixLoadStep.None;
 
-        private List<AssemblyInfo> m_HotfixAssemblies;
+        private List<AssemblyInfo> m_HotfixAssemblyInfoList;
         private byte[][] m_HotfixAssemblyBytes;
         private HotfixAppTypeRef m_HotfixAppType;
 
@@ -110,6 +112,13 @@ namespace UnityGameFramework.Runtime
             EnterLoadConfigStep();
         }
 
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            Utility.Assembly.ClearHotfixAssemblies();
+            Utility.Assembly.ClearCache();
+        }
+
         #region [加载热更新配置文件]
 
         /// <summary>
@@ -139,14 +148,14 @@ namespace UnityGameFramework.Runtime
             var configuration = (HotfixConfiguration)asset;
 
             m_HotfixAppType = configuration.HotfixAppType;
-            m_HotfixAssemblies = configuration.HotfixAssemblies.ToList();
+            m_HotfixAssemblyInfoList = configuration.HotfixAssemblies.ToList();
 
             // 归还资源
             m_ResourceComponent.UnloadAsset(asset);
 
 #if UNITY_EDITOR
             // 编辑器下直接触发到启动逻辑步骤
-            EnterLaunchHotfixEntryStep();
+            EnterLoadAssemblyEditorStep();
 #else
             // 进入加载程序集文件阶段
             EnterLoadAssemblyFileStep();
@@ -165,9 +174,9 @@ namespace UnityGameFramework.Runtime
             SetCurrentStep(HotfixLoadStep.LoadAssemblyFile);
 
             // 判断需要加载的热更新文件列表
-            for (var index = 0; index < m_HotfixAssemblies.Count; index++)
+            for (var index = 0; index < m_HotfixAssemblyInfoList.Count; index++)
             {
-                var assemblyInfo = m_HotfixAssemblies[index];
+                var assemblyInfo = m_HotfixAssemblyInfoList[index];
 
                 // 只要有一个程序集未加载或版本不对 在其之后的程序集都需要重新加载
                 if (!s_LoadedAssemblies.TryGetValue(assemblyInfo.Name, out var runtimeInfo))
@@ -177,10 +186,10 @@ namespace UnityGameFramework.Runtime
                     break;
 
                 // 程序集已加载 移除该列表项
-                m_HotfixAssemblies.RemoveAt(index--);
+                m_HotfixAssemblyInfoList.RemoveAt(index--);
             }
 
-            if (m_HotfixAssemblies.Count == 0)
+            if (m_HotfixAssemblyInfoList.Count == 0)
             {
                 // 无需加载 直接跳转加载热更新逻辑入口的步骤
                 EnterLaunchHotfixEntryStep();
@@ -188,10 +197,10 @@ namespace UnityGameFramework.Runtime
             }
 
             // 初始化文件数据数组
-            m_HotfixAssemblyBytes = new byte[m_HotfixAssemblies.Count][];
-            for (var index = 0; index < m_HotfixAssemblies.Count; index++)
+            m_HotfixAssemblyBytes = new byte[m_HotfixAssemblyInfoList.Count][];
+            for (var index = 0; index < m_HotfixAssemblyInfoList.Count; index++)
             {
-                var assemblyInfo = m_HotfixAssemblies[index];
+                var assemblyInfo = m_HotfixAssemblyInfoList[index];
                 var assetName = m_CustomHotfixAssetHelper.GetAssemblyAssetName(assemblyInfo);
                 m_ResourceComponent.LoadBinary(assetName, m_LoadAssemblyFileCallbacks, assemblyInfo);
             }
@@ -203,13 +212,13 @@ namespace UnityGameFramework.Runtime
         private void OnLoadAssemblyFileFailure(string binaryAssetName, LoadResourceStatus status, string errorMessage, object userdata)
         {
             var assemblyInfo = (AssemblyInfo)userdata;
-            if (m_HotfixAssemblies == null)
+            if (m_HotfixAssemblyInfoList == null)
             {
                 // 热更新程序集文件列表已经被清空，说明已经触发过加载失败，直接返回。
                 return;
             }
 
-            var index = m_HotfixAssemblies.IndexOf(assemblyInfo);
+            var index = m_HotfixAssemblyInfoList.IndexOf(assemblyInfo);
             if (index == -1)
             {
                 // 热更新程序集文件列表中不存在指定的热更新程序集文件，说明已经触发过加载失败，直接返回。
@@ -217,7 +226,7 @@ namespace UnityGameFramework.Runtime
             }
 
             // 清空数据
-            m_HotfixAssemblies = null;
+            m_HotfixAssemblyInfoList = null;
             m_HotfixAssemblyBytes = null;
             m_HotfixAppType = null;
 
@@ -235,13 +244,13 @@ namespace UnityGameFramework.Runtime
         private void OnLoadAssemblyFileSuccess(string binaryAssetName, byte[] binaryBytes, float duration, object userdata)
         {
             var assemblyInfo = (AssemblyInfo)userdata;
-            if (m_HotfixAssemblies == null)
+            if (m_HotfixAssemblyInfoList == null)
             {
                 // 热更新程序集文件列表已经被清空，说明已经触发过加载失败，直接返回。
                 return;
             }
 
-            var index = m_HotfixAssemblies.IndexOf(assemblyInfo);
+            var index = m_HotfixAssemblyInfoList.IndexOf(assemblyInfo);
             if (index == -1)
             {
                 // 热更新程序集文件列表中不存在指定的热更新程序集文件，说明已经触发过加载失败，直接返回。
@@ -289,8 +298,49 @@ namespace UnityGameFramework.Runtime
         private void EnterLoadAssemblyStep()
         {
             SetCurrentStep(HotfixLoadStep.LoadAssembly);
+
+            for (var i = 0; i < m_HotfixAssemblyInfoList.Count; i++)
+            {
+                var info = m_HotfixAssemblyInfoList[i];
+                var bytes = m_HotfixAssemblyBytes[i];
+
+                if (s_LoadedAssemblies.TryGetValue(info.Name, out var runtimeInfo) && runtimeInfo.Version == info.Version)
+                {
+                    // 已经加载过的程序集，从缓存中获取。
+                    Utility.Assembly.AddHotfix(runtimeInfo.Assembly);
+                    continue;
+                }
+                
+                var assembly = Assembly.Load(bytes);
+                runtimeInfo = new AssemblyRuntimeInfo(info.Name, info.Version, assembly);
+                s_LoadedAssemblies.Add(runtimeInfo.Name, runtimeInfo);
+                
+                Utility.Assembly.AddHotfix(assembly);
+            }
+        }
+
+        #endregion
+
+        #region [编辑器加载程序集逻辑]
+
+        private void EnterLoadAssemblyEditorStep()
+        {
+            SetCurrentStep(HotfixLoadStep.LoadAssembly);
+
+            var assemblies = Utility.Assembly.GetAssemblies();
             
-            // TODO: 加载程序集 并加入到Utility.Assembly中
+            foreach (var info in m_HotfixAssemblyInfoList)
+            {
+                var assembly = assemblies.FirstOrDefault(item => item.GetName().Name == info.Name);
+                if (assembly == null)
+                {
+                    throw new Exception($"Can not find assembly {info.Name} in editor.");
+                }
+                
+                Utility.Assembly.AddHotfix(assembly);
+            }
+            
+            EnterLaunchHotfixEntryStep();
         }
 
         #endregion
@@ -322,7 +372,7 @@ namespace UnityGameFramework.Runtime
             }
             
             // 清空数据
-            m_HotfixAssemblies = null;
+            m_HotfixAssemblyInfoList = null;
             m_HotfixAssemblyBytes = null;
             m_HotfixAppType = null;
 
