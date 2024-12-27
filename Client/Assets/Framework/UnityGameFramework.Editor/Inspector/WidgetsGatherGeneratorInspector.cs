@@ -28,7 +28,6 @@ namespace UnityGameFramework.Editor
             }
         }
 
-
         public static void GenerateCode(WidgetsGatherGenerator t)
         {
             var widgetsGather = t.GetComponent<WidgetsGather>();
@@ -48,20 +47,26 @@ namespace UnityGameFramework.Editor
                 return;
             }
 
-            var nodes = new List<(string typeFullName, string fieldName, string name)>();
+            var nodes = new List<Dictionary<string, string>>();
             for (var i = 0; i < count; i++)
             {
                 var widgetName = widgetsGather.WidgetNames[i];
                 var widget = widgetsGather.Widgets[i];
 
-                nodes.Add((widget.GetType().FullName, widgetName.ToUpperCamelCase(), widget.name));
+                var node = new Dictionary<string, string>();
+                node["name"] = widgetName;
+                node["field_name"] = widgetName.ToUpperCamelCase();
+                node["type_full_name"] = widget.GetType().FullName;
+                
+                nodes.Add(node);
             }
 
             // 使用Scriban进行创建代码。
             var scriptObject = new ScriptObject();
             scriptObject.Import(new Dictionary<string, object>
             {
-                ["nodes"] = nodes
+                ["nodes"] = nodes,
+                ["name"] = t.TypeName,
             });
 
             var context = new TemplateContext();
@@ -77,8 +82,7 @@ namespace UnityGameFramework.Editor
 
             File.WriteAllText(outputPath, output, Encoding.UTF8);
             
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
+            AssetDatabase.Refresh();
         }
 
         public override void OnInspectorGUI()
@@ -136,6 +140,7 @@ namespace UnityGameFramework.Editor
                         if (GUILayout.Button("删除代码"))
                         {
                             File.Delete(filePath);
+                            AssetDatabase.Refresh();
                         }
                     }
                 }
@@ -153,6 +158,11 @@ namespace UnityGameFramework.Editor
 
         private static string GetOutputFilePath(WidgetsGatherGenerator t)
         {
+            if (string.IsNullOrEmpty(t.GenerateDirectoryName))
+            {
+                return Path.Combine(GAME_LOGIC_DIRECTORY_PATH, t.TypeName + ".cs");
+            }
+            
             return Path.Combine(GAME_LOGIC_DIRECTORY_PATH, t.GenerateDirectoryName, t.TypeName + ".cs");
         }
     }
