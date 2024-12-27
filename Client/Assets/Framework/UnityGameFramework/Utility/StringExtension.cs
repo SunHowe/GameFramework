@@ -5,11 +5,15 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
+using System.Text;
+
 /// <summary>
 /// 对 string 的扩展方法。
 /// </summary>
 public static class StringExtension
 {
+    private static readonly StringBuilder s_StringBuilder = new StringBuilder();
+    
     /// <summary>
     /// 从指定字符串中的指定位置处开始读取一行。
     /// </summary>
@@ -62,5 +66,35 @@ public static class StringExtension
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// 转成首字母大写的驼峰字符串。
+    /// </summary>
+    public static string ToUpperCamelCase(this string str)
+    {
+        if (string.IsNullOrEmpty(str))
+        {
+            return str;
+        }
+        
+        // 将字符串中所有_后的字符转换为大写 然后确保首字母是大写
+        s_StringBuilder.Clear();
+        var upper = true;
+                
+        foreach (var c in str)
+        {
+            if (c == '_')
+            {
+                upper = true;
+            }
+            else
+            {
+                s_StringBuilder.Append(upper ? char.ToUpper(c) : c);
+                upper = false;
+            }
+        }
+                
+        return s_StringBuilder.ToString();
     }
 }

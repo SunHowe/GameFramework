@@ -20,6 +20,63 @@ namespace UnityGameFramework.Editor
         private string m_AddKey = string.Empty;
         private Object m_AddValue = null;
 
+        public static bool UpdateWidgetsGather(WidgetsGather t)
+        {
+            var isModify = false;
+            
+            var widgets = t.GetComponentsInChildren<Widget>();
+            foreach (var widget in widgets)
+            {
+                var widgetName = !string.IsNullOrEmpty(widget.WidgetName) ? widget.WidgetName : widget.name;
+                var widgetType = System.Type.GetType(widget.WidgetTypeName);
+                if (widgetType == null)
+                {
+                    Debug.LogError($"无效的组件类型在节点{widget.name}上: {widget.WidgetTypeName}");
+                    continue;
+                }
+
+                Object widgetObject;
+
+                if (widgetType == typeof(GameObject))
+                {
+                    widgetObject = widget.gameObject;
+                }
+                else if (typeof(Component).IsAssignableFrom(widgetType))
+                {
+                    widgetObject = widget.GetComponent(widgetType);
+                }
+                else
+                {
+                    Debug.LogError($"无效的组件类型在节点{widget.name}上: {widget.WidgetTypeName}");
+                    continue;
+                }
+
+                if (widgetObject == null)
+                {
+                    Debug.LogError($"无效的组件类型在节点{widget.name}上: {widget.WidgetTypeName}");
+                    continue;
+                }
+
+                var index = t.WidgetNames.IndexOf(widgetName);
+                if (index >= 0)
+                {
+                    if (t.Widgets[index] != widgetObject)
+                    {
+                        Debug.LogError($"重复的挂件名称: {widgetName}");
+                    }
+                                    
+                    continue;
+                }
+                                
+                t.WidgetNames.Add(widgetName);
+                t.Widgets.Add(widgetObject);
+
+                isModify = true;
+            }
+            
+            return isModify;
+        }
+
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
@@ -161,42 +218,18 @@ namespace UnityGameFramework.Editor
 
                         if (GUILayout.Button("收集所有Widget组件(自己和子节点)"))
                         {
-                            var widgets = t.GetComponentsInChildren<Widget>();
-                            foreach (var widget in widgets)
+                            if (UpdateWidgetsGather(t))
                             {
-                                var widgetName = !string.IsNullOrEmpty(widget.WidgetName) ? widget.WidgetName : widget.name;
-                                var widgetType = System.Type.GetType(widget.WidgetTypeName);
-                                if (widgetType == null)
-                                {
-                                    Debug.LogError($"无效的组件类型在节点{widget.name}上: {widget.WidgetTypeName}");
-                                    continue;
-                                }
                                 
-                                var widgetObject = widget.GetComponent(widgetType);
+                            }
+                        }
 
-                                if (widgetObject == null)
-                                {
-                                    Debug.LogError($"无效的组件类型在节点{widget.name}上: {widget.WidgetTypeName}");
-                                    continue;
-                                }
-
-                                var index = t.WidgetNames.IndexOf(widgetName);
-                                if (index >= 0)
-                                {
-                                    if (t.Widgets[index] != widgetObject)
-                                    {
-                                        Debug.LogError($"重复的挂件名称: {widgetName}");
-                                    }
-                                    
-                                    continue;
-                                }
-                                
-                                t.WidgetNames.Add(widgetName);
-                                t.Widgets.Add(widgetObject);
-
-                                ++count;
-
-                                isModify = true;
+                        if (t.GetComponent<WidgetsGatherGenerator>() == null)
+                        {
+                            if (GUILayout.Button("生成静态绑定器"))
+                            {
+                                var generator = t.gameObject.AddComponent<WidgetsGatherGenerator>();
+                                WidgetsGatherGeneratorInspector.SetMissingDefaultValue(generator);
                             }
                         }
                     }

@@ -30,18 +30,45 @@ namespace UnityGameFramework.Editor
 
             using (GameFrameworkEditorGUIUtility.MakeDisabledGroupScope(EditorApplication.isPlayingOrWillChangePlaymode))
             {
+                using var _ = GameFrameworkEditorGUIUtility.MakeVerticalScope("box");
+                
                 t.WidgetName = EditorGUILayout.TextField("WidgetName", t.WidgetName);
 
                 var index = m_FullTypeNames.IndexOf(t.WidgetTypeName);
-                if (index < 0)
-                {
-                    index = 0;
-                }
-                
-                var newIndex = EditorGUILayout.Popup("WidgetType", index, m_TypeNames.ToArray());
+                var newIndex = EditorGUILayout.Popup("WidgetType", index >= 0 ? index : 0, m_TypeNames.ToArray());
                 if (newIndex != index)
                 {
                     t.WidgetTypeName = m_FullTypeNames[newIndex];
+                }
+
+                var gather = t.gameObject.GetComponentInSelfOrParent<WidgetsGather>();
+                if (gather == null)
+                {
+                    EditorGUILayout.HelpBox("父节点不存在WidgetsGather组件，请检查是否是个无用的Widget", MessageType.Warning);
+                }
+                else
+                {
+                    if (GUILayout.Button("更新WidgetsGather"))
+                    {
+                        if (WidgetsGatherInspector.UpdateWidgetsGather(gather))
+                        {
+                            EditorUtility.SetDirty(gather);
+                        }
+                    }
+
+                    var gatherGenerator = gather.GetComponent<WidgetsGatherGenerator>();
+                    if (gatherGenerator != null)
+                    {
+                        if (GUILayout.Button("更新WidgetsGather并生成代码"))
+                        {
+                            if (WidgetsGatherInspector.UpdateWidgetsGather(gather))
+                            {
+                                EditorUtility.SetDirty(gather);
+                                
+                                WidgetsGatherGeneratorInspector.GenerateCode(gatherGenerator);
+                            }
+                        }
+                    }
                 }
             }
             

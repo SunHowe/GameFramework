@@ -53,6 +53,29 @@ namespace UnityGameFramework.Editor
         };
 
         /// <summary>
+        /// 获取指定类型的程序集实例列表。
+        /// </summary>
+        internal static Assembly[] GetAssemblies(params AssemblyType[] assemblyTypes)
+        {
+            var assemblies = new List<Assembly>();
+
+            foreach (var assemblyType in assemblyTypes)
+            {
+                var assemblyNames = AssemblyNames[assemblyType];
+                foreach (var assemblyName in assemblyNames)
+                {
+                    var assembly = Assembly.Load(assemblyName);
+                    if (assembly != null)
+                    {
+                        assemblies.Add(assembly);
+                    }
+                }
+            }
+            
+            return assemblies.ToArray();
+        }
+
+        /// <summary>
         /// 获取配置路径。
         /// </summary>
         /// <typeparam name="T">配置类型。</typeparam>
