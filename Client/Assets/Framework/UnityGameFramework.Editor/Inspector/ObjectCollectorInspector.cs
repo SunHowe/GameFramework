@@ -7,8 +7,8 @@ using Object = UnityEngine.Object;
 
 namespace UnityGameFramework.Editor
 {
-    [CustomEditor(typeof(WidgetsGather))]
-    internal sealed class WidgetsGatherInspector : GameFrameworkInspector
+    [CustomEditor(typeof(ObjectCollector))]
+    internal sealed class ObjectCollectorInspector : GameFrameworkInspector
     {
         /// <summary>
         /// 每页最大的item数量。
@@ -20,56 +20,56 @@ namespace UnityGameFramework.Editor
         private string m_AddKey = string.Empty;
         private Object m_AddValue = null;
 
-        public static bool UpdateWidgetsGather(WidgetsGather t)
+        public static bool UpdateObjectCollector(ObjectCollector t)
         {
             var isModify = false;
             
-            var widgets = t.GetComponentsInChildren<Widget>();
-            foreach (var widget in widgets)
+            var objectExports = t.GetComponentsInChildren<ObjectExport>();
+            foreach (var objectExport in objectExports)
             {
-                var widgetName = !string.IsNullOrEmpty(widget.WidgetName) ? widget.WidgetName : widget.name;
-                var widgetType = System.Type.GetType(widget.WidgetTypeName);
-                if (widgetType == null)
+                var exportName = !string.IsNullOrEmpty(objectExport.ExportName) ? objectExport.ExportName : objectExport.name;
+                var exportType = System.Type.GetType(objectExport.ExportTypeName);
+                if (exportType == null)
                 {
-                    Debug.LogError($"无效的组件类型在节点{widget.name}上: {widget.WidgetTypeName}");
+                    Debug.LogError($"无效的组件类型在节点{objectExport.name}上: {objectExport.ExportTypeName}");
                     continue;
                 }
 
-                Object widgetObject;
+                Object exportObject;
 
-                if (widgetType == typeof(GameObject))
+                if (exportType == typeof(GameObject))
                 {
-                    widgetObject = widget.gameObject;
+                    exportObject = objectExport.gameObject;
                 }
-                else if (typeof(Component).IsAssignableFrom(widgetType))
+                else if (typeof(Component).IsAssignableFrom(exportType))
                 {
-                    widgetObject = widget.GetComponent(widgetType);
+                    exportObject = objectExport.GetComponent(exportType);
                 }
                 else
                 {
-                    Debug.LogError($"无效的组件类型在节点{widget.name}上: {widget.WidgetTypeName}");
+                    Debug.LogError($"无效的组件类型在节点{objectExport.name}上: {objectExport.ExportTypeName}");
                     continue;
                 }
 
-                if (widgetObject == null)
+                if (exportObject == null)
                 {
-                    Debug.LogError($"无效的组件类型在节点{widget.name}上: {widget.WidgetTypeName}");
+                    Debug.LogError($"无效的组件类型在节点{objectExport.name}上: {objectExport.ExportTypeName}");
                     continue;
                 }
 
-                var index = t.WidgetNames.IndexOf(widgetName);
+                var index = t.ObjectNameList.IndexOf(exportName);
                 if (index >= 0)
                 {
-                    if (t.Widgets[index] != widgetObject)
+                    if (t.ObjectList[index] != exportObject)
                     {
-                        Debug.LogError($"重复的挂件名称: {widgetName}");
+                        Debug.LogError($"重复的挂件名称: {exportName}");
                     }
                                     
                     continue;
                 }
                                 
-                t.WidgetNames.Add(widgetName);
-                t.Widgets.Add(widgetObject);
+                t.ObjectNameList.Add(exportName);
+                t.ObjectList.Add(exportObject);
 
                 isModify = true;
             }
@@ -83,11 +83,11 @@ namespace UnityGameFramework.Editor
 
             serializedObject.Update();
 
-            var t = (WidgetsGather)target;
-            t.Widgets ??= new List<Object>();
-            t.WidgetNames ??= new List<string>();
+            var t = (ObjectCollector)target;
+            t.ObjectList ??= new List<Object>();
+            t.ObjectNameList ??= new List<string>();
 
-            var count = Math.Min(t.WidgetNames.Count, t.Widgets.Count);
+            var count = Math.Min(t.ObjectNameList.Count, t.ObjectList.Count);
             var pageCount = Mathf.CeilToInt((float)count / PAGE_ITEM_LIMIT);
             m_PageIndex = pageCount > 0 ? Mathf.Clamp(m_PageIndex, 0, pageCount - 1) : 0;
 
@@ -119,8 +119,8 @@ namespace UnityGameFramework.Editor
                         {
                             if (GUILayout.Button("+", GUILayout.Width(20)))
                             {
-                                t.WidgetNames.Add(m_AddKey);
-                                t.Widgets.Add(m_AddValue);
+                                t.ObjectNameList.Add(m_AddKey);
+                                t.ObjectList.Add(m_AddValue);
 
                                 m_AddKey = string.Empty;
                                 m_AddValue = null;
@@ -146,19 +146,19 @@ namespace UnityGameFramework.Editor
                                 break;
                             }
 
-                            var key = t.WidgetNames[index];
-                            var value = t.Widgets[index];
+                            var key = t.ObjectNameList[index];
+                            var value = t.ObjectList[index];
 
                             // 绘制Key、value对的字典。
                             using (GameFrameworkEditorGUIUtility.MakeHorizontalScope())
                             {
-                                t.WidgetNames[index] = EditorGUILayout.TextField(key);
-                                t.Widgets[index] = EditorGUILayout.ObjectField(value, typeof(Object), true);
+                                t.ObjectNameList[index] = EditorGUILayout.TextField(key);
+                                t.ObjectList[index] = EditorGUILayout.ObjectField(value, typeof(Object), true);
 
                                 if (GUILayout.Button("X", GUILayout.Width(20)))
                                 {
-                                    t.WidgetNames.RemoveAt(index);
-                                    t.Widgets.RemoveAt(index);
+                                    t.ObjectNameList.RemoveAt(index);
+                                    t.ObjectList.RemoveAt(index);
 
                                     --count;
 
@@ -207,8 +207,8 @@ namespace UnityGameFramework.Editor
                     {
                         if (GUILayout.Button("清空收集器"))
                         {
-                            t.WidgetNames.Clear();
-                            t.Widgets.Clear();
+                            t.ObjectNameList.Clear();
+                            t.ObjectList.Clear();
 
                             count = 0;
                             m_PageIndex = 0;
@@ -216,20 +216,29 @@ namespace UnityGameFramework.Editor
                             isModify = true;
                         }
 
-                        if (GUILayout.Button("收集所有Widget组件(自己和子节点)"))
+                        if (GUILayout.Button("收集所有Export组件(自己和子节点)"))
                         {
-                            if (UpdateWidgetsGather(t))
+                            if (UpdateObjectCollector(t))
                             {
-                                
+                                isModify = true;
                             }
                         }
 
-                        if (t.GetComponent<WidgetsGatherGenerator>() == null)
+                        var generator = t.GetComponent<ObjectCollectorGenerator>();
+                        if (generator == null)
                         {
                             if (GUILayout.Button("生成静态绑定器"))
                             {
-                                var generator = t.gameObject.AddComponent<WidgetsGatherGenerator>();
-                                WidgetsGatherGeneratorInspector.SetMissingDefaultValue(generator);
+                                generator = t.gameObject.AddComponent<ObjectCollectorGenerator>();
+                                ObjectCollectorGeneratorInspector.SetMissingDefaultValue(generator);
+                            }
+                        }
+                        else
+                        {
+                            if (GUILayout.Button("删除静态绑定器"))
+                            {
+                                ObjectCollectorGeneratorInspector.DeleteCode(generator);
+                                DestroyImmediate(generator);
                             }
                         }
                     }

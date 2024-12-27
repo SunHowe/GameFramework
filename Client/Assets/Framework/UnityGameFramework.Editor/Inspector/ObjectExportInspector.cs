@@ -6,14 +6,14 @@ using UnityGameFramework.Runtime;
 
 namespace UnityGameFramework.Editor
 {
-    [CustomEditor(typeof(Widget))]
-    internal sealed class WidgetInspector : GameFrameworkInspector
+    [CustomEditor(typeof(ObjectExport))]
+    internal sealed class ObjectExportInspector : GameFrameworkInspector
     {
         private readonly List<Component> m_ComponentBuffer = new List<Component>();
         private readonly HashSet<System.Type> m_ComponentTypeBuffer = new HashSet<System.Type>();
         private readonly List<System.Type> m_IgnoreTypes = new List<System.Type>()
         {
-            typeof(Widget),
+            typeof(ObjectExport),
         };
         
         private readonly List<string> m_TypeNames = new List<string>();
@@ -26,46 +26,46 @@ namespace UnityGameFramework.Editor
             
             serializedObject.Update();
             
-            var t = (Widget)target;
+            var t = (ObjectExport)target;
 
             using (GameFrameworkEditorGUIUtility.MakeDisabledGroupScope(EditorApplication.isPlayingOrWillChangePlaymode))
             {
                 using var _ = GameFrameworkEditorGUIUtility.MakeVerticalScope("box");
                 
-                t.WidgetName = EditorGUILayout.TextField("WidgetName", t.WidgetName);
+                t.ExportName = EditorGUILayout.TextField("导出键值", t.ExportName);
 
-                var index = m_FullTypeNames.IndexOf(t.WidgetTypeName);
-                var newIndex = EditorGUILayout.Popup("WidgetType", index >= 0 ? index : 0, m_TypeNames.ToArray());
+                var index = m_FullTypeNames.IndexOf(t.ExportTypeName);
+                var newIndex = EditorGUILayout.Popup("导出组件类型", index >= 0 ? index : 0, m_TypeNames.ToArray());
                 if (newIndex != index)
                 {
-                    t.WidgetTypeName = m_FullTypeNames[newIndex];
+                    t.ExportTypeName = m_FullTypeNames[newIndex];
                 }
 
-                var gather = t.gameObject.GetComponentInSelfOrParent<WidgetsGather>();
+                var gather = t.gameObject.GetComponentInSelfOrParent<ObjectCollector>();
                 if (gather == null)
                 {
-                    EditorGUILayout.HelpBox("父节点不存在WidgetsGather组件，请检查是否是个无用的Widget", MessageType.Warning);
+                    EditorGUILayout.HelpBox("父节点不存在ObjectCollector组件，请检查是否是个无用的导出配置", MessageType.Warning);
                 }
                 else
                 {
-                    if (GUILayout.Button("更新WidgetsGather"))
+                    if (GUILayout.Button("更新ObjectCollector"))
                     {
-                        if (WidgetsGatherInspector.UpdateWidgetsGather(gather))
+                        if (ObjectCollectorInspector.UpdateObjectCollector(gather))
                         {
                             EditorUtility.SetDirty(gather);
                         }
                     }
 
-                    var gatherGenerator = gather.GetComponent<WidgetsGatherGenerator>();
+                    var gatherGenerator = gather.GetComponent<ObjectCollectorGenerator>();
                     if (gatherGenerator != null)
                     {
-                        if (GUILayout.Button("更新WidgetsGather并生成代码"))
+                        if (GUILayout.Button("更新ObjectCollector并生成代码"))
                         {
-                            if (WidgetsGatherInspector.UpdateWidgetsGather(gather))
+                            if (ObjectCollectorInspector.UpdateObjectCollector(gather))
                             {
                                 EditorUtility.SetDirty(gather);
                                 
-                                WidgetsGatherGeneratorInspector.GenerateCode(gatherGenerator);
+                                ObjectCollectorGeneratorInspector.GenerateCode(gatherGenerator);
                             }
                         }
                     }
@@ -93,7 +93,7 @@ namespace UnityGameFramework.Editor
             m_ComponentBuffer.Clear();
             m_ComponentTypeBuffer.Clear();
             
-            var t = (Widget)target;
+            var t = (ObjectExport)target;
             t.GetComponents(m_ComponentBuffer);
             
             m_Types.Clear();

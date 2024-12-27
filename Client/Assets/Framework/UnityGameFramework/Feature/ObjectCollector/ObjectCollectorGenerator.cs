@@ -7,14 +7,14 @@ namespace UnityGameFramework.Runtime
     /// <summary>
     /// 挂件收集器静态绑定器生成组件。该组件将提供生成热更层静态绑定代码，并在运行时提供获取静态绑定对象的功能。
     /// </summary>
-    [RequireComponent(typeof(WidgetsGather))]
+    [RequireComponent(typeof(ObjectCollector))]
     [AddComponentMenu("")]
-    public sealed class WidgetsGatherGenerator : MonoBehaviour
+    public sealed class ObjectCollectorGenerator : MonoBehaviour
     {
         /// <summary>
         /// 获取静态绑定器实例。
         /// </summary>
-        public WidgetsGatherBase Gather => m_HasCreated ? m_Gather : CreateGather();
+        public ObjectCollectorBase ObjectCollector => m_HasCreated ? m_GenerateObjectCollector : CreateObjectCollector();
         
         /// <summary>
         /// 静态绑定器类型名。
@@ -31,16 +31,16 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         public string GenerateDirectoryName;
 
-        private WidgetsGatherBase m_Gather;
-        private WidgetsGather m_WidgetsGather;
+        private ObjectCollectorBase m_GenerateObjectCollector;
+        private ObjectCollector m_ObjectCollector;
         private bool m_HasCreated;
 
         private void Awake()
         {
-            m_WidgetsGather = GetComponent<WidgetsGather>();
+            m_ObjectCollector = GetComponent<ObjectCollector>();
         }
 
-        private WidgetsGatherBase CreateGather()
+        private ObjectCollectorBase CreateObjectCollector()
         {
             m_HasCreated = true;
 
@@ -50,8 +50,8 @@ namespace UnityGameFramework.Runtime
                 return null;
             }
 
-            var gather = (WidgetsGatherBase)Activator.CreateInstance(runtimeType);
-            gather.Awake(m_WidgetsGather);
+            var gather = (ObjectCollectorBase)Activator.CreateInstance(runtimeType);
+            gather.Awake(m_ObjectCollector);
             
             return gather;
         }

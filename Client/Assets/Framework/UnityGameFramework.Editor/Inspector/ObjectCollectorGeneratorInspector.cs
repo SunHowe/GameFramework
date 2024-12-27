@@ -10,38 +10,41 @@ using UnityGameFramework.Runtime;
 
 namespace UnityGameFramework.Editor
 {
-    [CustomEditor(typeof(WidgetsGatherGenerator))]
-    internal sealed class WidgetsGatherGeneratorInspector : GameFrameworkInspector
+    [CustomEditor(typeof(ObjectCollectorGenerator))]
+    internal sealed class ObjectCollectorGeneratorInspector : GameFrameworkInspector
     {
         private const string ASSEMBLY_NAME = "GameLogic";
-        private const string SCRIBAN_FILE_PATH = "../Scriban/GameLogic/WidgetsGather.tpl";
+        private const string SCRIBAN_FILE_PATH = "../Scriban/GameLogic/ObjectCollector.tpl";
         private const string GAME_LOGIC_DIRECTORY_PATH = "Assets/GameMain/Scripts/GameLogic";
 
-        public static void SetMissingDefaultValue(WidgetsGatherGenerator t)
+        public static void SetMissingDefaultValue(ObjectCollectorGenerator t)
         {
             t.AssemblyName = Assembly.Load(ASSEMBLY_NAME).FullName; // 强制设置程序集名。
 
             if (string.IsNullOrEmpty(t.TypeName))
             {
                 // 默认使用GameObject的名字进行生成
-                t.TypeName = $"{t.gameObject.name.ToUpperCamelCase()}Widgets";
+                t.TypeName = $"{t.gameObject.name.ToUpperCamelCase()}Objects";
             }
         }
 
-        public static void GenerateCode(WidgetsGatherGenerator t)
+        /// <summary>
+        /// 生成绑定代码。
+        /// </summary>
+        public static void GenerateCode(ObjectCollectorGenerator t)
         {
-            var widgetsGather = t.GetComponent<WidgetsGather>();
-            if (widgetsGather == null)
+            var objectCollector = t.GetComponent<ObjectCollector>();
+            if (objectCollector == null)
             {
                 return;
             }
 
-            if (widgetsGather.Widgets == null || widgetsGather.WidgetNames == null)
+            if (objectCollector.ObjectList == null || objectCollector.ObjectNameList == null)
             {
                 return;
             }
 
-            var count = Mathf.Min(widgetsGather.Widgets.Count, widgetsGather.WidgetNames.Count);
+            var count = Mathf.Min(objectCollector.ObjectList.Count, objectCollector.ObjectNameList.Count);
             if (count <= 0)
             {
                 return;
@@ -50,13 +53,13 @@ namespace UnityGameFramework.Editor
             var nodes = new List<Dictionary<string, string>>();
             for (var i = 0; i < count; i++)
             {
-                var widgetName = widgetsGather.WidgetNames[i];
-                var widget = widgetsGather.Widgets[i];
+                var objectName = objectCollector.ObjectNameList[i];
+                var objectInstance = objectCollector.ObjectList[i];
 
                 var node = new Dictionary<string, string>();
-                node["name"] = widgetName;
-                node["field_name"] = widgetName.ToUpperCamelCase();
-                node["type_full_name"] = widget.GetType().FullName;
+                node["name"] = objectName;
+                node["field_name"] = objectName.ToUpperCamelCase();
+                node["type_full_name"] = objectInstance.GetType().FullName;
                 
                 nodes.Add(node);
             }
@@ -85,13 +88,28 @@ namespace UnityGameFramework.Editor
             AssetDatabase.Refresh();
         }
 
+        /// <summary>
+        /// 删除绑定代码。
+        /// </summary>
+        public static void DeleteCode(ObjectCollectorGenerator t)
+        {
+            var filePath = GetOutputFilePath(t);
+            if (!File.Exists(filePath))
+            {
+                return;
+            }
+            
+            File.Delete(filePath);
+            AssetDatabase.Refresh();
+        }
+        
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
 
             serializedObject.Update();
 
-            var t = (WidgetsGatherGenerator)target;
+            var t = (ObjectCollectorGenerator)target;
             var isModify = false;
 
             string filePath;
@@ -126,7 +144,7 @@ namespace UnityGameFramework.Editor
                 {
                     if (GUILayout.Button("生成代码"))
                     {
-                        WidgetsGatherGeneratorInspector.GenerateCode(t);
+                        ObjectCollectorGeneratorInspector.GenerateCode(t);
                     }
 
                     if (File.Exists(filePath))
@@ -139,8 +157,7 @@ namespace UnityGameFramework.Editor
 
                         if (GUILayout.Button("删除代码"))
                         {
-                            File.Delete(filePath);
-                            AssetDatabase.Refresh();
+                            ObjectCollectorGeneratorInspector.DeleteCode(t);
                         }
                     }
                 }
@@ -156,7 +173,7 @@ namespace UnityGameFramework.Editor
             Repaint();
         }
 
-        private static string GetOutputFilePath(WidgetsGatherGenerator t)
+        private static string GetOutputFilePath(ObjectCollectorGenerator t)
         {
             if (string.IsNullOrEmpty(t.GenerateDirectoryName))
             {

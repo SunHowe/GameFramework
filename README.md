@@ -44,7 +44,7 @@
 
     - TimerFeature: 提供对定时器模块的局部管理，当Feature被销毁时，会自动销毁由该Feature创建的定时器实例。可以很方便的用于类似“界面打开期间，创建了一些定时器，当界面被关闭时，自动销毁这些定时器”这样的使用场景。
 
-    - WidgetsFeature: 提供对Widget的拓展支持，可以在设置过WidgetsGather后，方便的通过`this.GetWidget<T>(name)`获取到WidgetsGather中已注册的组件实例。
+    - ObjectCollectorFeature: 提供对ObjectCollector的拓展支持，可以在设置过ObjectCollector后，方便的通过`this.Get<T>(name)`获取到ObjectCollector中已注册的组件实例，配合`ObjectExport`组件可以在面板上快速的收集需要导出的组件实例，并且支持生成热更新层的静态绑定代码。。
 
     - FGUIFormFrameFeature: 为FGUI界面提供的界面框架功能，可以在界面初始化时进行添加该Feature(目前界面代码生成器会自动生成该Feature的添加代码，若不需要可以自行注释或删除)，该Feature会从界面上获取名字为`frame`的组件当做界面的框架组件，并从该框架组件上获取`closeButton`和`backButton`分别进行关闭按钮和返回按钮的逻辑处理。方便一些有通用界面框架的界面逻辑封装。比如全屏界面框架与弹窗界面框架。
 
