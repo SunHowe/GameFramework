@@ -1,6 +1,6 @@
 using UnityGameFramework.Runtime;
 
-namespace GameLogic
+namespace {{ namespace }}
 {
     public sealed partial class {{ name }} : ObjectCollectorBase
     {

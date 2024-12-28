@@ -77,5 +77,37 @@ namespace UnityGameFramework.Runtime
         {
             return owner.FeatureContainer.Get<T>(widgetName);
         }
+
+        /// <summary>
+        /// 获取物体收集器。
+        /// </summary>
+        public static ObjectCollector GetObjectCollector(this GameObject gameObject)
+        {
+            return gameObject.GetComponent<ObjectCollector>();
+        }
+
+        /// <summary>
+        /// 获取物体收集器。
+        /// </summary>
+        public static ObjectCollector GetObjectCollector(this Component component)
+        {
+            return component.GetComponent<ObjectCollector>();
+        }
+
+        /// <summary>
+        /// 获取物体收集器。
+        /// </summary>
+        public static T GetObjectCollector<T>(this GameObject gameObject) where T : ObjectCollectorBase
+        {
+            return gameObject.GetComponent<ObjectCollectorGenerator>()?.ObjectCollector as T;
+        }
+
+        /// <summary>
+        /// 获取物体收集器。
+        /// </summary>
+        public static T GetObjectCollector<T>(this Component component) where T : ObjectCollectorBase
+        {
+            return component.GetComponent<ObjectCollectorGenerator>()?.ObjectCollector as T;
+        }
     }
 }

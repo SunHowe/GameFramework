@@ -15,6 +15,11 @@ namespace UnityGameFramework.Runtime
         /// 获取静态绑定器实例。
         /// </summary>
         public ObjectCollectorBase ObjectCollector => m_HasCreated ? m_GenerateObjectCollector : CreateObjectCollector();
+
+        /// <summary>
+        /// 命名空间。
+        /// </summary>
+        public string Namespace;
         
         /// <summary>
         /// 静态绑定器类型名。
@@ -44,7 +49,13 @@ namespace UnityGameFramework.Runtime
         {
             m_HasCreated = true;
 
-            var runtimeType = Utility.Assembly.GetType(AssemblyName, TypeName);
+            var typeName = TypeName;
+            if (!string.IsNullOrEmpty(Namespace))
+            {
+                typeName = Utility.Text.Format("{0}.{1}", Namespace, typeName);
+            }
+            
+            var runtimeType = Utility.Assembly.GetHotfixType(AssemblyName, typeName);
             if (runtimeType == null)
             {
                 return null;

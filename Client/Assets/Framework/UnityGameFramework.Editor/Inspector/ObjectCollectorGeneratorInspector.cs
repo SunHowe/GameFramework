@@ -14,6 +14,7 @@ namespace UnityGameFramework.Editor
     internal sealed class ObjectCollectorGeneratorInspector : GameFrameworkInspector
     {
         private const string ASSEMBLY_NAME = "GameLogic";
+        private const string DEFAULT_NAMESPACE = "GameLogic";
         private const string SCRIBAN_FILE_PATH = "../Scriban/GameLogic/ObjectCollector.tpl";
         private const string GAME_LOGIC_DIRECTORY_PATH = "Assets/GameMain/Scripts/GameLogic";
 
@@ -25,6 +26,11 @@ namespace UnityGameFramework.Editor
             {
                 // 默认使用GameObject的名字进行生成
                 t.TypeName = $"{t.gameObject.name.ToUpperCamelCase()}Objects";
+            }
+
+            if (string.IsNullOrEmpty(t.Namespace))
+            {
+                t.Namespace = DEFAULT_NAMESPACE;
             }
         }
 
@@ -70,6 +76,7 @@ namespace UnityGameFramework.Editor
             {
                 ["nodes"] = nodes,
                 ["name"] = t.TypeName,
+                ["namespace"] = t.Namespace,
             });
 
             var context = new TemplateContext();
@@ -126,6 +133,13 @@ namespace UnityGameFramework.Editor
                     if (typeName != t.TypeName)
                     {
                         t.TypeName = typeName;
+                        isModify = true;
+                    }
+                    
+                    var namespaceName = EditorGUILayout.TextField("命名空间", t.Namespace);
+                    if (namespaceName != t.Namespace)
+                    {
+                        t.Namespace = namespaceName;
                         isModify = true;
                     }
 
