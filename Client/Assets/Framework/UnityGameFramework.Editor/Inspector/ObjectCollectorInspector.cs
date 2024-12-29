@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityGameFramework.Runtime;
@@ -19,6 +20,23 @@ namespace UnityGameFramework.Editor
 
         private string m_AddKey = string.Empty;
         private Object m_AddValue = null;
+
+        [MenuItem("GameObject/Game Framework/@(Alt+A)Add Object Collector &a", false, 0)]
+        static void AddObjectCollector()
+        {
+            var gameObject = Selection.objects.FirstOrDefault() as GameObject;
+            if (gameObject == null)
+            {
+                return;
+            }
+
+            if (gameObject.GetComponent<ObjectCollector>() != null)
+            {
+                return;
+            }
+            
+            gameObject.AddComponent<ObjectCollector>();
+        }
 
         public static bool UpdateObjectCollector(ObjectCollector t)
         {

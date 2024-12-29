@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityGameFramework.Runtime;
@@ -19,6 +20,18 @@ namespace UnityGameFramework.Editor
         private readonly List<string> m_TypeNames = new List<string>();
         private readonly List<string> m_FullTypeNames = new List<string>();
         private readonly List<System.Type> m_Types = new List<System.Type>();
+
+        [MenuItem("GameObject/Game Framework/@(Alt+S)Add Object Export &s", false, 0)]
+        static void AddObjectExport()
+        {
+            var gameObject = Selection.objects.FirstOrDefault() as GameObject;
+            if (gameObject == null)
+            {
+                return;
+            }
+            
+            gameObject.AddComponent<ObjectExport>();
+        }
         
         public override void OnInspectorGUI()
         {
