@@ -113,6 +113,36 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
+        /// 异步预缓存指定资源实例。
+        /// </summary>
+        public static async UniTask PreCacheAsync(this FeatureContainer container, string assetName)
+        {
+            var feature = container.AddFeature<GameObjectPoolFeature>();
+            
+            var instance = await feature.InstantiateAsync(assetName);
+            if (instance == null)
+            {
+                return;
+            }
+            
+            feature.Destroy(instance);
+        }
+
+        /// <summary>
+        /// 异步预缓存指定数量的资源实例。
+        /// </summary>
+        public static async UniTask PreCacheAsync(this FeatureContainer container, string assetName, int count)
+        {
+            using var buffer = ReusableList<UniTask>.Create();
+            for (var i = 0; i < count; i++)
+            {
+                buffer.Add(container.PreCacheAsync(assetName));
+            }
+            
+            await UniTask.WhenAll(buffer);
+        }
+
+        /// <summary>
         /// 归还GameObject实例。
         /// </summary>
         public static void Destroy(this FeatureContainer container, GameObject gameObject)
@@ -208,6 +238,22 @@ namespace UnityGameFramework.Runtime
         public static UniTask<GameObject> InstantiateAsync(this IFeatureContainerOwner owner, string assetName)
         {
             return owner.FeatureContainer.AddFeature<GameObjectPoolFeature>().InstantiateAsync(assetName);
+        }
+
+        /// <summary>
+        /// 异步预缓存指定资源实例。
+        /// </summary>
+        public static UniTask PreCacheAsync(this IFeatureContainerOwner owner, string assetName)
+        {
+            return owner.FeatureContainer.PreCacheAsync(assetName);
+        }
+
+        /// <summary>
+        /// 异步预缓存指定资源实例。
+        /// </summary>
+        public static UniTask PreCacheAsync(this IFeatureContainerOwner owner, string assetName, int count)
+        {
+            return owner.FeatureContainer.PreCacheAsync(assetName, count);
         }
 
         /// <summary>
